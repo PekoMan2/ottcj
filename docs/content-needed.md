@@ -6,6 +6,9 @@ its secure operational location.
 
 ## P0 — required for the pledge launch
 
+Confirmed product decision: **Zachráňme Vilyho is the final charitable cause
+and beneficiary of this website.** The cause itself is not a missing input.
+
 - [ ] Google Form owner, production URL, approved questions, confirmation
   behavior, and `/dakujem` redirect capability or agreed alternative.
 - [ ] Google Sheet ownership/access and the exact safe manual-publication
@@ -17,9 +20,11 @@ its secure operational location.
   details.
 - [ ] Lawyer-approved pledge and donation terms; no crowdfunding or tax/legal
   characterization may be inferred from the brief.
-- [ ] Exact Zachráňme Vilyho donation destination, approved campaign URL, IBAN
-  or payment link, recipient, QR data, and payment instructions.
-- [ ] Approved Vily story and authorization to publish the child's information.
+- [ ] Exact Zachráňme Vilyho donation destination, final public campaign URL,
+  IBAN or payment link, recipient, QR data, and payment instructions.
+- [ ] Final editorial wording for the Vily story and authorization to publish
+  the child's information. Milestone 2 temporarily uses the source-provided
+  Word/v5 wording so the confirmed charity section can be built and verified.
 - [ ] Verification and approval of medical, treatment, age, fundraising-target,
   amount-raised, and father's-walk claims, including an “updated at” date for
   changing totals.
