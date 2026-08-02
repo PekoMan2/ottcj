@@ -61,6 +61,8 @@ services:
       context: ./fe
       args:
         VITE_SITE_PHASE: ${VITE_SITE_PHASE:-pre}
+        VITE_EVENT_START_AT: ${VITE_EVENT_START_AT:-2026-08-13T06:00:00+02:00}
+        VITE_PLEDGE_FORM_URL: ${VITE_PLEDGE_FORM_URL:-}
     restart: unless-stopped
     depends_on:
       be:
