@@ -45,9 +45,17 @@ and beneficiary of this website.** The cause itself is not a missing input.
 
 ## P1 — required for complete pre-event content
 
-- [ ] `MAJO_Od_Tatier_k_Dunaju_2026.kmz` or approved GPX containing the route
-  and all 36 handoffs; it is described as available but is not in the repo.
-- [ ] Approved nine key checkpoints, distances, schedule estimates, and labels.
+- [x] `MAJO_Od_Tatier_k_Dunaju_2026.kmz` received from the
+  [approved public Google My Maps source](https://www.google.com/maps/d/u/0/embed?mid=1LFQrndIqUrMZMBZPi7wCOLtsbqLIbMc&ehbc=2E312F&ll=48.543776552695064%2C18.348612000000013&z=9)
+  and stored at
+  `fe/public/routes/MAJO_Od_Tatier_k_Dunaju_2026.kmz`. The source owner
+  confirmed that its internal `ODOVZDÁVKY 2025` folder label is stale and the
+  supplied map is the approved 2026 route.
+- [x] Milestone 4 concise checkpoint rule approved: Jasná start; numbered
+  source points 5, 10, 15, 20, 25, 30, and 35; Tyršovo nábrežie finish. Names,
+  ordering, coordinates, and displayed kilometres come from the KMZ; schedule
+  estimates are intentionally omitted and no separate nine-point content is
+  expected.
 - [ ] Michal Šula final biography, photo, approved alt text, factual and
   editorial approval, and publication permission. Milestone 3 provisionally
   uses only the name, trainer role, and description supplied by the brief.
