@@ -3,16 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import type { SiteConfig } from '../../config/site';
 import { Container } from '../../components/ui';
+import { siteContent } from '../../config/content';
 import { EventStatus } from './EventStatus';
 import { PledgeCta } from './PledgeCta';
-
-const navigation = [
-  { href: '/#trasa', label: 'trasa' },
-  { href: '/#vily', label: 'Vily' },
-  { href: '/#tim', label: 'tím' },
-  { href: '/#partneri', label: 'partneri' },
-  { href: '/#prislub', label: 'prísľub' },
-] as const;
 
 interface SiteHeaderProps {
   config: SiteConfig;
@@ -53,7 +46,7 @@ export function SiteHeader({ config }: SiteHeaderProps) {
         </Link>
 
         <nav aria-label="Hlavná navigácia" className={`site-nav ${menuOpen ? 'site-nav--open' : ''}`} id="site-navigation">
-          {navigation.map((item) => (
+          {siteContent.navigation.header.map((item) => (
             <a href={item.href} key={item.href} onClick={() => setMenuOpen(false)}>
               {item.label}
             </a>

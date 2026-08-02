@@ -3,8 +3,15 @@ import { Link, Outlet, Route, Routes } from 'react-router';
 import { Card, Container, HandwrittenAnnotation, Section } from './components/ui';
 import { siteConfig, type SiteConfig } from './config/site';
 import { CharitySection } from './features/home/CharitySection';
+import { ContactSection } from './features/home/ContactSection';
+import { FinalPledgeSection } from './features/home/FinalPledgeSection';
 import { HeroCollage } from './features/home/HeroCollage';
+import { PartnersSection } from './features/home/PartnersSection';
+import { RunOverview } from './features/home/RunOverview';
 import { SiteHeader } from './features/home/SiteHeader';
+import { SiteFooter } from './features/home/SiteFooter';
+import { StorySection } from './features/home/StorySection';
+import { TeamSection } from './features/home/TeamSection';
 
 interface SiteLayoutProps {
   config: SiteConfig;
@@ -20,11 +27,7 @@ function SiteLayout({ config }: SiteLayoutProps) {
         <Outlet />
       </main>
 
-      <footer className="site-shell__footer">
-        <Container>
-          <p>347 km sólo · verejný prísľub pre Zachráňme Vilyho</p>
-        </Container>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
@@ -34,6 +37,12 @@ function HomePage({ config }: SiteLayoutProps) {
     <>
       <HeroCollage config={config} />
       <CharitySection config={config} />
+      <RunOverview />
+      <StorySection />
+      <TeamSection />
+      <PartnersSection />
+      <ContactSection />
+      <FinalPledgeSection config={config} />
     </>
   );
 }
