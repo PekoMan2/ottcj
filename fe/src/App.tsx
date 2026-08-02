@@ -1,71 +1,122 @@
-import { Activity, ArrowLeft, MapPin, Radio } from 'lucide-react';
-import { Link, Route, Routes } from 'react-router';
+import { ArrowLeft } from 'lucide-react';
+import { Link, Outlet, Route, Routes } from 'react-router';
+import {
+  Card,
+  Container,
+  HandwrittenAnnotation,
+  Section,
+  SectionHeading,
+  Stat,
+  StickerButton,
+} from './components/ui';
+import { siteConfig } from './config/site';
+import type { SitePhase } from './config/sitePhase';
+
+const phaseLabels: Record<SitePhase, string> = {
+  live: 'práve beží',
+  post: 'po behu',
+  pre: 'pred behom',
+};
+
+interface SiteLayoutProps {
+  phase: SitePhase;
+}
+
+function SiteLayout({ phase }: SiteLayoutProps) {
+  return (
+    <div className="site-shell" data-site-phase={phase}>
+      <header className="site-shell__header">
+        <Container className="site-shell__header-inner">
+          <Link aria-label="Majo · Od Tatier k Dunaju — domov" className="brand" to="/">
+            <span className="brand__uuu">uuu</span>
+            <span className="brand__name">MAJO · OTKD</span>
+          </Link>
+          <p className="phase-label">
+            <span className="phase-label__caption">fáza webu:</span>
+            <span>{phaseLabels[phase]}</span>
+          </p>
+        </Container>
+      </header>
+
+      <main className="site-shell__main">
+        <Outlet />
+      </main>
+
+      <footer className="site-shell__footer">
+        <Container>
+          <p>347 km sólo · verejný prísľub pre Zachráňme Vilyho</p>
+        </Container>
+      </footer>
+    </div>
+  );
+}
 
 function HomePage() {
   return (
-    <main className="min-h-screen bg-zinc-950 px-6 py-10 text-white sm:px-10 sm:py-14">
-      <div className="mx-auto flex min-h-[calc(100vh-7rem)] max-w-6xl flex-col">
-        <header className="flex items-center justify-between border-b border-zinc-800 pb-5">
-          <div className="flex items-center gap-3 text-sm font-semibold">
-            <span className="grid size-9 place-items-center bg-lime-400 text-zinc-950">
-              <Activity aria-hidden="true" size={19} />
-            </span>
-            Run Tracker
+    <Section aria-labelledby="page-title">
+      <Container>
+        <div className="foundation-layout">
+          <div className="foundation-intro">
+            <SectionHeading
+              annotation="347 km sólo pre Vilyho"
+              eyebrow="verejný prísľub · charitatívny beh"
+              level="h1"
+              title={<span id="page-title">Od Tatier k Dunaju.</span>}
+            />
+
+            <div className="foundation-cta">
+              <StickerButton disabled>prisľúbiť podporu →</StickerButton>
+              <HandwrittenAnnotation>
+                ↳ odkaz na Google formulár čaká na dodanie
+              </HandwrittenAnnotation>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 text-sm text-zinc-400">
-            <Radio aria-hidden="true" className="text-lime-400" size={16} />
-            Live tracking soon
-          </div>
-        </header>
+          <Card className="foundation-purpose" rotation="right" tone="cream">
+            <p className="foundation-purpose__label">hlavný cieľ</p>
+            <h2>Verejný prísľub pre Zachráňme Vilyho.</h2>
+            <p>
+              Kompletná výzva, príbeh a prísľubový formulár sa pripravujú podľa
+              schváleného návrhu a doplneného obsahu.
+            </p>
+          </Card>
+        </div>
 
-        <section className="flex flex-1 flex-col justify-center py-16 sm:py-24">
-          <div className="mb-7 flex items-center gap-2 text-sm font-medium text-lime-400">
-            <MapPin aria-hidden="true" size={18} />
-            Live run
-          </div>
-
-          <h1 className="max-w-4xl text-5xl font-bold leading-[1.05] sm:text-7xl">
-            Follow every step of the run.
-          </h1>
-
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-zinc-400">
-            Live position, route progress, run details, and social updates will
-            appear here when the runner sets off.
-          </p>
-        </section>
-
-        <footer className="border-t border-zinc-800 pt-5 text-sm text-zinc-500">
-          Location updates will begin on race day.
-        </footer>
-      </div>
-    </main>
+        <div aria-label="Kľúčové údaje behu" className="foundation-stats">
+          <Stat label="kilometrov" value="347" />
+          <Stat label="časový limit" value="84 h" />
+          <Stat label="odovzdávok" value="36" />
+          <Stat label="bežec" value="1" />
+        </div>
+      </Container>
+    </Section>
   );
 }
 
 function NotFoundPage() {
   return (
-    <main className="grid min-h-screen place-items-center bg-zinc-950 px-6 text-white">
-      <div className="text-center">
-        <p className="text-sm font-medium text-lime-400">404</p>
-        <h1 className="mt-3 text-3xl font-semibold">Page not found</h1>
-        <Link
-          className="mt-7 inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
-          to="/"
-        >
-          <ArrowLeft aria-hidden="true" size={16} />
-          Back to the run
-        </Link>
-      </div>
-    </main>
+    <Section aria-labelledby="not-found-title">
+      <Container className="not-found">
+        <Card rotation="left">
+          <HandwrittenAnnotation>chyba 404</HandwrittenAnnotation>
+          <h1 id="not-found-title">Táto stránka tu nie je.</h1>
+          <Link className="text-link" to="/">
+            <ArrowLeft aria-hidden="true" size={18} />
+            späť na domovskú stránku
+          </Link>
+        </Card>
+      </Container>
+    </Section>
   );
 }
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="*" element={<NotFoundPage />} />
+      <Route element={<SiteLayout phase={siteConfig.phase} />}>
+        <Route index element={<HomePage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
     </Routes>
   );
 }

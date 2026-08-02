@@ -2,6 +2,9 @@ FROM node:24-alpine AS build
 
 WORKDIR /app
 
+ARG VITE_SITE_PHASE=pre
+ENV VITE_SITE_PHASE=${VITE_SITE_PHASE}
+
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 

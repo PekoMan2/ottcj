@@ -59,6 +59,8 @@ services:
   fe:
     build:
       context: ./fe
+      args:
+        VITE_SITE_PHASE: ${VITE_SITE_PHASE:-pre}
     restart: unless-stopped
     depends_on:
       be:
