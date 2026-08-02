@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" role="img" aria-labelledby="title description">
+  <title id="title">Zástupný portrét Maja</title>
+  <desc id="description">Ilustrovaná silueta označujúca miesto pre finálnu fotografiu.</desc>
+  <rect width="320" height="400" fill="#d6d2cb"/>
+  <path d="M28 350c22-95 74-143 132-143s110 48 132 143v50H28z" fill="#0f1419"/>
+  <circle cx="160" cy="140" r="76" fill="#e8622d"/>
+  <path d="M82 136c0-62 34-94 78-94 48 0 79 39 79 94-25-20-47-31-79-31-31 0-55 11-78 31z" fill="#0f1419"/>
+  <path d="M117 157c14 18 28 27 43 27s30-9 44-27" fill="none" stroke="#0f1419" stroke-linecap="round" stroke-width="7"/>
+  <text x="160" y="376" fill="#fdfcf9" font-family="Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">FOTO ČAKÁ NA DODANIE</text>
+</svg>

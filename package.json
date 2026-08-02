@@ -1,0 +1,26 @@
+{
+  "name": "ottcj",
+  "version": "1.0.0",
+  "description": "Live run tracking website",
+  "private": true,
+  "scripts": {
+    "dev": "docker compose up --build",
+    "up": "docker compose up --build -d",
+    "down": "docker compose down",
+    "logs": "docker compose logs -f",
+    "ps": "docker compose ps",
+    "rebuild": "docker compose up --build --force-recreate",
+    "reset": "docker compose down --volumes --remove-orphans"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PekoMan2/ottcj.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PekoMan2/ottcj/issues"
+  },
+  "homepage": "https://github.com/PekoMan2/ottcj#readme"
+}
