@@ -1,16 +1,7 @@
 import { Flag, MapPinned } from 'lucide-react';
 import { Container, Section, SectionHeading, Stat } from '../../components/ui';
 import { siteContent } from '../../config/content';
-
-function RouteMapInsertionPoint() {
-  return (
-    <div
-      aria-hidden="true"
-      className="route-map-insertion-point"
-      data-route-map-slot="reserved"
-    />
-  );
-}
+import { RouteMapPanel } from '../route/RouteMapPanel';
 
 export function RunOverview() {
   const { runOverview } = siteContent;
@@ -52,7 +43,7 @@ export function RunOverview() {
           ))}
         </div>
 
-        <RouteMapInsertionPoint />
+        <RouteMapPanel />
       </Container>
     </Section>
   );
