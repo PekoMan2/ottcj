@@ -30,14 +30,17 @@ and beneficiary of this website.** The cause itself is not a missing input.
   changing totals.
 - [ ] Majo HD production portrait/hero photo, usage rights, crop guidance, and
   approved alt text. The v5 placeholder portrait is not production content.
-- [ ] Majo biography (3–5 sentences), approved Refresher URL, exact approved
-  quotation, attribution, and permission to reproduce it.
+- [ ] Majo biography (3–5 sentences), approved Refresher URL, final approval
+  for the source-provided Michal Šula quotation and attribution, and permission
+  to reproduce it. Milestone 3 uses the supplied quotation provisionally.
 - [ ] Confirmed start/end date and time, start/finish names, distance, time
   limit, handoff count, and approved Slovak display copy.
-- [ ] Production sponsor, media, and personal contact addresses plus confirmed
-  Instagram handles. Values suggested by the brief still require approval.
-- [ ] IontMax logo in production formats, destination URL, placement approval,
-  partnership wording, and usage permission.
+- [ ] Final ownership and publication confirmation for the sponsor and media
+  addresses and Instagram handles supplied by the brief and rendered
+  provisionally in Milestone 3.
+- [ ] IontMax logo in production formats, destination URL, final partnership
+  wording, placement approval, and asset usage permission. Its main-partner
+  status is source-provided and rendered provisionally in Milestone 3.
 - [ ] Final primary CTA wording and Google Form destination.
 
 ## P1 — required for complete pre-event content
@@ -45,21 +48,26 @@ and beneficiary of this website.** The cause itself is not a missing input.
 - [ ] `MAJO_Od_Tatier_k_Dunaju_2026.kmz` or approved GPX containing the route
   and all 36 handoffs; it is described as available but is not in the repo.
 - [ ] Approved nine key checkpoints, distances, schedule estimates, and labels.
-- [ ] Michal Šula photo, biography, role, factual credentials, alt text, and
-  permission.
-- [ ] Camera operator name, photo, role, sentence, alt text, and permission.
-- [ ] Support crew names, roles, photos, copy, alt text, and permission.
+- [ ] Michal Šula final biography, photo, approved alt text, factual and
+  editorial approval, and publication permission. Milestone 3 provisionally
+  uses only the name, trainer role, and description supplied by the brief.
+- [ ] Camera operator name, photo, final role, one-sentence description,
+  approved alt text, and publication permission.
+- [ ] Support crew names, roles, photos, final copy, approved alt text, and
+  publication permission.
 - [ ] Decision on Pavel Seidl inclusion plus approved photo, copy, factual
   credentials, and permission if included.
 - [ ] Supporting and media partner confirmations, correct tiers, logos, URLs,
-  alt text, and brand usage guidance. Shokz is not confirmed by the brief.
+  approved alt text, and brand usage guidance. Shokz and all other prospective
+  partners remain unpublished until confirmed.
 - [ ] Press release, media contact, HD photo set, logo pack, captions, credits,
   rights, and downloadable format.
 - [ ] Decision and approved deeper content for optional `/vily`.
 - [ ] Selected pledge-list presentation: modal or `/prislub-zoznam`.
 - [ ] Public pledge seed/update file containing only consented name or “Anonym”
   and amount; no email or private message.
-- [ ] Final contact and footer copy.
+- [ ] Final contact copy, footer copy and claims, social-link ownership, and
+  publication approval.
 
 ## P2 — lifecycle, launch, and optional material
 
