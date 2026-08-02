@@ -1,7 +1,19 @@
-# Run Tracker
+# Majo · Od Tatier k Dunaju
 
-A small live run tracking website. The React application is served by Nginx,
-which forwards API requests to a NestJS backend connected to PostgreSQL.
+A pledge-first charity run website for Zachráňme Vilyho. The React application
+is served by Nginx, which forwards API requests to a NestJS backend connected
+to PostgreSQL.
+
+## Product documentation
+
+- [Product specification](docs/product-spec.md)
+- [Design system](docs/design-system.md)
+- [Seven-milestone implementation plan](docs/implementation-plan.md)
+- [Content and external inputs needed](docs/content-needed.md)
+
+The authoritative product inputs are `majootkd_design_brief_v2.docx` and
+`majootkd_skicar_max_chaos_v5.html`. See `AGENTS.md` for their exact authority
+and contributor rules.
 
 ## Project structure
 

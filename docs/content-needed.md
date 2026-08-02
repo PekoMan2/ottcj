@@ -1,0 +1,79 @@
+# Content and external inputs needed
+
+Do not place secret values or private pledge data in this file. Mark an item
+received only after the approved production input exists in the repository or
+its secure operational location.
+
+## P0 — required for the pledge launch
+
+- [ ] Google Form owner, production URL, approved questions, confirmation
+  behavior, and `/dakujem` redirect capability or agreed alternative.
+- [ ] Google Sheet ownership/access and the exact safe manual-publication
+  workflow. Public data must exclude email and private messages.
+- [ ] Final pledge consent wording, publication consent, minimum pledge amount,
+  fulfillment process, and approved definition of DNF/each time boundary.
+- [ ] Lawyer-approved GDPR notice, data controller/contact, purpose, legal
+  basis, retention, processors, data-subject rights, and Google processing
+  details.
+- [ ] Lawyer-approved pledge and donation terms; no crowdfunding or tax/legal
+  characterization may be inferred from the brief.
+- [ ] Exact Zachráňme Vilyho donation destination, approved campaign URL, IBAN
+  or payment link, recipient, QR data, and payment instructions.
+- [ ] Approved Vily story and authorization to publish the child's information.
+- [ ] Verification and approval of medical, treatment, age, fundraising-target,
+  amount-raised, and father's-walk claims, including an “updated at” date for
+  changing totals.
+- [ ] Majo HD production portrait/hero photo, usage rights, crop guidance, and
+  approved alt text. The v5 placeholder portrait is not production content.
+- [ ] Majo biography (3–5 sentences), approved Refresher URL, exact approved
+  quotation, attribution, and permission to reproduce it.
+- [ ] Confirmed start/end date and time, start/finish names, distance, time
+  limit, handoff count, and approved Slovak display copy.
+- [ ] Production sponsor, media, and personal contact addresses plus confirmed
+  Instagram handles. Values suggested by the brief still require approval.
+- [ ] IontMax logo in production formats, destination URL, placement approval,
+  partnership wording, and usage permission.
+- [ ] Final primary CTA wording and Google Form destination.
+
+## P1 — required for complete pre-event content
+
+- [ ] `MAJO_Od_Tatier_k_Dunaju_2026.kmz` or approved GPX containing the route
+  and all 36 handoffs; it is described as available but is not in the repo.
+- [ ] Approved nine key checkpoints, distances, schedule estimates, and labels.
+- [ ] Michal Šula photo, biography, role, factual credentials, alt text, and
+  permission.
+- [ ] Camera operator name, photo, role, sentence, alt text, and permission.
+- [ ] Support crew names, roles, photos, copy, alt text, and permission.
+- [ ] Decision on Pavel Seidl inclusion plus approved photo, copy, factual
+  credentials, and permission if included.
+- [ ] Supporting and media partner confirmations, correct tiers, logos, URLs,
+  alt text, and brand usage guidance. Shokz is not confirmed by the brief.
+- [ ] Press release, media contact, HD photo set, logo pack, captions, credits,
+  rights, and downloadable format.
+- [ ] Decision and approved deeper content for optional `/vily`.
+- [ ] Selected pledge-list presentation: modal or `/prislub-zoznam`.
+- [ ] Public pledge seed/update file containing only consented name or “Anonym”
+  and amount; no email or private message.
+- [ ] Final contact and footer copy.
+
+## P2 — lifecycle, launch, and optional material
+
+- [ ] Garmin LiveTrack or alternative provider URL/access, integration method,
+  refresh limits, terms, test feed, and owner.
+- [ ] Manual tracking fallback workflow, authorized operator, data fields, and
+  last-update/status-message process.
+- [ ] Production `DB_PASSWORD`, `TRACKING_SECRET`, deployment secrets, database
+  retention/backup policy, and secret owner in a secure store.
+- [ ] Hosting, domain, DNS, TLS, environment, deployment, and rollback access.
+- [ ] Analytics decision (Plausible, Umami, or none), site identifier, privacy
+  review, and access.
+- [ ] Production Open Graph image (1200×630), favicon, social captions, and
+  canonical production domain.
+- [ ] Post-run official elapsed time/status, multiplier, final public pledge
+  totals, verified donation total, and approved result copy.
+- [ ] Email reminder tool/process, sender identity, templates, lawful basis,
+  unsubscribe/retention rules, and access.
+- [ ] Approved payment QR generation rules and per-pledger amount workflow.
+- [ ] Optional trailer file/embed permission and captions/transcript.
+- [ ] Optional FAQ questions and approved answers.
+- [ ] Final press/media publication links and partner reporting requirements.
