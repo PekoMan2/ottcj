@@ -127,13 +127,14 @@ describe('App routes', () => {
     expect(screen.getByText('press kit →')).toHaveAttribute('aria-disabled', 'true');
   });
 
-  it('reserves a non-rendering route-map boundary for Milestone 4', () => {
+  it('renders the deferred route-map boundary without eagerly loading Leaflet', () => {
     const { container } = renderAt('/');
-    const mapSlot = container.querySelector('[data-route-map-slot="reserved"]');
+    const map = container.querySelector('[data-route-map-state="idle"]');
 
-    expect(mapSlot).toBeEmptyDOMElement();
-    expect(mapSlot).toHaveAttribute('aria-hidden', 'true');
-    expect(container).not.toHaveTextContent(/Leaflet|OpenStreetMap|načítavam mapu|aktuálna poloha/i);
+    expect(map).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'interaktívna mapa trasy' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'načítať interaktívnu mapu' })).toBeInTheDocument();
+    expect(container).not.toHaveTextContent(/Leaflet|OpenStreetMap|načítavam oficiálnu trasu/i);
   });
 
   it('renders the branded not-found route', () => {

@@ -12,7 +12,7 @@ test('renders the complete editorial homepage without overflow', async ({ page }
   await expect(page.getByRole('heading', { name: 'Michal Šula' })).toBeVisible();
   await expect(page.getByRole('heading', { exact: true, name: 'IontMax' })).toBeVisible();
   await expect(page.getByText('Shokz')).toHaveCount(0);
-  await expect(page.locator('[data-route-map-slot="reserved"]')).toBeHidden();
+  await expect(page.getByRole('heading', { name: 'interaktívna mapa trasy' })).toBeVisible();
 
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
