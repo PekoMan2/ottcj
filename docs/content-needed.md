@@ -70,8 +70,10 @@ and beneficiary of this website.** The cause itself is not a missing input.
   partners remain unpublished until confirmed.
 - [ ] Press release, media contact, HD photo set, logo pack, captions, credits,
   rights, and downloadable format.
-- [ ] Decision and approved deeper content for optional `/vily`.
-- [ ] Selected pledge-list presentation: modal or `/prislub-zoznam`.
+- [ ] Additional approved deeper content for `/vily`; final editorial wording,
+  factual updates, and publication approval remain tracked here and must not be
+  exposed as internal status warnings in the production UI.
+- [x] Pledge-list presentation selected: dedicated `/prislub-zoznam` route.
 - [ ] Public pledge seed/update file containing only consented name or “Anonym”
   and amount; no email or private message.
 - [ ] Final contact copy, footer copy and claims, social-link ownership, and
@@ -90,6 +92,8 @@ and beneficiary of this website.** The cause itself is not a missing input.
   review, and access.
 - [ ] Production Open Graph image (1200×630), favicon, social captions, and
   canonical production domain.
+- [ ] Final `/dakujem` share copy and canonical production URL. Milestone 5 uses
+  the selected system-share plus copy-link interaction with provisional copy.
 - [ ] Post-run official elapsed time/status, multiplier, final public pledge
   totals, verified donation total, and approved result copy.
 - [ ] Email reminder tool/process, sender identity, templates, lawful basis,
