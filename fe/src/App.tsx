@@ -1,44 +1,22 @@
 import { ArrowLeft } from 'lucide-react';
 import { Link, Outlet, Route, Routes } from 'react-router';
-import {
-  Card,
-  Container,
-  HandwrittenAnnotation,
-  Section,
-  SectionHeading,
-  Stat,
-  StickerButton,
-} from './components/ui';
-import { siteConfig } from './config/site';
-import type { SitePhase } from './config/sitePhase';
-
-const phaseLabels: Record<SitePhase, string> = {
-  live: 'práve beží',
-  post: 'po behu',
-  pre: 'pred behom',
-};
+import { Card, Container, HandwrittenAnnotation, Section } from './components/ui';
+import { siteConfig, type SiteConfig } from './config/site';
+import { CharitySection } from './features/home/CharitySection';
+import { HeroCollage } from './features/home/HeroCollage';
+import { SiteHeader } from './features/home/SiteHeader';
 
 interface SiteLayoutProps {
-  phase: SitePhase;
+  config: SiteConfig;
 }
 
-function SiteLayout({ phase }: SiteLayoutProps) {
+function SiteLayout({ config }: SiteLayoutProps) {
   return (
-    <div className="site-shell" data-site-phase={phase}>
-      <header className="site-shell__header">
-        <Container className="site-shell__header-inner">
-          <Link aria-label="Majo · Od Tatier k Dunaju — domov" className="brand" to="/">
-            <span className="brand__uuu">uuu</span>
-            <span className="brand__name">MAJO · OTKD</span>
-          </Link>
-          <p className="phase-label">
-            <span className="phase-label__caption">fáza webu:</span>
-            <span>{phaseLabels[phase]}</span>
-          </p>
-        </Container>
-      </header>
+    <div className="site-shell" data-site-phase={config.phase}>
+      <a className="skip-link" href="#main-content">preskočiť na obsah</a>
+      <SiteHeader config={config} />
 
-      <main className="site-shell__main">
+      <main className="site-shell__main" id="main-content">
         <Outlet />
       </main>
 
@@ -51,45 +29,12 @@ function SiteLayout({ phase }: SiteLayoutProps) {
   );
 }
 
-function HomePage() {
+function HomePage({ config }: SiteLayoutProps) {
   return (
-    <Section aria-labelledby="page-title">
-      <Container>
-        <div className="foundation-layout">
-          <div className="foundation-intro">
-            <SectionHeading
-              annotation="347 km sólo pre Vilyho"
-              eyebrow="verejný prísľub · charitatívny beh"
-              level="h1"
-              title={<span id="page-title">Od Tatier k Dunaju.</span>}
-            />
-
-            <div className="foundation-cta">
-              <StickerButton disabled>prisľúbiť podporu →</StickerButton>
-              <HandwrittenAnnotation>
-                ↳ odkaz na Google formulár čaká na dodanie
-              </HandwrittenAnnotation>
-            </div>
-          </div>
-
-          <Card className="foundation-purpose" rotation="right" tone="cream">
-            <p className="foundation-purpose__label">hlavný cieľ</p>
-            <h2>Verejný prísľub pre Zachráňme Vilyho.</h2>
-            <p>
-              Kompletná výzva, príbeh a prísľubový formulár sa pripravujú podľa
-              schváleného návrhu a doplneného obsahu.
-            </p>
-          </Card>
-        </div>
-
-        <div aria-label="Kľúčové údaje behu" className="foundation-stats">
-          <Stat label="kilometrov" value="347" />
-          <Stat label="časový limit" value="84 h" />
-          <Stat label="odovzdávok" value="36" />
-          <Stat label="bežec" value="1" />
-        </div>
-      </Container>
-    </Section>
+    <>
+      <HeroCollage config={config} />
+      <CharitySection config={config} />
+    </>
   );
 }
 
@@ -110,11 +55,15 @@ function NotFoundPage() {
   );
 }
 
-export default function App() {
+interface AppProps {
+  config?: SiteConfig;
+}
+
+export default function App({ config = siteConfig }: AppProps) {
   return (
     <Routes>
-      <Route element={<SiteLayout phase={siteConfig.phase} />}>
-        <Route index element={<HomePage />} />
+      <Route element={<SiteLayout config={config} />}>
+        <Route index element={<HomePage config={config} />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
