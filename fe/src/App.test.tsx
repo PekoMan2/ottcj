@@ -28,7 +28,7 @@ describe('App routes', () => {
     expect(
       screen.getByRole('heading', { name: 'bež so mnou. zachráňme Vilyho.' }),
     ).toBeInTheDocument();
-    expect(screen.getByText('36')).toBeInTheDocument();
+    expect(screen.getAllByText('36').length).toBeGreaterThan(0);
     expect(
       screen.getAllByRole('button', { name: /prisľúbiť podporu — formulár pripravujeme/i })[0],
     ).toBeDisabled();
@@ -42,7 +42,7 @@ describe('App routes', () => {
     renderAt('/', { ...defaultConfig, pledgeFormUrl: 'https://forms.gle/example' });
 
     const pledgeLinks = screen.getAllByRole('link', { name: /prísľub|prisľúbiť podporu/i });
-    expect(pledgeLinks.filter((link) => link.getAttribute('href') === 'https://forms.gle/example')).toHaveLength(3);
+    expect(pledgeLinks.filter((link) => link.getAttribute('href') === 'https://forms.gle/example')).toHaveLength(4);
   });
 
   it('opens and closes the mobile navigation accessibly', () => {
@@ -68,7 +68,72 @@ describe('App routes', () => {
     expect(
       screen.getByRole('heading', { name: 'bež so mnou. zachráňme Vilyho.' }),
     ).toBeInTheDocument();
-    expect(container).not.toHaveTextContent(/tempo|aktuálna poloha|dobehol som|vyzbierané spolu/i);
+    expect(container).not.toHaveTextContent(/aktuálna poloha|prejdené km|dobehol som|vyzbierané spolu/i);
+  });
+
+  it('renders the remaining homepage sections in the specified editorial order', () => {
+    const { container } = renderAt('/');
+
+    expect(
+      Array.from(container.querySelectorAll('main > section[id]')).map((section) => section.id),
+    ).toEqual(['vily', 'trasa', 'pribeh', 'tim', 'partneri', 'kontakt']);
+    expect(screen.getByRole('heading', { name: '347,32 km krížom cez Slovensko.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Majov príbeh.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Tím za behom.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Kto stojí pri projekte.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Ozvite sa správnym smerom.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Teraz bež so mnou.' })).toBeInTheDocument();
+  });
+
+  it('keeps every homepage navigation target valid and unique', () => {
+    const { container } = renderAt('/');
+    const ids = Array.from(container.querySelectorAll('[id]')).map((element) => element.id);
+
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const anchor of container.querySelectorAll<HTMLAnchorElement>('a[href^="/#"]')) {
+      const targetId = anchor.getAttribute('href')?.slice(2);
+      expect(targetId).toBeTruthy();
+      expect(document.getElementById(targetId!)).not.toBeNull();
+    }
+  });
+
+  it('uses source-provided content while keeping genuinely missing inputs explicit', () => {
+    const { container } = renderAt('/');
+
+    expect(screen.getByRole('heading', { name: 'Michal Šula' })).toBeInTheDocument();
+    expect(screen.getByText('Majster Slovenska v ultrabehu.')).toBeInTheDocument();
+    expect(screen.getByText('„Nie, ale môžeš byť prvý. A bude to trápenie.“')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'IontMax' })).toBeInTheDocument();
+    expect(container).not.toHaveTextContent('Shokz');
+    expect(container.querySelectorAll('[data-content-status="missing"].content-image').length).toBeGreaterThan(0);
+    expect(screen.getByText('prečítaj celý rozhovor →')).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('renders supplied contacts as valid links without adding unavailable routes', () => {
+    renderAt('/');
+
+    expect(screen.getByRole('link', { name: 'partneri@majootkd.sk' })).toHaveAttribute(
+      'href',
+      'mailto:partneri@majootkd.sk',
+    );
+    expect(screen.getByRole('link', { name: 'media@majootkd.sk' })).toHaveAttribute(
+      'href',
+      'mailto:media@majootkd.sk',
+    );
+    expect(screen.getAllByRole('link', { name: '@majo.crnkovic' })[0]).toHaveAttribute(
+      'href',
+      'https://www.instagram.com/majo.crnkovic/',
+    );
+    expect(screen.getByText('press kit →')).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('reserves a non-rendering route-map boundary for Milestone 4', () => {
+    const { container } = renderAt('/');
+    const mapSlot = container.querySelector('[data-route-map-slot="reserved"]');
+
+    expect(mapSlot).toBeEmptyDOMElement();
+    expect(mapSlot).toHaveAttribute('aria-hidden', 'true');
+    expect(container).not.toHaveTextContent(/Leaflet|OpenStreetMap|načítavam mapu|aktuálna poloha/i);
   });
 
   it('renders the branded not-found route', () => {

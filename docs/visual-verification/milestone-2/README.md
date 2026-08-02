@@ -16,9 +16,12 @@ implementation, and writes the four screenshots into this directory.
 
 ## Current status
 
-Screenshot generation and final side-by-side visual review were intentionally
-not rerun in this handoff at the user's direction. The gate remains pending;
-do not treat the absence of screenshots as visual acceptance.
+The gate was rerun during Milestone 3 after the remaining homepage sections
+were added. All six desktop/mobile Playwright checks pass. The four generated
+screenshots are stored beside this file; the React screenshots now include the
+complete homepage, while the v5 references end after the authoritative charity
+section. Side-by-side review confirms that the original header, collage hero,
+and charity composition remain recognizable and materially unchanged.
 
 ## Intended mobile adaptations
 
@@ -30,3 +33,5 @@ do not treat the absence of screenshots as visual acceptance.
   statistics recompose into a two-column sticker grid.
 - Charity content remains in the same narrative order while CTA controls stack
   to full width on narrow screens.
+- The Milestone 3 editorial grids become single-column card stacks while
+  retaining their doodles, borders, hard shadows, rotations, and CTA hierarchy.
