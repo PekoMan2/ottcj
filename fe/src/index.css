@@ -1573,9 +1573,10 @@ a {
 
 .route-checkpoints h4 {
   margin: 0 0 var(--space-2);
-  font-family: var(--font-handwritten);
+  font-family: var(--font-prompt);
   font-size: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
-  font-style: normal;
+  font-style: italic;
+  font-weight: 200;
   transform: rotate(-0.5deg);
 }
 

@@ -14,6 +14,10 @@ test('loads the production route lazily and exposes every source point', async (
   await expect(routeMap.getByRole('button', { name: 'celá trasa' })).toBeVisible();
 
   const keyPoints = routeMap.getByRole('list', { name: 'Deväť kľúčových bodov trasy' });
+  const keyPointsHeading = routeMap.getByRole('heading', { name: 'kľúčové body na trati' });
+  await expect(keyPointsHeading).toHaveCSS('font-family', /Prompt/u);
+  await expect(keyPointsHeading).toHaveCSS('font-style', 'italic');
+  await expect(keyPointsHeading).toHaveCSS('font-weight', '200');
   await expect(keyPoints.getByRole('listitem')).toHaveCount(9);
   await expect(keyPoints).toContainText('5. Liptovská Osada');
   await expect(keyPoints).toContainText('35. Jamaica');
