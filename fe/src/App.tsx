@@ -12,6 +12,13 @@ import { SiteHeader } from './features/home/SiteHeader';
 import { SiteFooter } from './features/home/SiteFooter';
 import { StorySection } from './features/home/StorySection';
 import { TeamSection } from './features/home/TeamSection';
+import { PublicPledgeDataProvider } from './features/pledge/PublicPledgeDataProvider';
+import type { PublicPledgeData } from './features/pledge/publicPledges';
+import { GdprPage } from './features/pages/GdprPage';
+import { PledgeListPage } from './features/pages/PledgeListPage';
+import { PressPage } from './features/pages/PressPage';
+import { ThankYouPage } from './features/pages/ThankYouPage';
+import { VilyPage } from './features/pages/VilyPage';
 
 interface SiteLayoutProps {
   config: SiteConfig;
@@ -66,15 +73,23 @@ function NotFoundPage() {
 
 interface AppProps {
   config?: SiteConfig;
+  initialPledgeData?: PublicPledgeData;
 }
 
-export default function App({ config = siteConfig }: AppProps) {
+export default function App({ config = siteConfig, initialPledgeData }: AppProps) {
   return (
-    <Routes>
-      <Route element={<SiteLayout config={config} />}>
-        <Route index element={<HomePage config={config} />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+    <PublicPledgeDataProvider initialData={initialPledgeData}>
+      <Routes>
+        <Route element={<SiteLayout config={config} />}>
+          <Route index element={<HomePage config={config} />} />
+          <Route path="prislub-zoznam" element={<PledgeListPage config={config} />} />
+          <Route path="dakujem" element={<ThankYouPage />} />
+          <Route path="press" element={<PressPage />} />
+          <Route path="vily" element={<VilyPage />} />
+          <Route path="gdpr" element={<GdprPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </PublicPledgeDataProvider>
   );
 }
