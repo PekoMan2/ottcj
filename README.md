@@ -10,6 +10,7 @@ to PostgreSQL.
 - [Design system](docs/design-system.md)
 - [Seven-milestone implementation plan](docs/implementation-plan.md)
 - [Content and external inputs needed](docs/content-needed.md)
+- [LiveTrack and lifecycle operations](docs/live-operations.md)
 
 The authoritative product inputs are `majootkd_design_brief_v2.docx` and
 `majootkd_skicar_max_chaos_v5.html`. See `AGENTS.md` for their exact authority
@@ -66,6 +67,12 @@ background, run `npm run up`.
 
 Change the host port through `APP_PORT` in `.env` when port 8080 is already in
 use.
+
+The public lifecycle state is read from `/api/event-state`; switching between
+`pre`, `live`, and `post` does not require rebuilding the frontend. Live-start
+registrations are disabled by default and must not be enabled until the
+approved consent, retention settings, encryption key, Garmin device and tested
+recipient limits are configured as described in the operations runbook.
 
 ## Traffic flow
 
