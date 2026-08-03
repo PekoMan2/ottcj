@@ -1,4 +1,3 @@
-import majoPhotoPlaceholder from '../../assets/majo-photo-placeholder.svg';
 import { Container, Stat } from '../../components/ui';
 import { siteContent } from '../../config/content';
 import type { SiteConfig } from '../../config/site';
@@ -45,7 +44,7 @@ function TitleWordArt() {
           </linearGradient>
           <path d="M25 120Q450 20 875 120" fill="none" id="hero-title-arc" />
         </defs>
-        <text fill="url(#hero-rainbow)" fontFamily="Bungee, Prompt, sans-serif" fontSize="84" paintOrder="stroke fill" stroke="#0f1419" strokeWidth="3">
+        <text fill="url(#hero-rainbow)" fontFamily="Bungee, Prompt, sans-serif" fontSize="72" paintOrder="stroke fill" stroke="#0f1419" strokeWidth="3">
           <textPath href="#hero-title-arc" startOffset="50%" textAnchor="middle">
             Od Tatier k Dunaju
           </textPath>
@@ -77,12 +76,12 @@ export function HeroCollage({ config }: HeroCollageProps) {
 
         <figure className="hero-photo-placeholder">
           <img
-            alt="Zástupná ilustrácia namiesto zatiaľ nedodanej fotografie Maja"
-            height="400"
-            src={majoPhotoPlaceholder}
-            width="320"
+            alt="Majo s vlajkou Slovenska po pretekoch"
+            fetchPriority="high"
+            height="656"
+            src="/majo.jpg"
+            width="438"
           />
-          <figcaption>finálne foto čaká na dodanie</figcaption>
         </figure>
 
         <div className="hero-primary-cta">
@@ -91,7 +90,7 @@ export function HeroCollage({ config }: HeroCollageProps) {
 
         <TitleWordArt />
         <p className="hero-date">
-          {siteContent.eventDateLabel} <span>termín čaká na potvrdenie</span>
+          {siteContent.eventDateLabel}
         </p>
       </div>
 
