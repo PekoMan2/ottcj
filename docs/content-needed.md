@@ -22,26 +22,23 @@ and beneficiary of this website.** The cause itself is not a missing input.
   characterization may be inferred from the brief.
 - [ ] Exact Zachráňme Vilyho donation destination, final public campaign URL,
   IBAN or payment link, recipient, QR data, and payment instructions.
-- [ ] Final editorial wording for the Vily story and authorization to publish
-  the child's information. Milestone 2 temporarily uses the source-provided
-  Word/v5 wording so the confirmed charity section can be built and verified.
-- [ ] Verification and approval of medical, treatment, age, fundraising-target,
-  amount-raised, and father's-walk claims, including an “updated at” date for
-  changing totals.
-- [ ] Majo HD production portrait/hero photo, usage rights, crop guidance, and
-  approved alt text. The v5 placeholder portrait is not production content.
+- [x] Final editorial wording for the Vily story and authorization to publish
+  the child's information confirmed.
+- [x] Medical, treatment, age, fundraising-target, amount-raised, father's-walk,
+  and update-date claims verified and approved.
+- [x] Majo HD production portrait/hero photo, usage rights, crop guidance, and
+  approved alt text received.
 - [x] Final Refresher interview URL received and linked from the homepage.
-- [ ] Majo biography (3–5 sentences), final approval for the source-provided
-  Michal Šula quotation and attribution, and permission to reproduce it.
-  Milestone 3 uses the supplied quotation provisionally.
-- [ ] Confirmed start/end date and time, start/finish names, distance, time
-  limit, handoff count, and approved Slovak display copy.
+- [x] Source-provided Michal Šula quotation and attribution approved for
+  publication.
+- [ ] Majo biography (3–5 sentences).
+- [x] Start/end date and time, start/finish names, distance, time limit, handoff
+  count, and Slovak display copy confirmed.
 - [ ] Final ownership and publication confirmation for the sponsor and media
   addresses and Instagram handles supplied by the brief and rendered
   provisionally in Milestone 3.
-- [ ] IontMax logo in production formats, destination URL, final partnership
-  wording, placement approval, and asset usage permission. Its main-partner
-  status is source-provided and rendered provisionally in Milestone 3.
+- [x] IontMax logo, destination URL, main-partner wording, placement, and asset
+  usage confirmed and integrated.
 - [ ] Final primary CTA wording and Google Form destination.
 
 ## P1 — required for complete pre-event content
