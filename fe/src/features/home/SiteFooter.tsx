@@ -1,4 +1,5 @@
 import { AtSign } from 'lucide-react';
+import { Link } from 'react-router';
 import { Container } from '../../components/ui';
 import { siteContent } from '../../config/content';
 import { ContentLinkView } from './ContentMedia';
@@ -18,8 +19,10 @@ export function SiteFooter() {
         </div>
 
         <nav aria-label={footer.navigationLabel} className="site-footer__nav">
-          {navigation.footer.map((item) => (
+          {navigation.footer.map((item) => item.href.startsWith('/#') ? (
             <a href={item.href} key={item.href}>{item.label}</a>
+          ) : (
+            <Link key={item.href} to={item.href}>{item.label}</Link>
           ))}
         </nav>
 

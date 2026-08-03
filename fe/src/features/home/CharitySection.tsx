@@ -1,11 +1,12 @@
 import { Container } from '../../components/ui';
 import { siteContent } from '../../config/content';
 import type { SiteConfig } from '../../config/site';
+import { Link } from 'react-router';
 import {
   calculatePledgeAmount,
   pledgeBrackets,
-  pledgeTotals,
 } from '../pledge/pledge';
+import { usePublicPledges } from '../pledge/publicPledgeContext';
 import { HeartDoodle } from './Doodles';
 import { PledgeCta } from './PledgeCta';
 
@@ -28,6 +29,7 @@ const currency = new Intl.NumberFormat('sk-SK', {
 
 export function CharitySection({ config }: CharitySectionProps) {
   const { charity } = siteContent;
+  const pledgeState = usePublicPledges();
 
   return (
     <section aria-labelledby="charity-title" className="charity-section" id="vily">
@@ -43,7 +45,7 @@ export function CharitySection({ config }: CharitySectionProps) {
         </h2>
 
         <article className="vily-card">
-          <div className="vily-card__tag">{charity.story.tag}</div>
+          <Link className="vily-card__tag" to="/vily">{charity.story.tag}</Link>
           <HeartDoodle className="vily-card__heart" />
           <div className="vily-card__copy">
             <p>{charity.story.introduction}</p>
@@ -115,22 +117,20 @@ export function CharitySection({ config }: CharitySectionProps) {
 
         <div className="charity-actions">
           <PledgeCta href={config.pledgeFormUrl} />
-          <button className="pledge-list-placeholder" disabled type="button">
-            zoznam prísľubov · čoskoro
-          </button>
+          <Link className="pledge-list-link" to="/prislub-zoznam">zoznam prísľubov</Link>
         </div>
         <p className="charity-note">↳ prísľub cez Google formulár. transparentne, dohľadateľne.</p>
 
-        <div className="pledge-summary" data-pledge-status={pledgeTotals.status}>
-          {pledgeTotals.status === 'pending' ? (
-            <p><strong>Súhrn prísľubov pripravujeme.</strong> Počty a sumy doplníme z bezpečných verejných dát.</p>
-          ) : (
+        <div className="pledge-summary" data-pledge-status={pledgeState.status}>
+          {pledgeState.status === 'loading' ? <p><strong>Načítavam verejné prísľuby…</strong></p> : null}
+          {pledgeState.status === 'error' ? <p><strong>Súhrn momentálne nie je dostupný.</strong> Bezpečné verejné dáta sa nepodarilo načítať.</p> : null}
+          {pledgeState.status === 'ready' ? (
             <p>
-              <strong>{pledgeTotals.pledgerCount}</strong> ľudí prisľúbilo · základ{' '}
-              <strong>{currency.format(pledgeTotals.baseAmountEur)}</strong> · potenciál až{' '}
-              <strong>{currency.format(pledgeTotals.baseAmountEur * 2.5)}</strong>
+              <strong>{pledgeState.summary.participantCount}</strong> ľudí prisľúbilo · základ{' '}
+              <strong>{currency.format(pledgeState.summary.baseTotalEur)}</strong> · potenciál až{' '}
+              <strong>{currency.format(pledgeState.summary.maximumPotentialEur)}</strong>
             </p>
-          )}
+          ) : null}
         </div>
       </Container>
     </section>

@@ -24,7 +24,7 @@ function resolveEventStart(value: unknown): string {
   return eventStart;
 }
 
-function resolveOptionalHttpUrl(value: unknown): string | undefined {
+function resolveOptionalGoogleFormUrl(value: unknown): string | undefined {
   if (value === undefined || value === '') {
     return undefined;
   }
@@ -36,9 +36,16 @@ function resolveOptionalHttpUrl(value: unknown): string | undefined {
   try {
     const url = new URL(value);
 
-    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
-      throw new Error('unsupported protocol');
-    }
+    const isLongForm = url.hostname === 'docs.google.com'
+      && (url.pathname === '/forms' || url.pathname.startsWith('/forms/'));
+    const isShortForm = url.hostname === 'forms.gle' && url.pathname !== '/';
+
+    if (
+      url.protocol !== 'https:'
+      || url.username !== ''
+      || url.password !== ''
+      || (!isLongForm && !isShortForm)
+    ) throw new Error('unsupported form destination');
 
     return url.toString();
   } catch {
@@ -50,7 +57,7 @@ export function resolveSiteConfig(environment: SiteEnvironment): SiteConfig {
   return {
     eventStartAt: resolveEventStart(environment.VITE_EVENT_START_AT),
     phase: resolveSitePhase(environment.VITE_SITE_PHASE),
-    pledgeFormUrl: resolveOptionalHttpUrl(environment.VITE_PLEDGE_FORM_URL),
+    pledgeFormUrl: resolveOptionalGoogleFormUrl(environment.VITE_PLEDGE_FORM_URL),
   };
 }
 

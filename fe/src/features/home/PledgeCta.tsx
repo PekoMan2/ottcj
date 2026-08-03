@@ -29,7 +29,7 @@ export function PledgeCta({ className, compact = false, href }: PledgeCtaProps) 
       disabled
       type="button"
     >
-      {label}
+      {compact ? 'prísľub · čoskoro' : 'formulár pripravujeme'}
     </button>
   );
 }

@@ -4,7 +4,7 @@ export interface RunFact {
 }
 
 export interface NavigationItem {
-  href: `/#${string}`;
+  href: `/${string}`;
   label: string;
 }
 
@@ -210,6 +210,10 @@ export const siteContent = Object.freeze({
       { href: '/#partneri', label: 'partneri' },
       { href: '/#kontakt', label: 'kontakt' },
       { href: '/#prislub', label: 'prísľub' },
+      { href: '/prislub-zoznam', label: 'zoznam prísľubov' },
+      { href: '/press', label: 'press' },
+      { href: '/vily', label: 'viac o Vilym' },
+      { href: '/gdpr', label: 'GDPR' },
     ],
   },
   charity: {
@@ -368,11 +372,7 @@ export const siteContent = Object.freeze({
             label: 'media@majootkd.sk',
             href: 'mailto:media@majootkd.sk',
           },
-          {
-            status: 'missing',
-            label: 'press kit →',
-            note: 'stránka /press vznikne v Milestone 5',
-          },
+          { status: 'ready', label: 'press kit →', href: '/press' },
         ],
       },
       {

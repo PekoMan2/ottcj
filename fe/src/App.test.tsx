@@ -1,18 +1,24 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import App from './App';
 import type { SiteConfig } from './config/site';
+import type { PublicPledgeData } from './features/pledge/publicPledges';
 
 const defaultConfig: SiteConfig = {
   eventStartAt: '2026-08-13T06:00:00+02:00',
   phase: 'pre',
 };
+const emptyPledges: PublicPledgeData = { pledges: [], updatedAt: null };
 
-function renderAt(path: string, config: SiteConfig = defaultConfig) {
+function renderAt(
+  path: string,
+  config: SiteConfig = defaultConfig,
+  initialPledgeData: PublicPledgeData = emptyPledges,
+) {
   return render(
     <MemoryRouter initialEntries={[path]}>
-      <App config={config} />
+      <App config={config} initialPledgeData={initialPledgeData} />
     </MemoryRouter>,
   );
 }
@@ -33,9 +39,7 @@ describe('App routes', () => {
       screen.getAllByRole('button', { name: /prisľúbiť podporu — formulár pripravujeme/i })[0],
     ).toBeDisabled();
     expect(container.querySelector('[data-site-phase="pre"]')).not.toBeNull();
-    expect(container.querySelector('[data-pledge-status="pending"]')).toHaveTextContent(
-      'Počty a sumy doplníme z bezpečných verejných dát',
-    );
+    expect(container.querySelector('[data-pledge-status="ready"]')).toHaveTextContent('0 ľudí prisľúbilo');
   });
 
   it('opens the configured pledge form from every primary CTA', () => {
@@ -124,7 +128,53 @@ describe('App routes', () => {
       'href',
       'https://www.instagram.com/majo.crnkovic/',
     );
-    expect(screen.getByText('press kit →')).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByRole('link', { name: 'press kit →' })).toHaveAttribute('href', '/press');
+  });
+
+  it.each([
+    ['/prislub-zoznam', 'Zoznam prísľubov.'],
+    ['/dakujem', 'Ďakujeme, že bežíš s nami.'],
+    ['/press', 'Press kit.'],
+    ['/vily', 'Zachráňme Vilyho.'],
+    ['/gdpr', 'GDPR informácie.'],
+  ])('renders the supporting route %s', (path, heading) => {
+    const { container } = renderAt(path);
+    expect(screen.getByRole('heading', { level: 1, name: heading })).toBeInTheDocument();
+    expect(container.querySelector('[data-site-phase="pre"]')).not.toBeNull();
+  });
+
+  it('keeps internal editorial status warnings off the Vily page', () => {
+    const { container } = renderAt('/vily');
+    expect(container).not.toHaveTextContent(/provisional|draft|unverified|čaká na schválenie|pracovný placeholder/i);
+  });
+
+  it('renders consented and anonymous pledges with cent-safe totals', () => {
+    renderAt('/prislub-zoznam', defaultConfig, {
+      updatedAt: '2026-08-02T12:30:00+02:00',
+      pledges: [
+        { displayName: 'Jana N.', baseAmountEur: 0.01 },
+        { displayName: null, baseAmountEur: 12.34 },
+      ],
+    });
+
+    const table = screen.getByRole('table', { name: 'Verejné prísľuby pre Zachráňme Vilyho' });
+    expect(within(table).getByText('Jana N.')).toBeInTheDocument();
+    expect(within(table).getByText('Anonym')).toBeInTheDocument();
+    expect(within(table).getByText('SPOLU (2 ľudí)')).toBeInTheDocument();
+    expect(within(table).getByText('12,35 €')).toBeInTheDocument();
+    expect(within(table).getByText('30,88 €')).toBeInTheDocument();
+  });
+
+  it('copies the homepage share link from the thank-you page', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText },
+    });
+    renderAt('/dakujem');
+    fireEvent.click(screen.getByRole('button', { name: 'kopírovať odkaz' }));
+    await waitFor(() => expect(writeText).toHaveBeenCalledWith('http://localhost:3000/'));
+    expect(screen.getByText('Odkaz je skopírovaný.')).toBeInTheDocument();
   });
 
   it('renders the deferred route-map boundary without eagerly loading Leaflet', () => {

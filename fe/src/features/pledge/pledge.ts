@@ -11,14 +11,6 @@ export interface PledgeBracket {
   tone?: 'max';
 }
 
-export type PledgeTotals =
-  | { status: 'pending' }
-  | {
-      baseAmountEur: number;
-      pledgerCount: number;
-      status: 'available';
-    };
-
 export const pledgeBrackets: readonly PledgeBracket[] = [
   {
     accessibleRange: 'od 76 do 84 hodín vrátane',
@@ -42,8 +34,6 @@ export const pledgeBrackets: readonly PledgeBracket[] = [
     tone: 'max',
   },
 ];
-
-export const pledgeTotals: PledgeTotals = { status: 'pending' };
 
 function assertElapsedHours(value: number): void {
   if (!Number.isFinite(value) || value < 0) {
