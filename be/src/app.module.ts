@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validateEnvironment } from './config/env.validation';
+import { EventStateModule } from './event-state/event-state.module';
+import { LiveAlertsModule } from './live-alerts/live-alerts.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { validateEnvironment } from './config/env.validation';
         synchronize: config.getOrThrow<boolean>('DB_SYNCHRONIZE'),
       }),
     }),
+    EventStateModule,
+    LiveAlertsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
