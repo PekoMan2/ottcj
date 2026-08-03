@@ -29,7 +29,6 @@ export function StorySection() {
             </blockquote>
             <figcaption>
               <strong>— {story.quoteAttribution}</strong>
-              <span>{story.quoteStatus}</span>
             </figcaption>
             <ContentLinkView className="interview-card__cta" link={story.interview} />
             <ArrowUpRight aria-hidden="true" className="interview-card__arrow" />

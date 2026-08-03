@@ -4,11 +4,7 @@ import type { SiteConfig } from '../../config/site';
 import {
   AmbulanceDoodle,
   ArrowDoodle,
-  CatDoodle,
-  HaluskyDoodle,
-  KamzikDoodle,
   MountainsDoodle,
-  SlovakiaRouteDoodle,
   SunDoodle,
 } from './Doodles';
 import { PledgeCta } from './PledgeCta';
@@ -17,13 +13,62 @@ interface HeroCollageProps {
   config: SiteConfig;
 }
 
-function DistanceWordArt() {
+interface HeroArtworkProps {
+  className: string;
+  height: number;
+  src: string;
+  width: number;
+}
+
+function HeroArtwork({ className, height, src, width }: HeroArtworkProps) {
   return (
-    <div aria-label="347 kilometrov" className="distance-wordart" role="img">
-      <svg aria-hidden="true" className="distance-wordart__scribble" viewBox="0 0 240 100">
-        <path d="M40 20Q15 25 15 55t50 35q65 5 125-8 35-10 30-42-10-25-70-28Q80 8 40 20Z" fill="none" stroke="#e51a1a" strokeLinecap="round" strokeWidth="3.5" />
+    <img
+      alt=""
+      aria-hidden="true"
+      className={`hero-artwork ${className}`}
+      draggable="false"
+      height={height}
+      src={src}
+      width={width}
+    />
+  );
+}
+
+function HeroMapArtwork() {
+  const routePath = 'M449 292C430 350 374 390 323 430S239 511 195 540S165 564 150 580';
+
+  return (
+    <div
+      aria-label="Orientačný náčrt trasy z Jasnej na Tyršovo nábrežie"
+      className="hero-map-artwork"
+      role="img"
+    >
+      <img
+        alt=""
+        aria-hidden="true"
+        className="hero-map-artwork__image"
+        draggable="false"
+        height="835"
+        src="/mapaweb.png"
+        width="938"
+      />
+      <svg
+        aria-hidden="true"
+        className="hero-map-artwork__route"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 938 835"
+      >
+        <path className="hero-map-artwork__route-line" d={routePath} />
+        <path className="hero-map-artwork__route-dash" d={routePath} />
+        <circle className="hero-map-artwork__point hero-map-artwork__point--start" cx="449" cy="292" r="17" />
+        <circle className="hero-map-artwork__point hero-map-artwork__point--finish" cx="150" cy="580" r="17" />
       </svg>
-      <span>347km</span>
+      <span aria-hidden="true" className="hero-map-artwork__label hero-map-artwork__label--start">
+        štart <small>uuultra</small>
+      </span>
+      <span aria-hidden="true" className="hero-map-artwork__label hero-map-artwork__label--finish">
+        cieľ <small>Tyršovo nábrežie</small>
+      </span>
     </div>
   );
 }
@@ -32,24 +77,14 @@ function TitleWordArt() {
   return (
     <h1 className="hero-wordart">
       <span className="sr-only">Od Tatier k Dunaju</span>
-      <svg aria-hidden="true" preserveAspectRatio="xMidYMid meet" viewBox="0 0 900 150">
-        <defs>
-          <linearGradient id="hero-rainbow" x1="0" x2="1">
-            <stop offset="0%" stopColor="#e51a1a" />
-            <stop offset="20%" stopColor="#f7931e" />
-            <stop offset="40%" stopColor="#ffd11e" />
-            <stop offset="60%" stopColor="#3ab44a" />
-            <stop offset="80%" stopColor="#1e90ff" />
-            <stop offset="100%" stopColor="#8e44ad" />
-          </linearGradient>
-          <path d="M25 120Q450 20 875 120" fill="none" id="hero-title-arc" />
-        </defs>
-        <text fill="url(#hero-rainbow)" fontFamily="Bungee, Prompt, sans-serif" fontSize="72" paintOrder="stroke fill" stroke="#0f1419" strokeWidth="3">
-          <textPath href="#hero-title-arc" startOffset="50%" textAnchor="middle">
-            Od Tatier k Dunaju
-          </textPath>
-        </text>
-      </svg>
+      <img
+        alt=""
+        aria-hidden="true"
+        draggable="false"
+        height="835"
+        src="/OTKD_LOGO_CRAZY.png"
+        width="1789"
+      />
     </h1>
   );
 }
@@ -60,21 +95,16 @@ export function HeroCollage({ config }: HeroCollageProps) {
       <div className="hero-collage">
         <SunDoodle className="hero-doodle hero-doodle--sun" />
         <MountainsDoodle className="hero-doodle hero-doodle--mountains" />
-        <HaluskyDoodle className="hero-doodle hero-doodle--halusky" />
-        <KamzikDoodle className="hero-doodle hero-doodle--kamzik" />
-        <SlovakiaRouteDoodle className="hero-doodle hero-doodle--route" />
-        <DistanceWordArt />
-
-        <p className="hero-label hero-label--start">
-          štart <span>uuultra</span>
-        </p>
-        <p className="hero-label hero-label--finish">cieľ (?)</p>
+        <HeroArtwork className="hero-artwork--halusky" height={614} src="/halusky.png" width={501} />
+        <HeroArtwork className="hero-artwork--suhaj" height={489} src="/suhajtransparent.png" width={366} />
+        <HeroMapArtwork />
+        <HeroArtwork className="hero-artwork--distance" height={461} src="/347km.png" width={1069} />
 
         <AmbulanceDoodle className="hero-doodle hero-doodle--ambulance" />
-        <CatDoodle className="hero-doodle hero-doodle--cat" />
+        <HeroArtwork className="hero-artwork--lynx" height={444} src="/rysostrovid.png" width={585} />
         <ArrowDoodle className="hero-doodle hero-doodle--arrow" />
 
-        <figure className="hero-photo-placeholder">
+        <figure className="hero-photo">
           <img
             alt="Majo s vlajkou Slovenska po pretekoch"
             fetchPriority="high"

@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { provisionalEventStart, resolveSiteConfig } from './site';
+import { confirmedEventStart, resolveSiteConfig } from './site';
 
 describe('resolveSiteConfig', () => {
-  it('uses safe provisional defaults', () => {
+  it('uses the confirmed event defaults', () => {
     expect(resolveSiteConfig({})).toEqual({
-      eventStartAt: provisionalEventStart,
+      eventStartAt: confirmedEventStart,
       phase: 'pre',
       pledgeFormUrl: undefined,
     });
