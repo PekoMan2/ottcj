@@ -30,9 +30,10 @@ and beneficiary of this website.** The cause itself is not a missing input.
   changing totals.
 - [ ] Majo HD production portrait/hero photo, usage rights, crop guidance, and
   approved alt text. The v5 placeholder portrait is not production content.
-- [ ] Majo biography (3–5 sentences), approved Refresher URL, final approval
-  for the source-provided Michal Šula quotation and attribution, and permission
-  to reproduce it. Milestone 3 uses the supplied quotation provisionally.
+- [x] Final Refresher interview URL received and linked from the homepage.
+- [ ] Majo biography (3–5 sentences), final approval for the source-provided
+  Michal Šula quotation and attribution, and permission to reproduce it.
+  Milestone 3 uses the supplied quotation provisionally.
 - [ ] Confirmed start/end date and time, start/finish names, distance, time
   limit, handoff count, and approved Slovak display copy.
 - [ ] Final ownership and publication confirmation for the sponsor and media

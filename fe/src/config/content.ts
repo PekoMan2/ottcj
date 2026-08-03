@@ -264,9 +264,9 @@ export const siteContent = Object.freeze({
     quoteAttribution: 'Michal Šula',
     quoteStatus: 'dočasný citát zo zdrojového briefu',
     interview: {
-      status: 'missing',
+      status: 'ready',
+      href: 'https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor',
       label: 'prečítaj celý rozhovor →',
-      note: 'finálny odkaz na Refresher čaká na dodanie',
     },
   },
   team: {

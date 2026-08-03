@@ -110,7 +110,10 @@ describe('App routes', () => {
     expect(screen.getByRole('heading', { name: 'IontMax' })).toBeInTheDocument();
     expect(container).not.toHaveTextContent('Shokz');
     expect(container.querySelectorAll('[data-content-status="missing"].content-image').length).toBeGreaterThan(0);
-    expect(screen.getByText('prečítaj celý rozhovor →')).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByRole('link', { name: 'prečítaj celý rozhovor →' })).toHaveAttribute(
+      'href',
+      'https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor',
+    );
   });
 
   it('renders supplied contacts as valid links without adding unavailable routes', () => {
