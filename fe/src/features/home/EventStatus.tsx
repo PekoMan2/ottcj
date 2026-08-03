@@ -1,13 +1,12 @@
-import type { SitePhase } from '../../config/sitePhase';
+import type { EventStateLoadState } from '../event/eventStateContext';
 import { formatCountdown } from '../countdown/countdown';
 import { useCountdown } from '../countdown/useCountdown';
 
 interface EventStatusProps {
-  eventStartAt: string;
-  phase: SitePhase;
+  state: EventStateLoadState;
 }
 
-function CountdownStatus({ eventStartAt }: Pick<EventStatusProps, 'eventStartAt'>) {
+function CountdownStatus({ eventStartAt }: { eventStartAt: string }) {
   const countdown = useCountdown(eventStartAt);
 
   return (
@@ -18,8 +17,17 @@ function CountdownStatus({ eventStartAt }: Pick<EventStatusProps, 'eventStartAt'
   );
 }
 
-export function EventStatus({ eventStartAt, phase }: EventStatusProps) {
-  if (phase === 'live') {
+export function EventStatus({ state }: EventStatusProps) {
+  if (state.status !== 'ready') {
+    return (
+      <div className="event-status" data-event-status={state.status}>
+        <span className="event-status__label">stav behu:</span>
+        <strong>{state.status === 'loading' ? 'načítavam' : 'nedostupný'}</strong>
+      </div>
+    );
+  }
+
+  if (state.data.phase === 'live') {
     return (
       <div className="event-status" data-event-status="live">
         <span className="event-status__label">stav behu:</span>
@@ -28,7 +36,7 @@ export function EventStatus({ eventStartAt, phase }: EventStatusProps) {
     );
   }
 
-  if (phase === 'post') {
+  if (state.data.phase === 'post') {
     return (
       <div className="event-status" data-event-status="post">
         <span className="event-status__label">stav podujatia:</span>
@@ -37,5 +45,5 @@ export function EventStatus({ eventStartAt, phase }: EventStatusProps) {
     );
   }
 
-  return <CountdownStatus eventStartAt={eventStartAt} />;
+  return <CountdownStatus eventStartAt={state.data.eventStartAt} />;
 }

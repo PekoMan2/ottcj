@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import type { SiteConfig } from '../../config/site';
 import { Container } from '../../components/ui';
 import { siteContent } from '../../config/content';
+import { useEventState } from '../event/eventStateContext';
 import { EventStatus } from './EventStatus';
 import { PledgeCta } from './PledgeCta';
 
@@ -12,6 +13,7 @@ interface SiteHeaderProps {
 }
 
 export function SiteHeader({ config }: SiteHeaderProps) {
+  const eventState = useEventState();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -54,8 +56,10 @@ export function SiteHeader({ config }: SiteHeaderProps) {
         </nav>
 
         <div className="site-header__actions">
-          <EventStatus eventStartAt={config.eventStartAt} phase={config.phase} />
-          <PledgeCta compact href={config.pledgeFormUrl} />
+          <EventStatus state={eventState} />
+          {eventState.status !== 'ready' || eventState.data.phase !== 'post' ? (
+            <PledgeCta compact href={config.pledgeFormUrl} />
+          ) : null}
           <button
             aria-controls="site-navigation"
             aria-expanded={menuOpen}

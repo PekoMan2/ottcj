@@ -2,14 +2,17 @@ import { ArrowDownLeft } from 'lucide-react';
 import { Container } from '../../components/ui';
 import { siteContent } from '../../config/content';
 import type { SiteConfig } from '../../config/site';
+import type { SitePhase } from '../../config/sitePhase';
 import { PledgeCta } from './PledgeCta';
 
 interface FinalPledgeSectionProps {
   config: SiteConfig;
+  phase?: SitePhase;
 }
 
-export function FinalPledgeSection({ config }: FinalPledgeSectionProps) {
+export function FinalPledgeSection({ config, phase }: FinalPledgeSectionProps) {
   const { finalPledge } = siteContent;
+  if (phase === 'post') return null;
 
   return (
     <section aria-labelledby="final-pledge-title" className="final-pledge-section">

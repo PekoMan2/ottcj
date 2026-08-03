@@ -7,6 +7,7 @@ import {
   pledgeBrackets,
 } from '../pledge/pledge';
 import { usePublicPledges } from '../pledge/publicPledgeContext';
+import { useEventState } from '../event/eventStateContext';
 import { HeartDoodle } from './Doodles';
 import { PledgeCta } from './PledgeCta';
 
@@ -29,7 +30,9 @@ const currency = new Intl.NumberFormat('sk-SK', {
 
 export function CharitySection({ config }: CharitySectionProps) {
   const { charity } = siteContent;
+  const eventState = useEventState();
   const pledgeState = usePublicPledges();
+  const isPost = eventState.status === 'ready' && eventState.data.phase === 'post';
 
   return (
     <section aria-labelledby="charity-title" className="charity-section" id="vily">
@@ -116,7 +119,7 @@ export function CharitySection({ config }: CharitySectionProps) {
         </div>
 
         <div className="charity-actions">
-          <PledgeCta href={config.pledgeFormUrl} />
+          {!isPost ? <PledgeCta href={config.pledgeFormUrl} /> : null}
           <Link className="pledge-list-link" to="/prislub-zoznam">zoznam prísľubov</Link>
         </div>
         <p className="charity-note">↳ prísľub cez Google formulár. transparentne, dohľadateľne.</p>

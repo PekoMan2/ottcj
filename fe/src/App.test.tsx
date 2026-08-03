@@ -3,11 +3,16 @@ import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import App from './App';
 import type { SiteConfig } from './config/site';
+import type { EventState } from './features/event/eventState';
 import type { PublicPledgeData } from './features/pledge/publicPledges';
 
-const defaultConfig: SiteConfig = {
+const defaultConfig: SiteConfig = {};
+const preEventState: EventState = {
   eventStartAt: '2026-08-13T06:00:00+02:00',
+  liveTrackUrl: null,
   phase: 'pre',
+  result: null,
+  updatedAt: null,
 };
 const emptyPledges: PublicPledgeData = { pledges: [], updatedAt: null };
 
@@ -15,10 +20,15 @@ function renderAt(
   path: string,
   config: SiteConfig = defaultConfig,
   initialPledgeData: PublicPledgeData = emptyPledges,
+  initialEventState: EventState = preEventState,
 ) {
   return render(
     <MemoryRouter initialEntries={[path]}>
-      <App config={config} initialPledgeData={initialPledgeData} />
+      <App
+        config={config}
+        initialEventState={initialEventState}
+        initialPledgeData={initialPledgeData}
+      />
     </MemoryRouter>,
   );
 }
@@ -63,16 +73,81 @@ describe('App routes', () => {
   });
 
   it.each([
-    ['live', 'práve beží'],
-    ['post', 'fáza behu sa skončila'],
-  ] as const)('renders honest %s phase status without fabricated metrics', (phase, status) => {
-    const { container } = renderAt('/', { ...defaultConfig, phase });
+    [
+      {
+        eventStartAt: preEventState.eventStartAt,
+        liveTrackUrl: null,
+        phase: 'live',
+        result: null,
+        updatedAt: null,
+      } satisfies EventState,
+      'práve beží',
+    ],
+    [
+      {
+        eventStartAt: preEventState.eventStartAt,
+        liveTrackUrl: null,
+        phase: 'post',
+        result: {
+          elapsedSeconds: null,
+          finalDonationTotalEur: null,
+          multiplier: 0,
+          resultCopy: null,
+          status: 'dnf',
+        },
+        updatedAt: null,
+      } satisfies EventState,
+      'fáza behu sa skončila',
+    ],
+  ] as const)('renders honest %s phase status', (runtimeState, status) => {
+    const { container } = renderAt('/', defaultConfig, emptyPledges, runtimeState);
 
     expect(screen.getByText(status)).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { name: 'bež so mnou. zachráňme Vilyho.' }),
     ).toBeInTheDocument();
-    expect(container).not.toHaveTextContent(/aktuálna poloha|prejdené km|dobehol som|vyzbierané spolu/i);
+    expect(container).not.toHaveTextContent(/aktuálna poloha|prejdené km|vyzbierané spolu/i);
+  });
+
+  it('links directly to Garmin while live and keeps the pledge available', () => {
+    renderAt(
+      '/',
+      { pledgeFormUrl: 'https://forms.gle/example' },
+      emptyPledges,
+      {
+        ...preEventState,
+        liveTrackUrl: 'https://livetrack.garmin.com/session/example',
+        phase: 'live',
+      },
+    );
+    expect(screen.getByRole('link', { name: /sledovať Maja naživo/i })).toHaveAttribute(
+      'href',
+      'https://livetrack.garmin.com/session/example',
+    );
+    expect(screen.getAllByRole('link', { name: /prísľub|prisľúbiť podporu/i }).length).toBeGreaterThan(0);
+  });
+
+  it('renders the official post result and removes pledge CTAs', () => {
+    renderAt(
+      '/',
+      { pledgeFormUrl: 'https://forms.gle/example' },
+      emptyPledges,
+      {
+        ...preEventState,
+        phase: 'post',
+        result: {
+          elapsedSeconds: 58 * 3600,
+          finalDonationTotalEur: 12500,
+          multiplier: 2.5,
+          resultCopy: 'Schválený výsledkový text.',
+          status: 'finished',
+        },
+      },
+    );
+    expect(screen.getByRole('heading', { name: 'Majo dobehol.' })).toBeInTheDocument();
+    expect(screen.getByText('58 h 0 min 0 s')).toBeInTheDocument();
+    expect(screen.getByText('2,5×')).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /prisľúbiť podporu/i })).not.toBeInTheDocument();
   });
 
   it('renders the remaining homepage sections in the specified editorial order', () => {

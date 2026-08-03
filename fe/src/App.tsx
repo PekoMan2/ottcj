@@ -2,6 +2,9 @@ import { ArrowLeft } from 'lucide-react';
 import { Link, Outlet, Route, Routes } from 'react-router';
 import { Card, Container, HandwrittenAnnotation, Section } from './components/ui';
 import { siteConfig, type SiteConfig } from './config/site';
+import { EventStateProvider } from './features/event/EventStateProvider';
+import type { EventState } from './features/event/eventState';
+import { useEventState } from './features/event/eventStateContext';
 import { CharitySection } from './features/home/CharitySection';
 import { ContactSection } from './features/home/ContactSection';
 import { FinalPledgeSection } from './features/home/FinalPledgeSection';
@@ -12,6 +15,7 @@ import { SiteHeader } from './features/home/SiteHeader';
 import { SiteFooter } from './features/home/SiteFooter';
 import { StorySection } from './features/home/StorySection';
 import { TeamSection } from './features/home/TeamSection';
+import { RunResultPanel } from './features/home/RunResultPanel';
 import { PublicPledgeDataProvider } from './features/pledge/PublicPledgeDataProvider';
 import type { PublicPledgeData } from './features/pledge/publicPledges';
 import { GdprPage } from './features/pages/GdprPage';
@@ -25,8 +29,10 @@ interface SiteLayoutProps {
 }
 
 function SiteLayout({ config }: SiteLayoutProps) {
+  const eventState = useEventState();
+  const phase = eventState.status === 'ready' ? eventState.data.phase : 'unknown';
   return (
-    <div className="site-shell" data-site-phase={config.phase}>
+    <div className="site-shell" data-site-phase={phase}>
       <a className="skip-link" href="#main-content">preskočiť na obsah</a>
       <SiteHeader config={config} />
 
@@ -40,16 +46,21 @@ function SiteLayout({ config }: SiteLayoutProps) {
 }
 
 function HomePage({ config }: SiteLayoutProps) {
+  const eventState = useEventState();
+  const runtimeState = eventState.status === 'ready' ? eventState.data : null;
   return (
     <>
-      <HeroCollage config={config} />
+      <HeroCollage config={config} eventState={runtimeState} />
+      {runtimeState?.phase === 'post' && runtimeState.result ? (
+        <RunResultPanel result={runtimeState.result} />
+      ) : null}
       <CharitySection config={config} />
       <RunOverview />
       <StorySection />
       <TeamSection />
       <PartnersSection />
       <ContactSection />
-      <FinalPledgeSection config={config} />
+      <FinalPledgeSection config={config} phase={runtimeState?.phase} />
     </>
   );
 }
@@ -73,23 +84,30 @@ function NotFoundPage() {
 
 interface AppProps {
   config?: SiteConfig;
+  initialEventState?: EventState;
   initialPledgeData?: PublicPledgeData;
 }
 
-export default function App({ config = siteConfig, initialPledgeData }: AppProps) {
+export default function App({
+  config = siteConfig,
+  initialEventState,
+  initialPledgeData,
+}: AppProps) {
   return (
-    <PublicPledgeDataProvider initialData={initialPledgeData}>
-      <Routes>
-        <Route element={<SiteLayout config={config} />}>
-          <Route index element={<HomePage config={config} />} />
-          <Route path="prislub-zoznam" element={<PledgeListPage config={config} />} />
-          <Route path="dakujem" element={<ThankYouPage />} />
-          <Route path="press" element={<PressPage />} />
-          <Route path="vily" element={<VilyPage />} />
-          <Route path="gdpr" element={<GdprPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </PublicPledgeDataProvider>
+    <EventStateProvider initialState={initialEventState}>
+      <PublicPledgeDataProvider initialData={initialPledgeData}>
+        <Routes>
+          <Route element={<SiteLayout config={config} />}>
+            <Route index element={<HomePage config={config} />} />
+            <Route path="prislub-zoznam" element={<PledgeListPage config={config} />} />
+            <Route path="dakujem" element={<ThankYouPage />} />
+            <Route path="press" element={<PressPage />} />
+            <Route path="vily" element={<VilyPage />} />
+            <Route path="gdpr" element={<GdprPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </PublicPledgeDataProvider>
+    </EventStateProvider>
   );
 }

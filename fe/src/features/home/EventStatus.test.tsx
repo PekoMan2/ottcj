@@ -15,8 +15,16 @@ describe('EventStatus', () => {
   it('updates the configured pre-event countdown', () => {
     render(
       <EventStatus
-        eventStartAt="2026-08-13T06:00:00+02:00"
-        phase="pre"
+        state={{
+          data: {
+            eventStartAt: '2026-08-13T06:00:00+02:00',
+            liveTrackUrl: null,
+            phase: 'pre',
+            result: null,
+            updatedAt: null,
+          },
+          status: 'ready',
+        }}
       />,
     );
 
@@ -33,11 +41,37 @@ describe('EventStatus', () => {
   ] as const)('renders the configured %s status without a countdown', (phase, label) => {
     render(
       <EventStatus
-        eventStartAt="2026-08-13T06:00:00+02:00"
-        phase={phase}
+        state={{
+          data: {
+            eventStartAt: '2026-08-13T06:00:00+02:00',
+            liveTrackUrl: null,
+            phase,
+            result:
+              phase === 'post'
+                ? {
+                    elapsedSeconds: null,
+                    finalDonationTotalEur: null,
+                    multiplier: 0,
+                    resultCopy: null,
+                    status: 'dnf',
+                  }
+                : null,
+            updatedAt: null,
+          },
+          status: 'ready',
+        }}
       />,
     );
 
+    expect(screen.getByText(label)).toBeInTheDocument();
+    expect(screen.queryByText('do štartu:')).not.toBeInTheDocument();
+  });
+
+  it.each([
+    [{ status: 'loading' } as const, 'načítavam'],
+    [{ message: 'offline', status: 'error' } as const, 'nedostupný'],
+  ])('uses a neutral status while runtime data is %s', (state, label) => {
+    render(<EventStatus state={state} />);
     expect(screen.getByText(label)).toBeInTheDocument();
     expect(screen.queryByText('do štartu:')).not.toBeInTheDocument();
   });

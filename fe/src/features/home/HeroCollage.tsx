@@ -1,6 +1,9 @@
+import { ExternalLink } from 'lucide-react';
 import { Container, Stat } from '../../components/ui';
 import { siteContent } from '../../config/content';
 import type { SiteConfig } from '../../config/site';
+import type { EventState } from '../event/eventState';
+import { LiveAlertSignup } from '../live-alerts/LiveAlertSignup';
 import {
   AmbulanceDoodle,
   ArrowDoodle,
@@ -11,6 +14,7 @@ import { PledgeCta } from './PledgeCta';
 
 interface HeroCollageProps {
   config: SiteConfig;
+  eventState: EventState | null;
 }
 
 interface HeroArtworkProps {
@@ -89,7 +93,10 @@ function TitleWordArt() {
   );
 }
 
-export function HeroCollage({ config }: HeroCollageProps) {
+export function HeroCollage({ config, eventState }: HeroCollageProps) {
+  const isLive = eventState?.phase === 'live';
+  const isPost = eventState?.phase === 'post';
+
   return (
     <section aria-label="347 km sólo pre Zachráňme Vilyho" className="hero-section">
       <div className="hero-collage">
@@ -115,7 +122,20 @@ export function HeroCollage({ config }: HeroCollageProps) {
         </figure>
 
         <div className="hero-primary-cta">
-          <PledgeCta href={config.pledgeFormUrl} />
+          {isLive && eventState.liveTrackUrl ? (
+            <a
+              className="live-track-cta"
+              href={eventState.liveTrackUrl}
+              rel="noreferrer"
+              target="_blank"
+            >
+              sledovať Maja naživo <ExternalLink aria-hidden="true" size={18} />
+            </a>
+          ) : null}
+          {isLive && !eventState.liveTrackUrl ? (
+            <span className="live-track-pending">LiveTrack odkaz sa pripravuje</span>
+          ) : null}
+          {!isPost ? <PledgeCta href={config.pledgeFormUrl} /> : null}
         </div>
 
         <TitleWordArt />
@@ -132,6 +152,12 @@ export function HeroCollage({ config }: HeroCollageProps) {
             </div>
           ))}
         </div>
+        {eventState?.phase === 'pre' ? (
+          <LiveAlertSignup
+            consentText={config.liveAlertConsentText}
+            consentVersion={config.liveAlertConsentVersion}
+          />
+        ) : null}
       </Container>
     </section>
   );

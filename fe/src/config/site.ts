@@ -1,27 +1,13 @@
-import { resolveSitePhase } from './sitePhase';
-
-export const confirmedEventStart = '2026-08-13T06:00:00+02:00';
-
 export interface SiteConfig {
-  eventStartAt: string;
-  phase: ReturnType<typeof resolveSitePhase>;
+  liveAlertConsentText?: string;
+  liveAlertConsentVersion?: string;
   pledgeFormUrl?: string;
 }
 
 interface SiteEnvironment {
-  VITE_EVENT_START_AT?: unknown;
+  VITE_LIVE_ALERT_CONSENT_TEXT?: unknown;
+  VITE_LIVE_ALERT_CONSENT_VERSION?: unknown;
   VITE_PLEDGE_FORM_URL?: unknown;
-  VITE_SITE_PHASE?: unknown;
-}
-
-function resolveEventStart(value: unknown): string {
-  const eventStart = value === undefined || value === '' ? confirmedEventStart : value;
-
-  if (typeof eventStart !== 'string' || Number.isNaN(Date.parse(eventStart))) {
-    throw new Error(`Invalid VITE_EVENT_START_AT: received ${String(value)}`);
-  }
-
-  return eventStart;
 }
 
 function resolveOptionalGoogleFormUrl(value: unknown): string | undefined {
@@ -53,18 +39,47 @@ function resolveOptionalGoogleFormUrl(value: unknown): string | undefined {
   }
 }
 
+function resolveOptionalConsentText(value: unknown): string | undefined {
+  if (value === undefined || value === '') return undefined;
+  if (typeof value !== 'string') {
+    throw new Error(`Invalid VITE_LIVE_ALERT_CONSENT_TEXT: received ${String(value)}`);
+  }
+  const consentText = value.trim();
+  if (consentText.length === 0 || consentText.length > 1000) {
+    throw new Error(`Invalid VITE_LIVE_ALERT_CONSENT_TEXT: received ${value}`);
+  }
+  return consentText;
+}
+
+function resolveOptionalConsentVersion(value: unknown): string | undefined {
+  if (value === undefined || value === '') return undefined;
+  if (typeof value !== 'string' || !/^[A-Za-z0-9._-]{1,64}$/u.test(value)) {
+    throw new Error(`Invalid VITE_LIVE_ALERT_CONSENT_VERSION: received ${String(value)}`);
+  }
+  return value;
+}
+
 export function resolveSiteConfig(environment: SiteEnvironment): SiteConfig {
+  const liveAlertConsentText = resolveOptionalConsentText(
+    environment.VITE_LIVE_ALERT_CONSENT_TEXT,
+  );
+  const liveAlertConsentVersion = resolveOptionalConsentVersion(
+    environment.VITE_LIVE_ALERT_CONSENT_VERSION,
+  );
+  if ((liveAlertConsentText === undefined) !== (liveAlertConsentVersion === undefined)) {
+    throw new Error('Invalid VITE_LIVE_ALERT_CONSENT configuration: text and version must be configured together');
+  }
   return {
-    eventStartAt: resolveEventStart(environment.VITE_EVENT_START_AT),
-    phase: resolveSitePhase(environment.VITE_SITE_PHASE),
+    liveAlertConsentText,
+    liveAlertConsentVersion,
     pledgeFormUrl: resolveOptionalGoogleFormUrl(environment.VITE_PLEDGE_FORM_URL),
   };
 }
 
 export const siteConfig = Object.freeze(
   resolveSiteConfig({
-    VITE_EVENT_START_AT: import.meta.env.VITE_EVENT_START_AT,
+    VITE_LIVE_ALERT_CONSENT_TEXT: import.meta.env.VITE_LIVE_ALERT_CONSENT_TEXT,
+    VITE_LIVE_ALERT_CONSENT_VERSION: import.meta.env.VITE_LIVE_ALERT_CONSENT_VERSION,
     VITE_PLEDGE_FORM_URL: import.meta.env.VITE_PLEDGE_FORM_URL,
-    VITE_SITE_PHASE: import.meta.env.VITE_SITE_PHASE,
   }),
 );
