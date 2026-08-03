@@ -34,7 +34,7 @@ describe('App routes', () => {
     expect(
       screen.getByRole('heading', { name: 'bež so mnou. zachráňme Vilyho.' }),
     ).toBeInTheDocument();
-    expect(screen.getAllByText('36').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('84 h').length).toBeGreaterThan(0);
     expect(
       screen.getAllByRole('button', { name: /prisľúbiť podporu — formulár pripravujeme/i })[0],
     ).toBeDisabled();
@@ -103,14 +103,30 @@ describe('App routes', () => {
 
   it('uses source-provided content while keeping genuinely missing inputs explicit', () => {
     const { container } = renderAt('/');
+    const hero = screen.getByRole('region', { name: '347 km sólo pre Zachráňme Vilyho' });
 
+    expect(within(hero).getByRole('img', { name: 'Majo s vlajkou Slovenska po pretekoch' }))
+      .toHaveAttribute('src', '/majo.jpg');
+    expect(within(hero).getByText('Tyršovo nábrežie')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Michal Šula' })).toBeInTheDocument();
     expect(screen.getByText('Majster Slovenska v ultrabehu.')).toBeInTheDocument();
     expect(screen.getByText('„Nie, ale môžeš byť prvý. A bude to trápenie.“')).toBeInTheDocument();
+    expect(container).not.toHaveTextContent('dočasný citát zo zdrojového briefu');
     expect(screen.getByRole('heading', { name: 'IontMax' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Logo IontMax' })).toHaveAttribute(
+      'src',
+      '/iontmax.png',
+    );
+    expect(screen.getByRole('link', { name: 'iontmax.com →' })).toHaveAttribute(
+      'href',
+      'https://www.iontmax.com/',
+    );
     expect(container).not.toHaveTextContent('Shokz');
     expect(container.querySelectorAll('[data-content-status="missing"].content-image').length).toBeGreaterThan(0);
-    expect(screen.getByText('prečítaj celý rozhovor →')).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByRole('link', { name: 'prečítaj celý rozhovor →' })).toHaveAttribute(
+      'href',
+      'https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor',
+    );
   });
 
   it('renders supplied contacts as valid links without adding unavailable routes', () => {

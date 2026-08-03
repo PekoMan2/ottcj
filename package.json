@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/PekoMan2/ottcj/issues"
   },
-  "homepage": "https://github.com/PekoMan2/ottcj#readme"
+  "homepage": "https://github.com/PekoMan2/ottcj#readme",
+  "devDependencies": {
+    "@types/node": "^26.1.2"
+  }
 }

@@ -13,6 +13,12 @@ test('loads the production route lazily and exposes every source point', async (
   await expect(routeMap.getByText('OpenStreetMap', { exact: true })).toBeVisible();
   await expect(routeMap.getByRole('button', { name: 'celá trasa' })).toBeVisible();
 
+  await routeMap.locator('.leaflet-marker-icon[title="18. Brehy"]').hover();
+  const checkpointTooltip = routeMap.locator('.route-map__tooltip');
+  await expect(checkpointTooltip).toBeVisible();
+  await expect(checkpointTooltip).toContainText('18. Brehy');
+  await expect(checkpointTooltip).toContainText(/približne km \d+/u);
+
   const keyPoints = routeMap.getByRole('list', { name: 'Deväť kľúčových bodov trasy' });
   const keyPointsHeading = routeMap.getByRole('heading', { name: 'kľúčové body na trati' });
   await expect(keyPointsHeading).toHaveCSS('font-family', /Prompt/u);

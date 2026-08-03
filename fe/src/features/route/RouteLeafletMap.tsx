@@ -1,7 +1,7 @@
 import 'leaflet/dist/leaflet.css';
 import { divIcon, type Map as LeafletMap } from 'leaflet';
 import { useMemo, useRef } from 'react';
-import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Polyline, Popup, TileLayer, Tooltip } from 'react-leaflet';
 import type { RouteBounds, RouteCheckpoint, RouteCoordinate, RouteData } from './routeTypes';
 
 interface RouteLeafletMapProps {
@@ -39,6 +39,16 @@ function checkpointIcon(checkpoint: RouteCheckpoint) {
     iconSize: [size, size],
     popupAnchor: [0, -size / 2],
   });
+}
+
+function CheckpointDetails({ checkpoint }: { checkpoint: RouteCheckpoint }) {
+  return (
+    <>
+      <strong>{checkpoint.name}</strong>
+      <br />
+      približne km {Math.round(checkpoint.distanceKm).toLocaleString('sk-SK')}
+    </>
+  );
 }
 
 export default function RouteLeafletMap({ route }: RouteLeafletMapProps) {
@@ -86,10 +96,16 @@ export default function RouteLeafletMap({ route }: RouteLeafletMapProps) {
             position={leafletCoordinate(checkpoint.coordinate)}
             title={checkpoint.name}
           >
+            <Tooltip
+              className="route-map__tooltip"
+              direction="top"
+              offset={[0, -10]}
+              opacity={1}
+            >
+              <CheckpointDetails checkpoint={checkpoint} />
+            </Tooltip>
             <Popup>
-              <strong>{checkpoint.name}</strong>
-              <br />
-              približne km {Math.round(checkpoint.distanceKm).toLocaleString('sk-SK')}
+              <CheckpointDetails checkpoint={checkpoint} />
             </Popup>
           </Marker>
         ))}

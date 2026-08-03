@@ -1,6 +1,6 @@
 import { resolveSitePhase } from './sitePhase';
 
-export const provisionalEventStart = '2026-08-13T06:00:00+02:00';
+export const confirmedEventStart = '2026-08-13T06:00:00+02:00';
 
 export interface SiteConfig {
   eventStartAt: string;
@@ -15,7 +15,7 @@ interface SiteEnvironment {
 }
 
 function resolveEventStart(value: unknown): string {
-  const eventStart = value === undefined || value === '' ? provisionalEventStart : value;
+  const eventStart = value === undefined || value === '' ? confirmedEventStart : value;
 
   if (typeof eventStart !== 'string' || Number.isNaN(Date.parse(eventStart))) {
     throw new Error(`Invalid VITE_EVENT_START_AT: received ${String(value)}`);

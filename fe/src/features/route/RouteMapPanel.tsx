@@ -71,7 +71,6 @@ export function RouteMapPanel() {
       ref={boundaryRef}
     >
       <div className="route-map__heading">
-        <p>GPX oficiálnej trasy OTKD</p>
         <h3 id="route-map-title">interaktívna mapa trasy</h3>
         <span>Jasná → Tyršovo nábrežie</span>
       </div>

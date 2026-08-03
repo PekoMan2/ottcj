@@ -82,7 +82,6 @@ export interface StoryContent {
   interview: ContentLink;
   quote: string;
   quoteAttribution: string;
-  quoteStatus: string;
   title: string;
 }
 
@@ -175,19 +174,12 @@ export interface SiteContent {
 const runFacts = [
   { label: 'kilometrov', value: '347' },
   { label: 'časový limit', value: '84 h' },
-  { label: 'odovzdávok', value: '36' },
   { label: 'bežec', value: '1' },
 ] as const;
 
 const missingPhoto = (label: string): MissingContentImage => ({
   label,
   note: 'fotografia, alt text a povolenie čakajú na dodanie',
-  status: 'missing',
-});
-
-const missingPartnerAsset = (label: string): MissingContentImage => ({
-  label,
-  note: 'logo a povolenie na použitie čakajú na dodanie',
   status: 'missing',
 });
 
@@ -262,11 +254,10 @@ export const siteContent = Object.freeze({
     },
     quote: '„Nie, ale môžeš byť prvý. A bude to trápenie.“',
     quoteAttribution: 'Michal Šula',
-    quoteStatus: 'dočasný citát zo zdrojového briefu',
     interview: {
-      status: 'missing',
+      status: 'ready',
+      href: 'https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor',
       label: 'prečítaj celý rozhovor →',
-      note: 'finálny odkaz na Refresher čaká na dodanie',
     },
   },
   team: {
@@ -309,22 +300,28 @@ export const siteContent = Object.freeze({
   partners: {
     eyebrow: 'partneri na dlhej trati',
     title: 'Kto stojí pri projekte.',
-    annotation: 'veľkosť karty zodpovedá partnerstvu, nie abecede',
+    annotation: 'partneri, ktorí podporili beh a projekt Zachráňme Vilyho',
     tiers: [
       {
         id: 'main-partner',
         title: 'hlavný partner',
-        annotation: 'potvrdený v zdrojovom briefe',
+        annotation: '',
         partners: [
           {
             name: 'IontMax',
-            description: 'Hlavný partner behu. Finálne partnerské znenie čaká na schválenie.',
-            statusLabel: 'potvrdený partner',
-            asset: missingPartnerAsset('LOGO IONTMAX'),
+            description: 'Hlavný partner behu.',
+            statusLabel: 'hlavný partner',
+            asset: {
+              alt: 'Logo IontMax',
+              height: 447,
+              src: '/iontmax.png',
+              status: 'ready',
+              width: 447,
+            },
             destination: {
-              status: 'missing',
-              label: 'web partnera',
-              note: 'finálna URL čaká na dodanie',
+              href: 'https://www.iontmax.com/',
+              label: 'iontmax.com →',
+              status: 'ready',
             },
           },
         ],
