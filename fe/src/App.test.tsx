@@ -46,16 +46,16 @@ describe('App routes', () => {
     ).toBeInTheDocument();
     expect(screen.getAllByText('84 h').length).toBeGreaterThan(0);
     expect(
-      screen.getAllByRole('button', { name: /prisľúbiť podporu — formulár pripravujeme/i })[0],
+      screen.getAllByRole('button', { name: /prispej na liečbu — formulár pripravujeme/i })[0],
     ).toBeDisabled();
     expect(container.querySelector('[data-site-phase="pre"]')).not.toBeNull();
-    expect(container.querySelector('[data-pledge-status="ready"]')).toHaveTextContent('0 ľudí prisľúbilo');
+    expect(container.querySelector('[data-pledge-status="ready"]')).toHaveTextContent('0 ľudí prispelo');
   });
 
   it('opens the configured pledge form from every primary CTA', () => {
     renderAt('/', { ...defaultConfig, pledgeFormUrl: 'https://forms.gle/example' });
 
-    const pledgeLinks = screen.getAllByRole('link', { name: /prísľub|prisľúbiť podporu/i });
+    const pledgeLinks = screen.getAllByRole('link', { name: /príspevok|prispej/i });
     expect(pledgeLinks.filter((link) => link.getAttribute('href') === 'https://forms.gle/example')).toHaveLength(4);
   });
 
@@ -124,7 +124,7 @@ describe('App routes', () => {
       'href',
       'https://livetrack.garmin.com/session/example',
     );
-    expect(screen.getAllByRole('link', { name: /prísľub|prisľúbiť podporu/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('link', { name: /príspevok|prispej/i }).length).toBeGreaterThan(0);
   });
 
   it('renders the official post result and removes pledge CTAs', () => {
@@ -147,7 +147,7 @@ describe('App routes', () => {
     expect(screen.getByRole('heading', { name: 'Majo dobehol.' })).toBeInTheDocument();
     expect(screen.getByText('58 h 0 min 0 s')).toBeInTheDocument();
     expect(screen.getByText('2,5×')).toBeInTheDocument();
-    expect(screen.queryByRole('link', { name: /prisľúbiť podporu/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /prispej na liečbu/i })).not.toBeInTheDocument();
   });
 
   it('renders the remaining homepage sections in the specified editorial order', () => {
@@ -223,7 +223,7 @@ describe('App routes', () => {
   });
 
   it.each([
-    ['/prislub-zoznam', 'Zoznam prísľubov.'],
+    ['/prispevky', 'Zoznam príspevkov.'],
     ['/dakujem', 'Ďakujeme, že bežíš s nami.'],
     ['/press', 'Press kit.'],
     ['/vily', 'Zachráňme Vilyho.'],
@@ -240,7 +240,7 @@ describe('App routes', () => {
   });
 
   it('renders consented and anonymous pledges with cent-safe totals', () => {
-    renderAt('/prislub-zoznam', defaultConfig, {
+    renderAt('/prispevky', defaultConfig, {
       updatedAt: '2026-08-02T12:30:00+02:00',
       pledges: [
         { displayName: 'Jana N.', baseAmountEur: 0.01 },
@@ -248,7 +248,7 @@ describe('App routes', () => {
       ],
     });
 
-    const table = screen.getByRole('table', { name: 'Verejné prísľuby pre Zachráňme Vilyho' });
+    const table = screen.getByRole('table', { name: 'Verejné príspevky pre Zachráňme Vilyho' });
     expect(within(table).getByText('Jana N.')).toBeInTheDocument();
     expect(within(table).getByText('Anonym')).toBeInTheDocument();
     expect(within(table).getByText('SPOLU (2 ľudí)')).toBeInTheDocument();

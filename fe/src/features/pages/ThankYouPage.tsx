@@ -33,7 +33,7 @@ export function ThankYouPage() {
   };
 
   return (
-    <PageIntro annotation="ďakujeme za každý bezpečne zverejnený prísľub" eyebrow={content.eyebrow} title={content.title}>
+    <PageIntro annotation="ďakujeme za každý bezpečne zverejnený príspevok" eyebrow={content.eyebrow} title={content.title}>
       <p>{content.body}</p>
       <div className="share-actions">
         {shareFunction ? <button className="sticker-button" onClick={share} type="button"><Share2 aria-hidden="true" /> zdieľať</button> : null}

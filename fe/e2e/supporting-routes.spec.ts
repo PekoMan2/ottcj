@@ -8,7 +8,7 @@ const evidenceDirectory = path.resolve(
 );
 
 const routes = [
-  { heading: 'Zoznam prísľubov.', path: '/prislub-zoznam', slug: 'pledges' },
+  { heading: 'Zoznam príspevkov.', path: '/prispevky', slug: 'pledges' },
   { heading: 'Ďakujeme, že bežíš s nami.', path: '/dakujem', slug: 'thank-you' },
   { heading: 'Press kit.', path: '/press', slug: 'press' },
   { heading: 'Zachráňme Vilyho.', path: '/vily', slug: 'vily' },
@@ -28,9 +28,9 @@ for (const route of routes) {
     );
     expect(overflow).toBeLessThanOrEqual(1);
 
-    if (route.path === '/prislub-zoznam') {
-      await expect(page.getByText('Zatiaľ nie je zverejnený žiadny prísľub.')).toBeVisible();
-      await expect(page.getByRole('heading', { name: 'Podmienky prísľubu.' })).toBeVisible();
+    if (route.path === '/prispevky') {
+      await expect(page.getByText('Zatiaľ nie je zverejnený žiadny príspevok.')).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Podmienky príspevku.' })).toBeVisible();
     }
     if (route.path === '/vily') {
       await expect(page.locator('main')).not.toContainText(/provisional|draft|unverified|čaká na schválenie|pracovný placeholder/iu);

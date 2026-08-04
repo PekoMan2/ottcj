@@ -20,8 +20,8 @@ export function PledgeListPage({ config }: { config: SiteConfig }) {
       <PageIntro
         actions={<PledgeCta href={config.pledgeFormUrl} />}
         annotation="verejné mená iba so súhlasom · ostatní sú Anonym"
-        eyebrow="verejný prísľub"
-        title="Zoznam prísľubov."
+        eyebrow="verejný príspevok"
+        title="Zoznam príspevkov."
       >
         <p>Výsledková listina bezpečných verejných údajov: meno určené na zverejnenie, základná suma a maximálny potenciál.</p>
       </PageIntro>
@@ -30,21 +30,21 @@ export function PledgeListPage({ config }: { config: SiteConfig }) {
         <Container>
           <h2 className="subpage-section__title" id="pledge-results-title">Kto beží s nami.</h2>
           {state.status === 'loading' ? (
-            <div aria-live="polite" className="data-status">Načítavam verejné prísľuby…</div>
+            <div aria-live="polite" className="data-status">Načítavam verejné príspevky…</div>
           ) : null}
           {state.status === 'error' ? (
             <div aria-live="polite" className="data-status data-status--error">{state.message}</div>
           ) : null}
           {state.status === 'ready' && state.data.pledges.length === 0 ? (
             <Card className="empty-pledges" rotation="left">
-              <strong>Zatiaľ nie je zverejnený žiadny prísľub.</strong>
+              <strong>Zatiaľ nie je zverejnený žiadny príspevok.</strong>
               <p>Prvé bezpečné verejné údaje pribudnú po manuálnej kontrole formulára.</p>
             </Card>
           ) : null}
           {state.status === 'ready' && state.data.pledges.length > 0 ? (
             <div className="pledge-table-wrap">
               <table className="pledge-table">
-                <caption>Verejné prísľuby pre Zachráňme Vilyho</caption>
+                <caption>Verejné príspevky pre Zachráňme Vilyho</caption>
                 <thead><tr><th scope="col">Meno</th><th scope="col">Základ</th><th scope="col">Potenciál (2,5×)</th></tr></thead>
                 <tbody>
                   {state.data.pledges.map((pledge, index) => (
@@ -67,8 +67,8 @@ export function PledgeListPage({ config }: { config: SiteConfig }) {
         <Container>
           <Card rotation="right" tone="cream">
             <p className="legal-warning">PRACOVNÝ PLACEHOLDER · VYŽADUJE PRÁVNE SCHVÁLENIE</p>
-            <h2 id="pledge-terms-title">Podmienky prísľubu.</h2>
-            <p>Prísľub používa základnú sumu a násobok podľa výsledného času. DNF alebo čas nad 84 hodín znamená násobok 0×. Finálne znenie, minimálna suma, spôsob splnenia a platobné údaje ešte nie sú právne ani prevádzkovo schválené.</p>
+            <h2 id="pledge-terms-title">Podmienky príspevku.</h2>
+            <p>Príspevok používa základnú sumu a násobok podľa výsledného času. DNF alebo čas nad 84 hodín znamená násobok 0×. Finálne znenie, minimálna suma, spôsob splnenia a platobné údaje ešte nie sú právne ani prevádzkovo schválené.</p>
             <Link className="text-link" to="/gdpr">informácie o ochrane údajov →</Link>
           </Card>
         </Container>

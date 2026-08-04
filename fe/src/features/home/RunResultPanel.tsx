@@ -41,7 +41,7 @@ export function RunResultPanel({ result }: { result: EventResult }) {
             </dd>
           </div>
           <div>
-            <dt>násobok prísľubu</dt>
+            <dt>násobok príspevku</dt>
             <dd>{formatMultiplier(result.multiplier)}</dd>
           </div>
           {result.finalDonationTotalEur !== null ? (

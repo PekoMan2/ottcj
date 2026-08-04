@@ -99,7 +99,7 @@ export default function App({
         <Routes>
           <Route element={<SiteLayout config={config} />}>
             <Route index element={<HomePage config={config} />} />
-            <Route path="prislub-zoznam" element={<PledgeListPage config={config} />} />
+            <Route path="prispevky" element={<PledgeListPage config={config} />} />
             <Route path="dakujem" element={<ThankYouPage />} />
             <Route path="press" element={<PressPage />} />
             <Route path="vily" element={<VilyPage />} />

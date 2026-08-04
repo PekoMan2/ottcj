@@ -1,10 +1,10 @@
 export const supportingContent = Object.freeze({
   thankYou: {
-    eyebrow: 'prísľub odoslaný',
+    eyebrow: 'príspevok odoslaný',
     title: 'Ďakujeme, že bežíš s nami.',
-    body: 'Tvoj prísľub pomáha niesť príbeh Zachráňme Vilyho ďalej. Zdieľaj výzvu s niekým, kto sa chce pridať.',
+    body: 'Tvoj príspevok pomáha niesť príbeh Zachráňme Vilyho ďalej. Zdieľaj výzvu s niekým, kto sa chce pridať.',
     shareTitle: 'Majo · Od Tatier k Dunaju',
-    shareText: '347 km sólo pre Zachráňme Vilyho. Pridaj sa verejným prísľubom.',
+    shareText: '347 km sólo pre Zachráňme Vilyho. Pridaj sa verejným príspevkom.',
   },
   press: {
     eyebrow: 'pre médiá',

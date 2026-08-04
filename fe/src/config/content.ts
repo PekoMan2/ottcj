@@ -192,7 +192,7 @@ export const siteContent = Object.freeze({
       { href: '/#vily', label: 'Vily' },
       { href: '/#tim', label: 'tím' },
       { href: '/#partneri', label: 'partneri' },
-      { href: '/#prislub', label: 'prísľub' },
+      { href: '/#prispevok', label: 'príspevok' },
     ],
     footer: [
       { href: '/#trasa', label: 'trasa' },
@@ -201,15 +201,15 @@ export const siteContent = Object.freeze({
       { href: '/#tim', label: 'tím' },
       { href: '/#partneri', label: 'partneri' },
       { href: '/#kontakt', label: 'kontakt' },
-      { href: '/#prislub', label: 'prísľub' },
-      { href: '/prislub-zoznam', label: 'zoznam prísľubov' },
+      { href: '/#prispevok', label: 'príspevok' },
+      { href: '/prispevky', label: 'zoznam príspevkov' },
       { href: '/press', label: 'press' },
       { href: '/vily', label: 'viac o Vilym' },
       { href: '/gdpr', label: 'GDPR' },
     ],
   },
   charity: {
-    badge: 'verejný prísľub · charitatívny beh',
+    badge: 'verejný príspevok · charitatívny beh',
     headingLead: 'bež so mnou.',
     headingPurpose: 'zachráňme Vilyho.',
     story: {
@@ -394,13 +394,13 @@ export const siteContent = Object.freeze({
   finalPledge: {
     eyebrow: 'už vieš, prečo bežím',
     title: 'Teraz bež so mnou.',
-    body: 'Prisľúb základnú sumu. Výsledný čas rozhodne o násobku a podpora smeruje projektu Zachráňme Vilyho.',
-    annotation: 'jeden formulár · jasné pravidlá · verejný prísľub',
+    body: 'Prispej základnou sumou. Výsledný čas rozhodne o násobku a podpora smeruje projektu Zachráňme Vilyho.',
+    annotation: 'jeden formulár · jasné pravidlá · verejný príspevok',
   },
   footer: {
     brandPrefix: 'uuu',
     brandName: 'MAJO · OTKD',
-    summary: '347 km sólo · verejný prísľub pre Zachráňme Vilyho',
+    summary: '347 km sólo · verejný príspevok pre Zachráňme Vilyho',
     navigationLabel: 'Navigácia v pätičke',
     socialLabel: 'Sociálne siete',
     socialLinks: [

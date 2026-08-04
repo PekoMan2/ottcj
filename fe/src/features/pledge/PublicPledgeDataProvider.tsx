@@ -34,7 +34,7 @@ export function PublicPledgeDataProvider({ children, initialData }: PublicPledge
       .catch((error: unknown) => {
         if (controller.signal.aborted) return;
         const detail = error instanceof Error ? ` ${error.message}` : '';
-        setState({ message: `Verejné prísľuby sa nepodarilo načítať.${detail}`, status: 'error' });
+        setState({ message: `Verejné príspevky sa nepodarilo načítať.${detail}`, status: 'error' });
       });
     return () => controller.abort();
   }, [initialData]);

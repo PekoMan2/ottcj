@@ -12,7 +12,7 @@ export function PledgeCta({ className, compact = false, href }: PledgeCtaProps) 
   ]
     .filter(Boolean)
     .join(' ');
-  const label = compact ? 'prísľub →' : 'prisľúbiť podporu →';
+  const label = compact ? 'prispej →' : 'prispej na liečbu →';
 
   if (href) {
     return (
@@ -29,7 +29,7 @@ export function PledgeCta({ className, compact = false, href }: PledgeCtaProps) 
       disabled
       type="button"
     >
-      {compact ? 'prísľub · čoskoro' : 'formulár pripravujeme'}
+      {compact ? 'príspevok · čoskoro' : 'formulár pripravujeme'}
     </button>
   );
 }
