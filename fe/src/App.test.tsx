@@ -239,6 +239,20 @@ describe('App routes', () => {
     expect(container).not.toHaveTextContent(/provisional|draft|unverified|čaká na schválenie|pracovný placeholder/i);
   });
 
+  it('scrolls to the top after navigating to another page', () => {
+    const scrollTo = vi.fn();
+    vi.stubGlobal('scrollTo', scrollTo);
+
+    renderAt('/');
+    expect(scrollTo).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByRole('link', { name: 'press' }));
+
+    expect(screen.getByRole('heading', { name: 'Press kit.' })).toBeInTheDocument();
+    expect(scrollTo).toHaveBeenCalledWith({ behavior: 'instant', left: 0, top: 0 });
+    vi.unstubAllGlobals();
+  });
+
   it('renders consented and anonymous pledges with cent-safe totals', () => {
     renderAt('/prispevky', defaultConfig, {
       updatedAt: '2026-08-02T12:30:00+02:00',

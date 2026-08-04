@@ -1,39 +1,68 @@
-import { ArrowLeft } from 'lucide-react';
-import { Link, Outlet, Route, Routes } from 'react-router';
-import { Card, Container, HandwrittenAnnotation, Section } from './components/ui';
-import { siteConfig, type SiteConfig } from './config/site';
-import { EventStateProvider } from './features/event/EventStateProvider';
-import type { EventState } from './features/event/eventState';
-import { useEventState } from './features/event/eventStateContext';
-import { CharitySection } from './features/home/CharitySection';
-import { ContactSection } from './features/home/ContactSection';
-import { FinalPledgeSection } from './features/home/FinalPledgeSection';
-import { HeroCollage } from './features/home/HeroCollage';
-import { PartnersSection } from './features/home/PartnersSection';
-import { RunOverview } from './features/home/RunOverview';
-import { SiteHeader } from './features/home/SiteHeader';
-import { SiteFooter } from './features/home/SiteFooter';
-import { StorySection } from './features/home/StorySection';
-import { TeamSection } from './features/home/TeamSection';
-import { RunResultPanel } from './features/home/RunResultPanel';
-import { PublicPledgeDataProvider } from './features/pledge/PublicPledgeDataProvider';
-import type { PublicPledgeData } from './features/pledge/publicPledges';
-import { GdprPage } from './features/pages/GdprPage';
-import { PledgeListPage } from './features/pages/PledgeListPage';
-import { PressPage } from './features/pages/PressPage';
-import { ThankYouPage } from './features/pages/ThankYouPage';
-import { VilyPage } from './features/pages/VilyPage';
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
+import {
+  Link,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useNavigationType,
+} from "react-router";
+import {
+  Card,
+  Container,
+  HandwrittenAnnotation,
+  Section,
+} from "./components/ui";
+import { siteConfig, type SiteConfig } from "./config/site";
+import { EventStateProvider } from "./features/event/EventStateProvider";
+import type { EventState } from "./features/event/eventState";
+import { useEventState } from "./features/event/eventStateContext";
+import { CharitySection } from "./features/home/CharitySection";
+import { ContactSection } from "./features/home/ContactSection";
+import { FinalPledgeSection } from "./features/home/FinalPledgeSection";
+import { HeroCollage } from "./features/home/HeroCollage";
+import { PartnersSection } from "./features/home/PartnersSection";
+import { RunOverview } from "./features/home/RunOverview";
+import { SiteHeader } from "./features/home/SiteHeader";
+import { SiteFooter } from "./features/home/SiteFooter";
+import { StorySection } from "./features/home/StorySection";
+import { TeamSection } from "./features/home/TeamSection";
+import { RunResultPanel } from "./features/home/RunResultPanel";
+import { PublicPledgeDataProvider } from "./features/pledge/PublicPledgeDataProvider";
+import type { PublicPledgeData } from "./features/pledge/publicPledges";
+import { GdprPage } from "./features/pages/GdprPage";
+import { PledgeListPage } from "./features/pages/PledgeListPage";
+import { PressPage } from "./features/pages/PressPage";
+import { ThankYouPage } from "./features/pages/ThankYouPage";
+import { VilyPage } from "./features/pages/VilyPage";
 
 interface SiteLayoutProps {
   config: SiteConfig;
 }
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  const navigationType = useNavigationType();
+
+  useEffect(() => {
+    // POP is back/forward navigation, the browser restores scroll itself
+    if (navigationType === "POP") return;
+    window.scrollTo({ behavior: "instant", left: 0, top: 0 });
+  }, [navigationType, pathname]);
+
+  return null;
+}
+
 function SiteLayout({ config }: SiteLayoutProps) {
   const eventState = useEventState();
-  const phase = eventState.status === 'ready' ? eventState.data.phase : 'unknown';
+  const phase =
+    eventState.status === "ready" ? eventState.data.phase : "unknown";
   return (
     <div className="site-shell" data-site-phase={phase}>
-      <a className="skip-link" href="#main-content">preskočiť na obsah</a>
+      <a className="skip-link" href="#main-content">
+        preskočiť na obsah
+      </a>
       <SiteHeader config={config} />
 
       <main className="site-shell__main" id="main-content">
@@ -47,11 +76,11 @@ function SiteLayout({ config }: SiteLayoutProps) {
 
 function HomePage({ config }: SiteLayoutProps) {
   const eventState = useEventState();
-  const runtimeState = eventState.status === 'ready' ? eventState.data : null;
+  const runtimeState = eventState.status === "ready" ? eventState.data : null;
   return (
     <>
       <HeroCollage config={config} eventState={runtimeState} />
-      {runtimeState?.phase === 'post' && runtimeState.result ? (
+      {runtimeState?.phase === "post" && runtimeState.result ? (
         <RunResultPanel result={runtimeState.result} />
       ) : null}
       <CharitySection config={config} />
@@ -96,10 +125,14 @@ export default function App({
   return (
     <EventStateProvider initialState={initialEventState}>
       <PublicPledgeDataProvider initialData={initialPledgeData}>
+        <ScrollToTop />
         <Routes>
           <Route element={<SiteLayout config={config} />}>
             <Route index element={<HomePage config={config} />} />
-            <Route path="prispevky" element={<PledgeListPage config={config} />} />
+            <Route
+              path="prispevky"
+              element={<PledgeListPage config={config} />}
+            />
             <Route path="dakujem" element={<ThankYouPage />} />
             <Route path="press" element={<PressPage />} />
             <Route path="vily" element={<VilyPage />} />
