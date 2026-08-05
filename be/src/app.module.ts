@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validateEnvironment } from './config/env.validation';
+import { DonioModule } from './donio/donio.module';
 import { EventStateModule } from './event-state/event-state.module';
 import { LiveAlertsModule } from './live-alerts/live-alerts.module';
 
@@ -29,6 +30,7 @@ import { LiveAlertsModule } from './live-alerts/live-alerts.module';
         synchronize: config.getOrThrow<boolean>('DB_SYNCHRONIZE'),
       }),
     }),
+    DonioModule,
     EventStateModule,
     LiveAlertsModule,
   ],

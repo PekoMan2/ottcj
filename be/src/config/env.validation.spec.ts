@@ -20,6 +20,12 @@ describe('validateEnvironment', () => {
     expect(environment.DB_PORT).toBe(5432);
     expect(environment.DB_SYNCHRONIZE).toBe(true);
     expect(environment.EVENT_START_AT).toBe('2026-08-13T06:00:00+02:00');
+    expect(environment.DONIO_CHALLENGE_URL).toBe(
+      'https://donio.sk/zachranme-vilyho/majo-od-tatier-k-dunaju',
+    );
+    expect(environment.DONIO_CAMPAIGN_URL).toBe(
+      'https://donio.sk/zachranme-vilyho',
+    );
     expect(environment.LIVE_ALERTS_ENABLED).toBe(false);
   });
 

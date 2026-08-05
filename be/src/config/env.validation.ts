@@ -17,6 +17,11 @@ const optionalInteger = (minimum: number, maximum: number) =>
     (value) => (value === '' || value === undefined ? undefined : value),
     z.coerce.number().int().min(minimum).max(maximum).optional(),
   );
+const urlWithDefault = (defaultValue: string) =>
+  z.preprocess(
+    (value) => (value === '' || value === undefined ? undefined : value),
+    z.url().default(defaultValue),
+  );
 
 function isBase64Key(value: string): boolean {
   try {
@@ -44,6 +49,10 @@ export const environmentSchema = z
       .string()
       .datetime({ offset: true })
       .default('2026-08-13T06:00:00+02:00'),
+    DONIO_CHALLENGE_URL: urlWithDefault(
+      'https://donio.sk/zachranme-vilyho/majo-od-tatier-k-dunaju',
+    ),
+    DONIO_CAMPAIGN_URL: urlWithDefault('https://donio.sk/zachranme-vilyho'),
     LIVE_ALERTS_ENABLED: z
       .enum(['true', 'false'])
       .default('false')
