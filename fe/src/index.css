@@ -360,7 +360,7 @@ a {
 
 .brand {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.625rem;
   text-decoration: none;
 }
@@ -372,11 +372,10 @@ a {
   line-height: 0.8;
 }
 
-.brand__name {
-  color: var(--color-ember);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+.brand__logo {
+  display: block;
+  width: auto;
+  height: 2.75rem;
 }
 
 .site-nav {
@@ -1415,7 +1414,8 @@ a {
   .site-header__actions > .donate-cta { display: none; }
   .event-status { font-size: 0.65rem; }
   .event-status__label { font-size: 0.8rem; }
-  .brand__uuu { font-size: 2rem; }
+  .brand__uuu { font-size: 1.75rem; }
+  .brand__logo { height: 1.85rem; }
 
   .hero-collage {
     display: grid;

@@ -39,7 +39,13 @@ export function SiteHeader() {
       <Container className="site-header__inner">
         <Link aria-label="Majo · Od Tatier k Dunaju — domov" className="brand" to="/">
           <span className="brand__uuu">uuu</span>
-          <span className="brand__name">MAJO · OTKD</span>
+          <img
+            alt=""
+            className="brand__logo"
+            height={144}
+            src="/otkd-logo.png"
+            width={700}
+          />
         </Link>
 
         <nav aria-label="Hlavná navigácia" className={`site-nav ${menuOpen ? 'site-nav--open' : ''}`} id="site-navigation">
