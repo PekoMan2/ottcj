@@ -190,6 +190,17 @@ describe('App routes', () => {
     ).toBeEnabled();
   });
 
+  it('hides the notify signup once the start time has passed', () => {
+    renderAt('/', { ...preEventState, eventStartAt: '2026-08-01T06:00:00+02:00' });
+
+    expect(
+      screen.queryByRole('button', { name: 'upozorni ma pri štarte' }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Majov Garmin tracking/i }),
+    ).toBeDisabled();
+  });
+
   it('renders the official post result and removes donation CTAs', () => {
     renderAt('/', {
       ...preEventState,

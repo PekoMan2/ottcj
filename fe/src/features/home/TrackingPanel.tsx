@@ -1,15 +1,20 @@
 import { Radio } from 'lucide-react';
 import { siteContent } from '../../config/content';
+import { useCountdown } from '../countdown/useCountdown';
 import type { EventState } from '../event/eventState';
 
 interface TrackingPanelProps {
   eventState: EventState | null;
 }
 
+const epoch = '1970-01-01T00:00:00Z';
+
 export function TrackingPanel({ eventState }: TrackingPanelProps) {
   const { tracking } = siteContent;
+  const countdown = useCountdown(eventState?.eventStartAt ?? epoch);
   const liveTrackUrl =
     eventState?.phase === 'live' ? eventState.liveTrackUrl : null;
+  const beforeStart = eventState?.phase === 'pre' && !countdown.started;
 
   return (
     <aside aria-label="Sledovanie behu naživo" className="tracking-panel">
@@ -48,7 +53,7 @@ export function TrackingPanel({ eventState }: TrackingPanelProps) {
             {tracking.unofficialLabel}
           </button>
         )}
-        {eventState?.phase === 'pre' ? (
+        {beforeStart ? (
           <button
             className="sticker-button sticker-button--dark tracking-panel__notify"
             type="button"
