@@ -17,20 +17,17 @@ export function PartnersSection() {
 
         <ul className="partner-wall">
           {partners.list.map((partner, index) => {
-            const body = (
-              <>
-                {partner.logo ? (
-                  <img
-                    alt={partner.logo.alt}
-                    className="partner-chip__logo"
-                    height={partner.logo.height}
-                    loading="lazy"
-                    src={partner.logo.src}
-                    width={partner.logo.width}
-                  />
-                ) : null}
-                <strong>{partner.name}</strong>
-              </>
+            const body = partner.logo ? (
+              <img
+                alt={partner.logo.alt}
+                className="partner-chip__logo"
+                height={partner.logo.height}
+                loading="lazy"
+                src={partner.logo.src}
+                width={partner.logo.width}
+              />
+            ) : (
+              <strong>{partner.name}</strong>
             );
 
             return (

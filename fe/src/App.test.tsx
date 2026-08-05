@@ -229,12 +229,22 @@ describe('App routes', () => {
     expect(screen.getByText('Michal Šula')).toBeInTheDocument();
     expect(screen.getByText('kto je Vilko?', { exact: false })).toBeInTheDocument();
     expect(screen.getByText(/Vilko má 2 roky/)).toBeInTheDocument();
-    expect(screen.getByText('IontMax')).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: 'Logo IontMax' })).toHaveAttribute(
+    expect(screen.getByRole('img', { name: 'IontMax' })).toHaveAttribute(
       'src',
       '/iontmax.png',
     );
-    expect(screen.getByText('Shokz slúchadlá')).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Shokz slúchadlá' })).toHaveAttribute(
+      'src',
+      '/shokz.png',
+    );
+    expect(screen.getByRole('img', { name: 'Daybyday Nitra' })).toHaveAttribute(
+      'src',
+      '/daybyday.png',
+    );
+    expect(screen.getByRole('img', { name: 'All People Nitra' })).toHaveAttribute(
+      'src',
+      '/allpeople.png',
+    );
     expect(screen.getByText('tu môžeš byť ty')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'prečítaj celý rozhovor →' })).toHaveAttribute(
       'href',

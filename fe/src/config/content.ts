@@ -349,7 +349,7 @@ export const siteContent = Object.freeze({
         name: 'IontMax',
         href: 'https://www.iontmax.com/',
         logo: {
-          alt: 'Logo IontMax',
+          alt: 'IontMax',
           height: 113,
           src: '/iontmax.png',
           status: 'ready',
@@ -358,8 +358,9 @@ export const siteContent = Object.freeze({
       },
       {
         name: 'Shokz slúchadlá',
+        href: 'https://shokz.com/',
         logo: {
-          alt: 'Logo Shokz',
+          alt: 'Shokz slúchadlá',
           height: 156,
           src: '/shokz.png',
           status: 'ready',
@@ -369,7 +370,7 @@ export const siteContent = Object.freeze({
       {
         name: 'Daybyday Nitra',
         logo: {
-          alt: 'Logo Day by Day',
+          alt: 'Daybyday Nitra',
           height: 104,
           src: '/daybyday.png',
           status: 'ready',
@@ -378,8 +379,9 @@ export const siteContent = Object.freeze({
       },
       {
         name: 'All People Nitra',
+        href: 'https://www.instagram.com/allpeoplenitra/',
         logo: {
-          alt: 'Logo All People',
+          alt: 'All People Nitra',
           height: 198,
           src: '/allpeople.png',
           status: 'ready',
