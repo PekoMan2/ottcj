@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+﻿@import 'tailwindcss';
 
 @theme {
   --color-paper: #fdfcf9;
@@ -825,7 +825,7 @@ a {
 .hero-stat--3 { transform: rotate(-0.4deg); }
 .hero-stat--4 { transform: rotate(1deg); }
 
-.live-alert-signup {
+.tracking-panel {
   position: relative;
   z-index: 12;
   display: grid;
@@ -839,50 +839,25 @@ a {
   transform: rotate(0.25deg);
 }
 
-.live-alert-signup--pending,
-.live-alert-signup--closed {
-  grid-template-columns: auto minmax(0, 1fr);
+.tracking-panel__heading {
+  display: flex;
   align-items: center;
+  gap: var(--space-2);
 }
 
-.live-alert-signup--error {
-  border-left: 0.5rem solid var(--color-ember);
-  color: var(--color-ash);
-  font-weight: 700;
-}
-
-.live-alert-signup > svg,
-.live-alert-signup__heading > svg {
+.tracking-panel__heading > svg {
   width: 2.25rem;
   height: 2.25rem;
   color: var(--color-ember);
   stroke-width: 2.5;
 }
 
-.live-alert-signup h2,
-.live-alert-signup p {
+.tracking-panel__heading p,
+.tracking-panel__heading h2 {
   margin: 0;
 }
 
-.live-alert-signup h2 {
-  font-size: clamp(1.35rem, 3vw, 2rem);
-  line-height: 1;
-}
-
-.live-alert-signup--pending p,
-.live-alert-signup--closed p {
-  margin-top: 0.35rem;
-  color: var(--color-ash);
-  font-size: 0.875rem;
-}
-
-.live-alert-signup__heading {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.live-alert-signup__heading p {
+.tracking-panel__heading p {
   color: var(--color-ember);
   font-family: var(--font-handwritten);
   font-size: 1.15rem;
@@ -890,78 +865,29 @@ a {
   font-weight: 700;
 }
 
-.live-alert-signup form {
-  display: grid;
+.tracking-panel__heading h2 {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1;
+}
+
+.tracking-panel__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-2);
 }
 
-.live-alert-signup__fields {
-  display: grid;
-  gap: var(--space-2);
+.tracking-panel__notify {
+  margin-left: auto;
 }
 
-.live-alert-signup__fields label {
-  display: grid;
-  gap: 0.3rem;
-  color: var(--color-ink);
-  font-size: 0.8rem;
-  font-weight: 800;
-}
-
-.live-alert-signup__fields input {
-  width: 100%;
-  min-height: 2.75rem;
-  border: var(--border-ink);
-  border-radius: 0;
-  background: var(--color-paper);
-  color: var(--color-ink);
-  font-family: var(--font-stats);
-  font-size: 0.9rem;
+.tracking-panel__note {
+  margin: 0;
+  color: var(--color-ash);
+  font-family: var(--font-handwritten);
+  font-size: 1.1rem;
   font-style: normal;
-  padding: 0.65rem 0.75rem;
-}
-
-.live-alert-signup__fields small,
-.live-alert-signup__privacy {
-  color: var(--color-ash);
-  font-size: 0.7rem;
-  font-weight: 600;
-}
-
-.live-alert-signup__consent {
-  display: grid;
-  align-items: start;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.65rem;
-  font-size: 0.82rem;
-  line-height: 1.45;
-}
-
-.live-alert-signup__consent input {
-  width: 1.2rem;
-  height: 1.2rem;
-  margin: 0.1rem 0 0;
-  accent-color: var(--color-ember);
-}
-
-.live-alert-signup__privacy a {
-  font-weight: 800;
-  text-underline-offset: 0.2rem;
-}
-
-.live-alert-signup .sticker-button {
-  justify-self: start;
-}
-
-.live-alert-signup__feedback {
-  min-height: 1.5rem;
-  color: var(--color-ash);
-  font-size: 0.8rem;
   font-weight: 700;
-}
-
-.live-alert-signup__feedback--error {
-  color: #9b3010;
 }
 
 .run-result-panel {
@@ -1375,7 +1301,6 @@ a {
 
 @media (min-width: 48rem) {
   .charity-section { padding-block: var(--space-10); }
-  .live-alert-signup__fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .join-run-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .run-result-panel__inner { grid-template-columns: auto minmax(0, 1fr); }
   .run-result-panel dl {
@@ -1576,6 +1501,10 @@ a {
   .hero-stat { padding: 0.75rem; }
   .hero-stat .stat__value { font-size: 1.8rem; }
 
+  .tracking-panel__buttons { align-items: stretch; flex-direction: column; }
+  .tracking-panel__buttons .sticker-button { width: 100%; }
+  .tracking-panel__notify { margin-left: 0; }
+
   .charity-section { padding-block: var(--space-6); }
   .charity-title { font-size: clamp(2.65rem, 13vw, 4rem); }
   .vily-card { padding: 2rem 1rem 1rem; }
@@ -1586,7 +1515,7 @@ a {
   .bet-box { padding: 1rem; }
 }
 
-/* Milestone 3 — editorial homepage sections */
+/* Milestone 3 â€” editorial homepage sections */
 
 .run-overview,
 .join-run-section,

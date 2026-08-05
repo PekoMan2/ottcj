@@ -6,12 +6,20 @@ interface EventStatusProps {
   state: EventStateLoadState;
 }
 
-function CountdownStatus({ eventStartAt }: { eventStartAt: string }) {
+function CountdownStatus({
+  eventStartAt,
+  status,
+}: {
+  eventStartAt: string;
+  status: 'live' | 'pre';
+}) {
   const countdown = useCountdown(eventStartAt);
 
   return (
-    <div className="event-status" data-event-status="pre">
-      <span className="event-status__label">do štartu:</span>
+    <div className="event-status" data-event-status={status}>
+      <span className="event-status__label">
+        {countdown.started ? 'Majo behá už:' : 'do štartu:'}
+      </span>
       <time dateTime={eventStartAt}>{formatCountdown(countdown)}</time>
     </div>
   );
@@ -27,15 +35,6 @@ export function EventStatus({ state }: EventStatusProps) {
     );
   }
 
-  if (state.data.phase === 'live') {
-    return (
-      <div className="event-status" data-event-status="live">
-        <span className="event-status__label">stav behu:</span>
-        <strong>práve beží</strong>
-      </div>
-    );
-  }
-
   if (state.data.phase === 'post') {
     return (
       <div className="event-status" data-event-status="post">
@@ -45,5 +44,10 @@ export function EventStatus({ state }: EventStatusProps) {
     );
   }
 
-  return <CountdownStatus eventStartAt={state.data.eventStartAt} />;
+  return (
+    <CountdownStatus
+      eventStartAt={state.data.eventStartAt}
+      status={state.data.phase}
+    />
+  );
 }

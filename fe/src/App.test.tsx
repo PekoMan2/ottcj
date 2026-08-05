@@ -2,11 +2,9 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import App from './App';
-import type { SiteConfig } from './config/site';
 import type { DonioCampaign } from './features/donio/donioCampaign';
 import type { EventState } from './features/event/eventState';
 
-const defaultConfig: SiteConfig = {};
 const preEventState: EventState = {
   eventStartAt: '2026-08-13T06:00:00+02:00',
   liveTrackUrl: null,
@@ -27,14 +25,12 @@ const donioUrl = 'https://donio.sk/zachranme-vilyho/majo-od-tatier-k-dunaju';
 
 function renderAt(
   path: string,
-  config: SiteConfig = defaultConfig,
   initialEventState: EventState = preEventState,
   initialDonioCampaign: DonioCampaign = emptyCampaign,
 ) {
   return render(
     <MemoryRouter initialEntries={[path]}>
       <App
-        config={config}
         initialDonioCampaign={initialDonioCampaign}
         initialEventState={initialEventState}
       />
@@ -78,7 +74,7 @@ describe('App routes', () => {
   });
 
   it('shows live campaign and challenge numbers from Donio', () => {
-    renderAt('/', defaultConfig, preEventState, {
+    renderAt('/', preEventState, {
       campaignCollectedEur: 2_013_292.68,
       campaignDonorCount: 65_422,
       campaignTargetEur: 3_963_500,
@@ -120,13 +116,13 @@ describe('App routes', () => {
   it.each([
     [
       {
-        eventStartAt: preEventState.eventStartAt,
+        eventStartAt: '2026-08-01T06:00:00+02:00',
         liveTrackUrl: null,
         phase: 'live',
         result: null,
         updatedAt: null,
       } satisfies EventState,
-      'práve beží',
+      'Majo behá už:',
     ],
     [
       {
@@ -145,7 +141,7 @@ describe('App routes', () => {
       'fáza behu sa skončila',
     ],
   ] as const)('renders honest %s phase status', (runtimeState, status) => {
-    const { container } = renderAt('/', defaultConfig, runtimeState);
+    const { container } = renderAt('/', runtimeState);
 
     expect(screen.getByText(status)).toBeInTheDocument();
     expect(
@@ -155,7 +151,7 @@ describe('App routes', () => {
   });
 
   it('links directly to Garmin while live and keeps the donation available', () => {
-    renderAt('/', defaultConfig, {
+    renderAt('/', {
       ...preEventState,
       liveTrackUrl: 'https://livetrack.garmin.com/session/example',
       phase: 'live',
@@ -168,11 +164,34 @@ describe('App routes', () => {
       'href',
       'https://livetrack.garmin.com/session/example',
     );
+    expect(
+      screen.getByRole('link', { name: /Majov Garmin tracking/i }),
+    ).toHaveAttribute('href', 'https://livetrack.garmin.com/session/example');
+    expect(
+      screen.queryByRole('button', { name: 'upozorni ma pri štarte' }),
+    ).not.toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: /prispej/i }).length).toBeGreaterThan(0);
   });
 
+  it('offers official tracking, a disabled Garmin button, and notify signup before the start', () => {
+    renderAt('/');
+
+    expect(
+      screen.getByRole('link', { name: 'oficiálny Live-track OTKD sólo bežcov →' }),
+    ).toHaveAttribute(
+      'href',
+      'https://sunbell.tracktherace.com/sk/sportove-udalosti/beh-v-prirode/od-tatier-k-dunaju-2026-solo/pretek',
+    );
+    expect(
+      screen.getByRole('button', { name: /Majov Garmin tracking/i }),
+    ).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'upozorni ma pri štarte' }),
+    ).toBeEnabled();
+  });
+
   it('renders the official post result and removes donation CTAs', () => {
-    renderAt('/', defaultConfig, {
+    renderAt('/', {
       ...preEventState,
       phase: 'post',
       result: {

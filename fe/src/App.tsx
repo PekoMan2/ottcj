@@ -14,7 +14,6 @@ import {
   HandwrittenAnnotation,
   Section,
 } from "./components/ui";
-import { siteConfig, type SiteConfig } from "./config/site";
 import type { DonioCampaign } from "./features/donio/donioCampaign";
 import { DonioCampaignProvider } from "./features/donio/DonioCampaignProvider";
 import { EventStateProvider } from "./features/event/EventStateProvider";
@@ -69,12 +68,12 @@ function SiteLayout() {
   );
 }
 
-function HomePage({ config }: { config: SiteConfig }) {
+function HomePage() {
   const eventState = useEventState();
   const runtimeState = eventState.status === "ready" ? eventState.data : null;
   return (
     <>
-      <HeroCollage config={config} eventState={runtimeState} />
+      <HeroCollage eventState={runtimeState} />
       {runtimeState?.phase === "post" && runtimeState.result ? (
         <RunResultPanel result={runtimeState.result} />
       ) : null}
@@ -108,13 +107,11 @@ function NotFoundPage() {
 }
 
 interface AppProps {
-  config?: SiteConfig;
   initialDonioCampaign?: DonioCampaign;
   initialEventState?: EventState;
 }
 
 export default function App({
-  config = siteConfig,
   initialDonioCampaign,
   initialEventState,
 }: AppProps) {
@@ -124,7 +121,7 @@ export default function App({
         <ScrollToTop />
         <Routes>
           <Route element={<SiteLayout />}>
-            <Route index element={<HomePage config={config} />} />
+            <Route index element={<HomePage />} />
             <Route path="press" element={<PressPage />} />
             <Route path="vily" element={<VilyPage />} />
             <Route path="gdpr" element={<GdprPage />} />

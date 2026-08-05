@@ -158,6 +158,17 @@ export interface ContactContent {
   title: string;
 }
 
+export interface TrackingContent {
+  eyebrow: string;
+  notifyLabel: string;
+  officialHref: string;
+  officialLabel: string;
+  pendingNote: string;
+  runningNote: string;
+  title: string;
+  unofficialLabel: string;
+}
+
 export interface FinalCtaContent {
   annotation: string;
   body: string;
@@ -190,6 +201,7 @@ export interface SiteContent {
   runOverview: RunOverviewContent;
   story: StoryContent;
   team: TeamContent;
+  tracking: TrackingContent;
 }
 
 const runFacts = [
@@ -426,6 +438,17 @@ export const siteContent = Object.freeze({
         href: "https://www.youtube.com/@uuultra.behyyy",
       },
     ],
+  },
+  tracking: {
+    eyebrow: "sleduj ma naživo",
+    title: "Kde práve som?",
+    officialLabel: "oficiálny Live-track OTKD sólo bežcov →",
+    officialHref:
+      "https://sunbell.tracktherace.com/sk/sportove-udalosti/beh-v-prirode/od-tatier-k-dunaju-2026-solo/pretek",
+    unofficialLabel: "Majov Garmin tracking (záložný)",
+    notifyLabel: "upozorni ma pri štarte",
+    pendingNote: "Garmin odkaz pridáme hneď po štarte.",
+    runningNote: "Garmin beží priamo z Majových hodiniek.",
   },
   finalCta: {
     eyebrow: "už vieš, prečo bežím",

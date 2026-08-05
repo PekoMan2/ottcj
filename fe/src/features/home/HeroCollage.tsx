@@ -1,19 +1,17 @@
 import { ExternalLink } from 'lucide-react';
 import { Container, Stat } from '../../components/ui';
 import { siteContent } from '../../config/content';
-import type { SiteConfig } from '../../config/site';
 import { DonioCta } from '../donio/DonioCta';
 import type { EventState } from '../event/eventState';
-import { LiveAlertSignup } from '../live-alerts/LiveAlertSignup';
 import {
   AmbulanceDoodle,
   ArrowDoodle,
   MountainsDoodle,
   SunDoodle,
 } from './Doodles';
+import { TrackingPanel } from './TrackingPanel';
 
 interface HeroCollageProps {
-  config: SiteConfig;
   eventState: EventState | null;
 }
 
@@ -93,7 +91,7 @@ function TitleWordArt() {
   );
 }
 
-export function HeroCollage({ config, eventState }: HeroCollageProps) {
+export function HeroCollage({ eventState }: HeroCollageProps) {
   const isLive = eventState?.phase === 'live';
   const isPost = eventState?.phase === 'post';
 
@@ -152,11 +150,8 @@ export function HeroCollage({ config, eventState }: HeroCollageProps) {
             </div>
           ))}
         </div>
-        {eventState?.phase === 'pre' ? (
-          <LiveAlertSignup
-            consentText={config.liveAlertConsentText}
-            consentVersion={config.liveAlertConsentVersion}
-          />
+        {eventState?.phase !== 'post' ? (
+          <TrackingPanel eventState={eventState} />
         ) : null}
       </Container>
     </section>
