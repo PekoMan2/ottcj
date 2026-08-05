@@ -369,6 +369,7 @@ export const siteContent = Object.freeze({
       },
       {
         name: 'Daybyday Nitra',
+        href: 'https://daybday.store/',
         logo: {
           alt: 'Daybyday Nitra',
           height: 104,
