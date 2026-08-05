@@ -173,29 +173,32 @@ describe('App routes', () => {
     expect(screen.getAllByRole('link', { name: /prispej/i }).length).toBeGreaterThan(0);
   });
 
-  it('offers official tracking, a disabled Garmin button, and notify signup before the start', () => {
+  it('offers the notify card before the start instead of tracking links', () => {
     renderAt('/');
 
+    expect(
+      screen.getByRole('heading', { name: 'upozorni ma, keď Majo vybehne' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'upozorni ma pri štarte' }),
+    ).toBeEnabled();
+    expect(
+      screen.queryByRole('link', { name: /oficiálny Live-track/i }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('switches to tracking links once the start time has passed', () => {
+    renderAt('/', { ...preEventState, eventStartAt: '2026-08-01T06:00:00+02:00' });
+
+    expect(
+      screen.queryByRole('button', { name: 'upozorni ma pri štarte' }),
+    ).not.toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: 'oficiálny Live-track OTKD sólo bežcov →' }),
     ).toHaveAttribute(
       'href',
       'https://sunbell.tracktherace.com/sk/sportove-udalosti/beh-v-prirode/od-tatier-k-dunaju-2026-solo/pretek',
     );
-    expect(
-      screen.getByRole('button', { name: /Majov Garmin tracking/i }),
-    ).toBeDisabled();
-    expect(
-      screen.getByRole('button', { name: 'upozorni ma pri štarte' }),
-    ).toBeEnabled();
-  });
-
-  it('hides the notify signup once the start time has passed', () => {
-    renderAt('/', { ...preEventState, eventStartAt: '2026-08-01T06:00:00+02:00' });
-
-    expect(
-      screen.queryByRole('button', { name: 'upozorni ma pri štarte' }),
-    ).not.toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /Majov Garmin tracking/i }),
     ).toBeDisabled();

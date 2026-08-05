@@ -877,8 +877,11 @@ a {
   gap: var(--space-2);
 }
 
-.tracking-panel__notify {
-  margin-left: auto;
+.tracking-panel__body {
+  max-width: 42rem;
+  margin: 0;
+  font-size: 0.975rem;
+  font-weight: 600;
 }
 
 .tracking-panel__note {
@@ -1503,7 +1506,6 @@ a {
 
   .tracking-panel__buttons { align-items: stretch; flex-direction: column; }
   .tracking-panel__buttons .sticker-button { width: 100%; }
-  .tracking-panel__notify { margin-left: 0; }
 
   .charity-section { padding-block: var(--space-6); }
   .charity-title { font-size: clamp(2.65rem, 13vw, 4rem); }
