@@ -229,23 +229,23 @@ describe('App routes', () => {
     expect(screen.getByText('Michal Šula')).toBeInTheDocument();
     expect(screen.getByText('kto je Vilko?', { exact: false })).toBeInTheDocument();
     expect(screen.getByText(/Vilko má 2 roky/)).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: 'IontMax' })).toHaveAttribute(
+    expect(screen.getAllByRole('img', { name: 'IontMax' })[0]).toHaveAttribute(
       'src',
       '/iontmax.png',
     );
-    expect(screen.getByRole('img', { name: 'Shokz slúchadlá' })).toHaveAttribute(
+    expect(screen.getAllByRole('img', { name: 'Shokz slúchadlá' })[0]).toHaveAttribute(
       'src',
       '/shokz.png',
     );
-    expect(screen.getByRole('img', { name: 'Daybyday Nitra' })).toHaveAttribute(
+    expect(screen.getAllByRole('img', { name: 'Daybyday Nitra' })[0]).toHaveAttribute(
       'src',
       '/daybyday.png',
     );
-    expect(screen.getByRole('img', { name: 'All People Nitra' })).toHaveAttribute(
+    expect(screen.getAllByRole('img', { name: 'All People Nitra' })[0]).toHaveAttribute(
       'src',
       '/allpeople.png',
     );
-    expect(screen.getByText('tu môžeš byť ty')).toBeInTheDocument();
+    expect(screen.getByText(/tu môžeš byť ty/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'prečítaj celý rozhovor →' })).toHaveAttribute(
       'href',
       'https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor',
@@ -283,6 +283,7 @@ describe('App routes', () => {
     expect(within(footer).queryByRole('link', { name: 'tím' })).not.toBeInTheDocument();
     expect(within(footer).queryByRole('link', { name: /príspevk/ })).not.toBeInTheDocument();
     expect(within(footer).getByText('347 km sólo – zbierka pre Vilyho')).toBeInTheDocument();
+    expect(within(footer).getAllByRole('img')).toHaveLength(4);
   });
 
   it.each([

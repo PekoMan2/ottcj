@@ -32,6 +32,28 @@ export function SiteFooter() {
             <ContentLinkView key={link.label} link={link} />
           ))}
         </div>
+
+        <div aria-label="Partneri behu" className="site-footer__partners" role="group">
+          {siteContent.partners.list.map((partner) => {
+            if (!partner.logo) return null;
+            const logo = (
+              <img
+                alt={partner.logo.alt}
+                height={partner.logo.height}
+                loading="lazy"
+                src={partner.logo.src}
+                width={partner.logo.width}
+              />
+            );
+            return partner.href ? (
+              <a href={partner.href} key={partner.name} rel="noreferrer" target="_blank">
+                {logo}
+              </a>
+            ) : (
+              <span key={partner.name}>{logo}</span>
+            );
+          })}
+        </div>
       </Container>
     </footer>
   );

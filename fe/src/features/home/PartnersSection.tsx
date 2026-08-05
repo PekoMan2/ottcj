@@ -1,26 +1,20 @@
-import { Handshake } from 'lucide-react';
-import { Container, Section, SectionHeading } from '../../components/ui';
+import { Container } from '../../components/ui';
 import { siteContent } from '../../config/content';
 
 export function PartnersSection() {
   const { partners } = siteContent;
 
   return (
-    <Section aria-labelledby="partners-title" className="partners-section" id="partneri">
+    <section aria-labelledby="partners-title" className="partners-section" id="partneri">
       <Container>
-        <SectionHeading
-          annotation={partners.annotation}
-          eyebrow={partners.eyebrow}
-          id="partners-title"
-          title={partners.title}
-        />
-
-        <ul className="partner-wall">
-          {partners.list.map((partner, index) => {
+        <h2 className="partners-section__title" id="partners-title">
+          {partners.title} <span aria-hidden="true">↓</span>
+        </h2>
+        <ul className="partner-strip">
+          {partners.list.map((partner) => {
             const body = partner.logo ? (
               <img
                 alt={partner.logo.alt}
-                className="partner-chip__logo"
                 height={partner.logo.height}
                 loading="lazy"
                 src={partner.logo.src}
@@ -31,7 +25,7 @@ export function PartnersSection() {
             );
 
             return (
-              <li className={`partner-chip partner-chip--${(index % 4) + 1}`} key={partner.name}>
+              <li key={partner.name}>
                 {partner.href ? (
                   <a href={partner.href} rel="noreferrer" target="_blank">
                     {body}
@@ -42,14 +36,12 @@ export function PartnersSection() {
               </li>
             );
           })}
-          <li className="partner-chip partner-chip--open">
-            <Handshake aria-hidden="true" />
-            <strong>{partners.openSlot.title}</strong>
-            <p>{partners.openSlot.body}</p>
-            <a href={`mailto:${partners.openSlot.email}`}>{partners.openSlot.email}</a>
-          </li>
         </ul>
+        <p className="partners-section__open">
+          {partners.openSlot.title} →{' '}
+          <a href={`mailto:${partners.openSlot.email}`}>{partners.openSlot.email}</a>
+        </p>
       </Container>
-    </Section>
+    </section>
   );
 }

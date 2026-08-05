@@ -10,8 +10,8 @@ test('renders the complete editorial homepage without overflow', async ({ page }
   }
 
   await expect(page.getByText('Michal Šula')).toBeVisible();
-  await expect(page.getByAltText('IontMax')).toBeVisible();
-  await expect(page.getByAltText('Shokz slúchadlá')).toBeVisible();
+  await expect(page.locator('#partneri').getByAltText('IontMax')).toBeVisible();
+  await expect(page.locator('#partneri').getByAltText('Shokz slúchadlá')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'interaktívna mapa trasy' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Pridaj sa ku mne počas behu.' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Neboj sa, nekúšem.' })).toBeVisible();

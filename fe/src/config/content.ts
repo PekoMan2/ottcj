@@ -135,11 +135,8 @@ export interface PartnerItem {
 }
 
 export interface PartnersContent {
-  annotation: string;
-  eyebrow: string;
   list: readonly PartnerItem[];
   openSlot: {
-    body: string;
     email: string;
     title: string;
   };
@@ -341,9 +338,7 @@ export const siteContent = Object.freeze({
     ],
   },
   partners: {
-    eyebrow: 'bez nich by to nešlo',
     title: 'Partneri.',
-    annotation: 'podporili beh a projekt Zachráňme Vilyho',
     list: [
       {
         name: 'IontMax',
@@ -392,7 +387,6 @@ export const siteContent = Object.freeze({
     ],
     openSlot: {
       title: 'tu môžeš byť ty',
-      body: 'Hľadám ďalších partnerov behu. Ozvi sa a pobežíme spolu.',
       email: 'majocrnkovic@gmail.com',
     },
   },
