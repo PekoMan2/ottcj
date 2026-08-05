@@ -2,6 +2,7 @@ import { ExternalLink } from 'lucide-react';
 import { Container, Stat } from '../../components/ui';
 import { siteContent } from '../../config/content';
 import type { SiteConfig } from '../../config/site';
+import { DonioCta } from '../donio/DonioCta';
 import type { EventState } from '../event/eventState';
 import { LiveAlertSignup } from '../live-alerts/LiveAlertSignup';
 import {
@@ -10,7 +11,6 @@ import {
   MountainsDoodle,
   SunDoodle,
 } from './Doodles';
-import { PledgeCta } from './PledgeCta';
 
 interface HeroCollageProps {
   config: SiteConfig;
@@ -52,9 +52,9 @@ function HeroMapArtwork() {
         aria-hidden="true"
         className="hero-map-artwork__image"
         draggable="false"
-        height="835"
-        src="/mapaweb.png"
-        width="938"
+        height="488"
+        src="/mapatrans.png"
+        width="548"
       />
       <svg
         aria-hidden="true"
@@ -135,7 +135,7 @@ export function HeroCollage({ config, eventState }: HeroCollageProps) {
           {isLive && !eventState.liveTrackUrl ? (
             <span className="live-track-pending">LiveTrack odkaz sa pripravuje</span>
           ) : null}
-          {!isPost ? <PledgeCta href={config.pledgeFormUrl} /> : null}
+          {!isPost ? <DonioCta /> : null}
         </div>
 
         <TitleWordArt />

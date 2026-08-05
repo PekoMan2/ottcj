@@ -13,7 +13,7 @@ export function PressPage() {
           <div className="asset-grid">
             {content.assets.map((asset) => <Card className="missing-asset" data-content-status="missing" key={asset.label} rotation="left"><strong>{asset.label}</strong><span>{asset.note}</span></Card>)}
           </div>
-          <Card className="media-contact" rotation="right" tone="ink"><p>Kontakt pre médiá</p><a href="mailto:media@majootkd.sk">media@majootkd.sk</a></Card>
+          <Card className="media-contact" rotation="right" tone="ink"><p>Kontakt pre médiá</p><a href={`mailto:${content.contactEmail}`}>{content.contactEmail}</a></Card>
         </Container>
       </Section>
     </>

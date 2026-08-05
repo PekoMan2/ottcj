@@ -5,14 +5,19 @@ test('renders the complete editorial homepage without overflow', async ({ page }
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
 
-  for (const id of ['trasa', 'pribeh', 'tim', 'partneri', 'kontakt']) {
+  for (const id of ['vily', 'trasa', 'pridaj-sa', 'pribeh', 'tim', 'partneri', 'kontakt']) {
     await expect(page.locator(`#${id}`)).toBeVisible();
   }
 
-  await expect(page.getByRole('heading', { name: 'Michal Šula' })).toBeVisible();
-  await expect(page.getByRole('heading', { exact: true, name: 'IontMax' })).toBeVisible();
-  await expect(page.getByText('Shokz')).toHaveCount(0);
+  await expect(page.getByText('Michal Šula')).toBeVisible();
+  await expect(page.getByText('IontMax', { exact: true })).toBeVisible();
+  await expect(page.getByText('Shokz slúchadlá')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'interaktívna mapa trasy' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Pridaj sa ku mne počas behu.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Neboj sa, nekúšem.' })).toBeVisible();
+  await expect(
+    page.getByRole('complementary', { name: 'Stav zbierky Zachráňme Vilyho' }),
+  ).toBeVisible();
 
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,

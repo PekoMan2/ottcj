@@ -66,7 +66,7 @@ export function LiveAlertSignup({
       <aside className="live-alert-signup live-alert-signup--pending" data-content-status="missing">
         <BellRing aria-hidden="true" />
         <div>
-          <h2>upozorni ma pri štarte</h2>
+          <h2>upozorni ma, keď Majo vybehne</h2>
           <p>Registráciu spustíme po schválení súhlasu a úspešnom Garmin teste.</p>
         </div>
       </aside>
@@ -97,7 +97,7 @@ export function LiveAlertSignup({
       <aside className="live-alert-signup live-alert-signup--closed">
         <BellRing aria-hidden="true" />
         <div>
-          <h2>upozorni ma pri štarte</h2>
+          <h2>upozorni ma, keď Majo vybehne</h2>
           <p>Registrácia momentálne nie je dostupná alebo je overená Garmin kapacita naplnená.</p>
         </div>
       </aside>
@@ -167,7 +167,7 @@ export function LiveAlertSignup({
         <BellRing aria-hidden="true" />
         <div>
           <p>Garmin LiveTrack</p>
-          <h2>upozorni ma, keď Majo vyštartuje</h2>
+          <h2>upozorni ma, keď Majo vybehne a pošli mi link na jeho polohu</h2>
         </div>
       </div>
       <form onSubmit={submit}>

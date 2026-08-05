@@ -1,18 +1,13 @@
 import { Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
-import type { SiteConfig } from '../../config/site';
 import { Container } from '../../components/ui';
 import { siteContent } from '../../config/content';
+import { DonioCta } from '../donio/DonioCta';
 import { useEventState } from '../event/eventStateContext';
 import { EventStatus } from './EventStatus';
-import { PledgeCta } from './PledgeCta';
 
-interface SiteHeaderProps {
-  config: SiteConfig;
-}
-
-export function SiteHeader({ config }: SiteHeaderProps) {
+export function SiteHeader() {
   const eventState = useEventState();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -58,7 +53,7 @@ export function SiteHeader({ config }: SiteHeaderProps) {
         <div className="site-header__actions">
           <EventStatus state={eventState} />
           {eventState.status !== 'ready' || eventState.data.phase !== 'post' ? (
-            <PledgeCta compact href={config.pledgeFormUrl} />
+            <DonioCta size="compact" />
           ) : null}
           <button
             aria-controls="site-navigation"

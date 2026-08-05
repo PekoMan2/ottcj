@@ -15,13 +15,16 @@ import {
   Section,
 } from "./components/ui";
 import { siteConfig, type SiteConfig } from "./config/site";
+import type { DonioCampaign } from "./features/donio/donioCampaign";
+import { DonioCampaignProvider } from "./features/donio/DonioCampaignProvider";
 import { EventStateProvider } from "./features/event/EventStateProvider";
 import type { EventState } from "./features/event/eventState";
 import { useEventState } from "./features/event/eventStateContext";
 import { CharitySection } from "./features/home/CharitySection";
 import { ContactSection } from "./features/home/ContactSection";
-import { FinalPledgeSection } from "./features/home/FinalPledgeSection";
+import { FinalCtaSection } from "./features/home/FinalCtaSection";
 import { HeroCollage } from "./features/home/HeroCollage";
+import { JoinRunSection } from "./features/home/JoinRunSection";
 import { PartnersSection } from "./features/home/PartnersSection";
 import { RunOverview } from "./features/home/RunOverview";
 import { SiteHeader } from "./features/home/SiteHeader";
@@ -29,17 +32,9 @@ import { SiteFooter } from "./features/home/SiteFooter";
 import { StorySection } from "./features/home/StorySection";
 import { TeamSection } from "./features/home/TeamSection";
 import { RunResultPanel } from "./features/home/RunResultPanel";
-import { PublicPledgeDataProvider } from "./features/pledge/PublicPledgeDataProvider";
-import type { PublicPledgeData } from "./features/pledge/publicPledges";
 import { GdprPage } from "./features/pages/GdprPage";
-import { PledgeListPage } from "./features/pages/PledgeListPage";
 import { PressPage } from "./features/pages/PressPage";
-import { ThankYouPage } from "./features/pages/ThankYouPage";
 import { VilyPage } from "./features/pages/VilyPage";
-
-interface SiteLayoutProps {
-  config: SiteConfig;
-}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -54,7 +49,7 @@ function ScrollToTop() {
   return null;
 }
 
-function SiteLayout({ config }: SiteLayoutProps) {
+function SiteLayout() {
   const eventState = useEventState();
   const phase =
     eventState.status === "ready" ? eventState.data.phase : "unknown";
@@ -63,7 +58,7 @@ function SiteLayout({ config }: SiteLayoutProps) {
       <a className="skip-link" href="#main-content">
         preskočiť na obsah
       </a>
-      <SiteHeader config={config} />
+      <SiteHeader />
 
       <main className="site-shell__main" id="main-content">
         <Outlet />
@@ -74,7 +69,7 @@ function SiteLayout({ config }: SiteLayoutProps) {
   );
 }
 
-function HomePage({ config }: SiteLayoutProps) {
+function HomePage({ config }: { config: SiteConfig }) {
   const eventState = useEventState();
   const runtimeState = eventState.status === "ready" ? eventState.data : null;
   return (
@@ -83,13 +78,14 @@ function HomePage({ config }: SiteLayoutProps) {
       {runtimeState?.phase === "post" && runtimeState.result ? (
         <RunResultPanel result={runtimeState.result} />
       ) : null}
-      <CharitySection config={config} />
+      <CharitySection />
       <RunOverview />
+      <JoinRunSection eventState={runtimeState} />
       <StorySection />
       <TeamSection />
       <PartnersSection />
       <ContactSection />
-      <FinalPledgeSection config={config} phase={runtimeState?.phase} />
+      <FinalCtaSection phase={runtimeState?.phase} />
     </>
   );
 }
@@ -113,34 +109,29 @@ function NotFoundPage() {
 
 interface AppProps {
   config?: SiteConfig;
+  initialDonioCampaign?: DonioCampaign;
   initialEventState?: EventState;
-  initialPledgeData?: PublicPledgeData;
 }
 
 export default function App({
   config = siteConfig,
+  initialDonioCampaign,
   initialEventState,
-  initialPledgeData,
 }: AppProps) {
   return (
     <EventStateProvider initialState={initialEventState}>
-      <PublicPledgeDataProvider initialData={initialPledgeData}>
+      <DonioCampaignProvider initialData={initialDonioCampaign}>
         <ScrollToTop />
         <Routes>
-          <Route element={<SiteLayout config={config} />}>
+          <Route element={<SiteLayout />}>
             <Route index element={<HomePage config={config} />} />
-            <Route
-              path="prispevky"
-              element={<PledgeListPage config={config} />}
-            />
-            <Route path="dakujem" element={<ThankYouPage />} />
             <Route path="press" element={<PressPage />} />
             <Route path="vily" element={<VilyPage />} />
             <Route path="gdpr" element={<GdprPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
-      </PublicPledgeDataProvider>
+      </DonioCampaignProvider>
     </EventStateProvider>
   );
 }

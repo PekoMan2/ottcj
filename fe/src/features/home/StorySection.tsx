@@ -1,7 +1,6 @@
-import { ArrowUpRight } from 'lucide-react';
 import { Container, Section, SectionHeading } from '../../components/ui';
 import { siteContent } from '../../config/content';
-import { ContentLinkView } from './ContentMedia';
+import { ContentImageView, ContentLinkView } from './ContentMedia';
 
 export function StorySection() {
   const { story } = siteContent;
@@ -16,24 +15,17 @@ export function StorySection() {
           title={story.title}
         />
 
-        <div className="story-section__grid">
-          <article className="story-biography" data-content-status={story.biography.status}>
-            <p className="story-biography__label">BIO ČAKÁ NA DODANIE</p>
-            <p>{story.biography.placeholder}</p>
-          </article>
+        <ol className="story-timeline">
+          {story.milestones.map((milestone, index) => (
+            <li className={`story-milestone story-milestone--${(index % 4) + 1}`} key={milestone.id}>
+              <span className="story-milestone__tag">{milestone.tag}</span>
+              <p>{milestone.text}</p>
+              <ContentImageView className="story-milestone__photo" image={milestone.photo} />
+            </li>
+          ))}
+        </ol>
 
-          <figure className="interview-card">
-            <p className="interview-card__source">Refresher rozhovor</p>
-            <blockquote>
-              <p>{story.quote}</p>
-            </blockquote>
-            <figcaption>
-              <strong>— {story.quoteAttribution}</strong>
-            </figcaption>
-            <ContentLinkView className="interview-card__cta" link={story.interview} />
-            <ArrowUpRight aria-hidden="true" className="interview-card__arrow" />
-          </figure>
-        </div>
+        <ContentLinkView className="story-section__interview text-link" link={story.interview} />
       </Container>
     </Section>
   );

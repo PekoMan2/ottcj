@@ -1,42 +1,11 @@
 export interface SiteConfig {
   liveAlertConsentText?: string;
   liveAlertConsentVersion?: string;
-  pledgeFormUrl?: string;
 }
 
 interface SiteEnvironment {
   VITE_LIVE_ALERT_CONSENT_TEXT?: unknown;
   VITE_LIVE_ALERT_CONSENT_VERSION?: unknown;
-  VITE_PLEDGE_FORM_URL?: unknown;
-}
-
-function resolveOptionalGoogleFormUrl(value: unknown): string | undefined {
-  if (value === undefined || value === '') {
-    return undefined;
-  }
-
-  if (typeof value !== 'string') {
-    throw new Error(`Invalid VITE_PLEDGE_FORM_URL: received ${String(value)}`);
-  }
-
-  try {
-    const url = new URL(value);
-
-    const isLongForm = url.hostname === 'docs.google.com'
-      && (url.pathname === '/forms' || url.pathname.startsWith('/forms/'));
-    const isShortForm = url.hostname === 'forms.gle' && url.pathname !== '/';
-
-    if (
-      url.protocol !== 'https:'
-      || url.username !== ''
-      || url.password !== ''
-      || (!isLongForm && !isShortForm)
-    ) throw new Error('unsupported form destination');
-
-    return url.toString();
-  } catch {
-    throw new Error(`Invalid VITE_PLEDGE_FORM_URL: received ${value}`);
-  }
 }
 
 function resolveOptionalConsentText(value: unknown): string | undefined {
@@ -72,7 +41,6 @@ export function resolveSiteConfig(environment: SiteEnvironment): SiteConfig {
   return {
     liveAlertConsentText,
     liveAlertConsentVersion,
-    pledgeFormUrl: resolveOptionalGoogleFormUrl(environment.VITE_PLEDGE_FORM_URL),
   };
 }
 
@@ -80,6 +48,5 @@ export const siteConfig = Object.freeze(
   resolveSiteConfig({
     VITE_LIVE_ALERT_CONSENT_TEXT: import.meta.env.VITE_LIVE_ALERT_CONSENT_TEXT,
     VITE_LIVE_ALERT_CONSENT_VERSION: import.meta.env.VITE_LIVE_ALERT_CONSENT_VERSION,
-    VITE_PLEDGE_FORM_URL: import.meta.env.VITE_PLEDGE_FORM_URL,
   }),
 );

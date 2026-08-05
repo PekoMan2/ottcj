@@ -15,10 +15,6 @@ function formatElapsedTime(seconds: number): string {
   return `${hours} h ${minutes} min ${remainingSeconds} s`;
 }
 
-function formatMultiplier(multiplier: EventResult['multiplier']): string {
-  return `${new Intl.NumberFormat('sk-SK', { maximumFractionDigits: 1 }).format(multiplier)}×`;
-}
-
 export function RunResultPanel({ result }: { result: EventResult }) {
   return (
     <section aria-labelledby="run-result-title" className="run-result-panel">
@@ -39,10 +35,6 @@ export function RunResultPanel({ result }: { result: EventResult }) {
                 ? formatElapsedTime(result.elapsedSeconds)
                 : 'DNF'}
             </dd>
-          </div>
-          <div>
-            <dt>násobok príspevku</dt>
-            <dd>{formatMultiplier(result.multiplier)}</dd>
           </div>
           {result.finalDonationTotalEur !== null ? (
             <div>

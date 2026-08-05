@@ -1,10 +1,10 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import App from './App';
 import type { SiteConfig } from './config/site';
+import type { DonioCampaign } from './features/donio/donioCampaign';
 import type { EventState } from './features/event/eventState';
-import type { PublicPledgeData } from './features/pledge/publicPledges';
 
 const defaultConfig: SiteConfig = {};
 const preEventState: EventState = {
@@ -14,27 +14,36 @@ const preEventState: EventState = {
   result: null,
   updatedAt: null,
 };
-const emptyPledges: PublicPledgeData = { pledges: [], updatedAt: null };
+const emptyCampaign: DonioCampaign = {
+  campaignCollectedEur: null,
+  campaignDonorCount: null,
+  campaignTargetEur: null,
+  challengeCollectedEur: null,
+  challengeDonorCount: null,
+  challengeTargetEur: null,
+  updatedAt: null,
+};
+const donioUrl = 'https://donio.sk/zachranme-vilyho/majo-od-tatier-k-dunaju';
 
 function renderAt(
   path: string,
   config: SiteConfig = defaultConfig,
-  initialPledgeData: PublicPledgeData = emptyPledges,
   initialEventState: EventState = preEventState,
+  initialDonioCampaign: DonioCampaign = emptyCampaign,
 ) {
   return render(
     <MemoryRouter initialEntries={[path]}>
       <App
         config={config}
+        initialDonioCampaign={initialDonioCampaign}
         initialEventState={initialEventState}
-        initialPledgeData={initialPledgeData}
       />
     </MemoryRouter>,
   );
 }
 
 describe('App routes', () => {
-  it('renders the complete pledge-first homepage at the root route', () => {
+  it('renders the donation-first homepage at the root route', () => {
     const { container } = renderAt('/');
 
     expect(
@@ -45,18 +54,54 @@ describe('App routes', () => {
       screen.getByRole('heading', { name: 'bež so mnou. zachráňme Vilyho.' }),
     ).toBeInTheDocument();
     expect(screen.getAllByText('84 h').length).toBeGreaterThan(0);
-    expect(
-      screen.getAllByRole('button', { name: /prispej na liečbu — formulár pripravujeme/i })[0],
-    ).toBeDisabled();
     expect(container.querySelector('[data-site-phase="pre"]')).not.toBeNull();
-    expect(container.querySelector('[data-pledge-status="ready"]')).toHaveTextContent('0 ľudí prispelo');
   });
 
-  it('opens the configured pledge form from every primary CTA', () => {
-    renderAt('/', { ...defaultConfig, pledgeFormUrl: 'https://forms.gle/example' });
+  it('links every donation CTA to the Donio challenge', () => {
+    renderAt('/');
 
-    const pledgeLinks = screen.getAllByRole('link', { name: /príspevok|prispej/i });
-    expect(pledgeLinks.filter((link) => link.getAttribute('href') === 'https://forms.gle/example')).toHaveLength(4);
+    const donateLinks = screen.getAllByRole('link', { name: /prispej/i });
+    expect(donateLinks.length).toBeGreaterThanOrEqual(3);
+    for (const link of donateLinks) {
+      expect(link).toHaveAttribute('href', donioUrl);
+      expect(link).toHaveAttribute('target', '_blank');
+    }
+  });
+
+  it('shows fallback campaign numbers when live Donio data is unavailable', () => {
+    renderAt('/');
+
+    const progress = screen.getByRole('complementary', { name: 'Stav zbierky Zachráňme Vilyho' });
+    expect(within(progress).getByText('2 000 000 €')).toBeInTheDocument();
+    expect(within(progress).getByText(/z\s*4 000 000 €/)).toBeInTheDocument();
+    expect(within(progress).getByText(/približný stav/)).toBeInTheDocument();
+  });
+
+  it('shows live campaign and challenge numbers from Donio', () => {
+    renderAt('/', defaultConfig, preEventState, {
+      campaignCollectedEur: 2_013_292.68,
+      campaignDonorCount: 65_422,
+      campaignTargetEur: 3_963_500,
+      challengeCollectedEur: 150,
+      challengeDonorCount: 1,
+      challengeTargetEur: 1000,
+      updatedAt: '2026-08-05T10:00:00.000Z',
+    });
+
+    const progress = screen.getByRole('complementary', { name: 'Stav zbierky Zachráňme Vilyho' });
+    expect(within(progress).getByText('2 013 293 €')).toBeInTheDocument();
+    expect(within(progress).getByText(/naživo z donio\.sk/)).toBeInTheDocument();
+    expect(within(progress).getByText(/cez môj beh:/)).toBeInTheDocument();
+    expect(within(progress).getByRole('progressbar')).toHaveAttribute('aria-valuenow', '51');
+  });
+
+  it('renders the bet invitation with both time codes', () => {
+    renderAt('/');
+
+    expect(screen.getByText('bonus: stav si na môj čas')).toBeInTheDocument();
+    expect(screen.getByText('(Majo čas: 73:30:00)')).toBeInTheDocument();
+    expect(screen.getByText('(Majo čas: nedobehne)')).toBeInTheDocument();
+    expect(screen.getByText('Uveď svoje reálne meno ;-)')).toBeInTheDocument();
   });
 
   it('opens and closes the mobile navigation accessibly', () => {
@@ -100,7 +145,7 @@ describe('App routes', () => {
       'fáza behu sa skončila',
     ],
   ] as const)('renders honest %s phase status', (runtimeState, status) => {
-    const { container } = renderAt('/', defaultConfig, emptyPledges, runtimeState);
+    const { container } = renderAt('/', defaultConfig, runtimeState);
 
     expect(screen.getByText(status)).toBeInTheDocument();
     expect(
@@ -109,45 +154,40 @@ describe('App routes', () => {
     expect(container).not.toHaveTextContent(/aktuálna poloha|prejdené km|vyzbierané spolu/i);
   });
 
-  it('links directly to Garmin while live and keeps the pledge available', () => {
-    renderAt(
-      '/',
-      { pledgeFormUrl: 'https://forms.gle/example' },
-      emptyPledges,
-      {
-        ...preEventState,
-        liveTrackUrl: 'https://livetrack.garmin.com/session/example',
-        phase: 'live',
-      },
-    );
+  it('links directly to Garmin while live and keeps the donation available', () => {
+    renderAt('/', defaultConfig, {
+      ...preEventState,
+      liveTrackUrl: 'https://livetrack.garmin.com/session/example',
+      phase: 'live',
+    });
     expect(screen.getByRole('link', { name: /sledovať Maja naživo/i })).toHaveAttribute(
       'href',
       'https://livetrack.garmin.com/session/example',
     );
-    expect(screen.getAllByRole('link', { name: /príspevok|prispej/i }).length).toBeGreaterThan(0);
+    expect(screen.getByRole('link', { name: /kde práve som/i })).toHaveAttribute(
+      'href',
+      'https://livetrack.garmin.com/session/example',
+    );
+    expect(screen.getAllByRole('link', { name: /prispej/i }).length).toBeGreaterThan(0);
   });
 
-  it('renders the official post result and removes pledge CTAs', () => {
-    renderAt(
-      '/',
-      { pledgeFormUrl: 'https://forms.gle/example' },
-      emptyPledges,
-      {
-        ...preEventState,
-        phase: 'post',
-        result: {
-          elapsedSeconds: 58 * 3600,
-          finalDonationTotalEur: 12500,
-          multiplier: 2.5,
-          resultCopy: 'Schválený výsledkový text.',
-          status: 'finished',
-        },
+  it('renders the official post result and removes donation CTAs', () => {
+    renderAt('/', defaultConfig, {
+      ...preEventState,
+      phase: 'post',
+      result: {
+        elapsedSeconds: 58 * 3600,
+        finalDonationTotalEur: 12500,
+        multiplier: 2.5,
+        resultCopy: 'Schválený výsledkový text.',
+        status: 'finished',
       },
-    );
+    });
     expect(screen.getByRole('heading', { name: 'Majo dobehol.' })).toBeInTheDocument();
     expect(screen.getByText('58 h 0 min 0 s')).toBeInTheDocument();
-    expect(screen.getByText('2,5×')).toBeInTheDocument();
-    expect(screen.queryByRole('link', { name: /prispej na liečbu/i })).not.toBeInTheDocument();
+    expect(screen.getByText('12 500,00 €')).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Teraz bež so mnou.' })).not.toBeInTheDocument();
+    expect(screen.getAllByRole('link', { name: /Prispej Vilkovi/i }).length).toBe(1);
   });
 
   it('renders the remaining homepage sections in the specified editorial order', () => {
@@ -155,12 +195,12 @@ describe('App routes', () => {
 
     expect(
       Array.from(container.querySelectorAll('main > section[id]')).map((section) => section.id),
-    ).toEqual(['vily', 'trasa', 'pribeh', 'tim', 'partneri', 'kontakt']);
+    ).toEqual(['vily', 'trasa', 'pridaj-sa', 'pribeh', 'tim', 'partneri', 'kontakt']);
     expect(screen.getByRole('heading', { name: '347,32 km krížom cez Slovensko.' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Majov príbeh.' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Tím za behom.' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Kto stojí pri projekte.' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Ozvite sa správnym smerom.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Pridaj sa ku mne počas behu.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Môj bežecký príbeh.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Partneri.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Neboj sa, nekúšem.' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Teraz bež so mnou.' })).toBeInTheDocument();
   });
 
@@ -176,55 +216,66 @@ describe('App routes', () => {
     }
   });
 
-  it('uses source-provided content while keeping genuinely missing inputs explicit', () => {
-    const { container } = renderAt('/');
+  it('renders the rewritten route and story content', () => {
+    renderAt('/');
     const hero = screen.getByRole('region', { name: '347 km sólo pre Zachráňme Vilyho' });
 
     expect(within(hero).getByRole('img', { name: 'Majo s vlajkou Slovenska po pretekoch' }))
       .toHaveAttribute('src', '/majo.jpg');
     expect(within(hero).getByText('Tyršovo nábrežie')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Michal Šula' })).toBeInTheDocument();
-    expect(screen.getByText('Majster Slovenska v ultrabehu.')).toBeInTheDocument();
-    expect(screen.getByText('„Nie, ale môžeš byť prvý. A bude to trápenie.“')).toBeInTheDocument();
-    expect(container).not.toHaveTextContent('dočasný citát zo zdrojového briefu');
-    expect(screen.getByRole('heading', { name: 'IontMax' })).toBeInTheDocument();
+    expect(
+      screen.getByText(/Od štartu 13\. 8\. o 8:00 pred Hotelom Sorea Marmot/),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Michal Šula')).toBeInTheDocument();
+    expect(screen.getByText('kto je Vilko?', { exact: false })).toBeInTheDocument();
+    expect(screen.getByText(/Vilko má 2 roky/)).toBeInTheDocument();
+    expect(screen.getByText('IontMax')).toBeInTheDocument();
     expect(screen.getByRole('img', { name: 'Logo IontMax' })).toHaveAttribute(
       'src',
       '/iontmax.png',
     );
-    expect(screen.getByRole('link', { name: 'iontmax.com →' })).toHaveAttribute(
-      'href',
-      'https://www.iontmax.com/',
-    );
-    expect(container).not.toHaveTextContent('Shokz');
-    expect(container.querySelectorAll('[data-content-status="missing"].content-image').length).toBeGreaterThan(0);
+    expect(screen.getByText('Shokz slúchadlá')).toBeInTheDocument();
+    expect(screen.getByText('tu môžeš byť ty')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'prečítaj celý rozhovor →' })).toHaveAttribute(
       'href',
       'https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor',
     );
   });
 
-  it('renders supplied contacts as valid links without adding unavailable routes', () => {
+  it('routes every contact through the single personal address', () => {
     renderAt('/');
 
-    expect(screen.getByRole('link', { name: 'partneri@majootkd.sk' })).toHaveAttribute(
+    expect(screen.getAllByRole('link', { name: /majocrnkovic@gmail\.com/i })[0]).toHaveAttribute(
       'href',
-      'mailto:partneri@majootkd.sk',
+      'mailto:majocrnkovic@gmail.com',
     );
-    expect(screen.getByRole('link', { name: 'media@majootkd.sk' })).toHaveAttribute(
-      'href',
-      'mailto:media@majootkd.sk',
-    );
+    expect(screen.getByText('OSOBNE – NAJLEPŠIA FORMA')).toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: '@majo.crnkovic' })[0]).toHaveAttribute(
       'href',
       'https://www.instagram.com/majo.crnkovic/',
     );
+    expect(screen.getAllByRole('link', { name: /@odtatierkdunaju/ })[0]).toHaveAttribute(
+      'href',
+      'https://www.instagram.com/odtatierkdunaju/',
+    );
+    expect(screen.getAllByRole('link', { name: /YouTube/ })[0]).toHaveAttribute(
+      'href',
+      'https://www.youtube.com/@uuultra.behyyy',
+    );
     expect(screen.getByRole('link', { name: 'press kit →' })).toHaveAttribute('href', '/press');
   });
 
+  it('keeps GDPR reachable for consent info but out of the footer', () => {
+    renderAt('/');
+    const footer = screen.getByRole('contentinfo');
+
+    expect(within(footer).queryByRole('link', { name: 'GDPR' })).not.toBeInTheDocument();
+    expect(within(footer).queryByRole('link', { name: 'tím' })).not.toBeInTheDocument();
+    expect(within(footer).queryByRole('link', { name: /príspevk/ })).not.toBeInTheDocument();
+    expect(within(footer).getByText('347 km sólo – zbierka pre Vilyho')).toBeInTheDocument();
+  });
+
   it.each([
-    ['/prispevky', 'Zoznam príspevkov.'],
-    ['/dakujem', 'Ďakujeme, že bežíš s nami.'],
     ['/press', 'Press kit.'],
     ['/vily', 'Zachráňme Vilyho.'],
     ['/gdpr', 'GDPR informácie.'],
@@ -251,35 +302,6 @@ describe('App routes', () => {
     expect(screen.getByRole('heading', { name: 'Press kit.' })).toBeInTheDocument();
     expect(scrollTo).toHaveBeenCalledWith({ behavior: 'instant', left: 0, top: 0 });
     vi.unstubAllGlobals();
-  });
-
-  it('renders consented and anonymous pledges with cent-safe totals', () => {
-    renderAt('/prispevky', defaultConfig, {
-      updatedAt: '2026-08-02T12:30:00+02:00',
-      pledges: [
-        { displayName: 'Jana N.', baseAmountEur: 0.01 },
-        { displayName: null, baseAmountEur: 12.34 },
-      ],
-    });
-
-    const table = screen.getByRole('table', { name: 'Verejné príspevky pre Zachráňme Vilyho' });
-    expect(within(table).getByText('Jana N.')).toBeInTheDocument();
-    expect(within(table).getByText('Anonym')).toBeInTheDocument();
-    expect(within(table).getByText('SPOLU (2 ľudí)')).toBeInTheDocument();
-    expect(within(table).getByText('12,35 €')).toBeInTheDocument();
-    expect(within(table).getByText('30,88 €')).toBeInTheDocument();
-  });
-
-  it('copies the homepage share link from the thank-you page', async () => {
-    const writeText = vi.fn().mockResolvedValue(undefined);
-    Object.defineProperty(navigator, 'clipboard', {
-      configurable: true,
-      value: { writeText },
-    });
-    renderAt('/dakujem');
-    fireEvent.click(screen.getByRole('button', { name: 'kopírovať odkaz' }));
-    await waitFor(() => expect(writeText).toHaveBeenCalledWith('http://localhost:3000/'));
-    expect(screen.getByText('Odkaz je skopírovaný.')).toBeInTheDocument();
   });
 
   it('renders the deferred route-map boundary without eagerly loading Leaflet', () => {
