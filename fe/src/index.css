@@ -2262,8 +2262,11 @@ a {
 }
 
 .partner-chip__logo {
-  width: 5.5rem;
-  height: auto;
+  width: auto;
+  max-width: 100%;
+  height: 3.5rem;
+  mix-blend-mode: multiply;
+  object-fit: contain;
 }
 
 .partner-chip--1 { transform: rotate(-0.8deg); }
@@ -2292,7 +2295,7 @@ a {
 }
 
 .partner-chip--open a {
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   font-weight: 800;
   overflow-wrap: anywhere;
   text-decoration-color: var(--color-ember);

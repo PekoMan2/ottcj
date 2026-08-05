@@ -350,15 +350,42 @@ export const siteContent = Object.freeze({
         href: 'https://www.iontmax.com/',
         logo: {
           alt: 'Logo IontMax',
-          height: 447,
+          height: 113,
           src: '/iontmax.png',
           status: 'ready',
-          width: 447,
+          width: 427,
         },
       },
-      { name: 'Shokz slúchadlá' },
-      { name: 'Daybyday Nitra' },
-      { name: 'All People Nitra' },
+      {
+        name: 'Shokz slúchadlá',
+        logo: {
+          alt: 'Logo Shokz',
+          height: 156,
+          src: '/shokz.png',
+          status: 'ready',
+          width: 395,
+        },
+      },
+      {
+        name: 'Daybyday Nitra',
+        logo: {
+          alt: 'Logo Day by Day',
+          height: 104,
+          src: '/daybyday.png',
+          status: 'ready',
+          width: 179,
+        },
+      },
+      {
+        name: 'All People Nitra',
+        logo: {
+          alt: 'Logo All People',
+          height: 198,
+          src: '/allpeople.png',
+          status: 'ready',
+          width: 800,
+        },
+      },
     ],
     openSlot: {
       title: 'tu môžeš byť ty',
