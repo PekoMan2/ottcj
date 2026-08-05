@@ -378,7 +378,7 @@ export const siteContent = Object.freeze({
       },
       {
         name: "All People Nitra",
-        href: "https://www.instagram.com/allpeoplenitra/",
+        href: "https://apn.sk/",
         logo: {
           alt: "All People Nitra",
           height: 198,
