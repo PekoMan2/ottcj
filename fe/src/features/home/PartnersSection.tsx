@@ -25,7 +25,13 @@ export function PartnersSection() {
             );
 
             return (
-              <li key={partner.name}>
+              <li
+                className={partner.label ? 'partner-strip__item--main' : undefined}
+                key={partner.name}
+              >
+                {partner.label ? (
+                  <span className="partner-strip__label">{partner.label}</span>
+                ) : null}
                 {partner.href ? (
                   <a href={partner.href} rel="noreferrer" target="_blank">
                     {body}

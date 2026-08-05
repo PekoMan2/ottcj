@@ -15,7 +15,6 @@ export function TeamSection() {
             <li key={member.role}>
               <span className="team-roster__role">{member.role}</span>
               <strong>{member.name}</strong>
-              {member.note ? <small>{member.note}</small> : null}
             </li>
           ))}
         </ul>

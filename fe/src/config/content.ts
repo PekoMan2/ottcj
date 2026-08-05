@@ -11,13 +11,13 @@ export interface NavigationItem {
 export interface ReadyContentLink {
   href: string;
   label: string;
-  status: 'ready';
+  status: "ready";
 }
 
 export interface MissingContentLink {
   label: string;
   note: string;
-  status: 'missing';
+  status: "missing";
 }
 
 export type ContentLink = MissingContentLink | ReadyContentLink;
@@ -26,14 +26,14 @@ export interface ReadyContentImage {
   alt: string;
   height: number;
   src: string;
-  status: 'ready';
+  status: "ready";
   width: number;
 }
 
 export interface MissingContentImage {
   label: string;
   note: string;
-  status: 'missing';
+  status: "missing";
 }
 
 export type ContentImage = MissingContentImage | ReadyContentImage;
@@ -130,6 +130,7 @@ export interface TeamContent {
 
 export interface PartnerItem {
   href?: string;
+  label?: string;
   logo?: ReadyContentImage;
   name: string;
 }
@@ -192,270 +193,272 @@ export interface SiteContent {
 }
 
 const runFacts = [
-  { label: 'kilometrov', value: '347' },
-  { label: 'časový limit', value: '84 h' },
-  { label: 'bežec', value: '1' },
+  { label: "kilometrov", value: "347" },
+  { label: "časový limit", value: "84 h" },
+  { label: "bežec", value: "1" },
 ] as const;
 
 const missingPhoto = (label: string): MissingContentImage => ({
   label,
-  note: 'fotka pribudne čoskoro',
-  status: 'missing',
+  note: "fotka pribudne čoskoro",
+  status: "missing",
 });
 
 export const siteContent = Object.freeze({
-  eventDateLabel: '13. — 16. augusta 2026',
+  eventDateLabel: "13. — 16. augusta 2026",
   runFacts,
   navigation: {
     header: [
-      { href: '/#trasa', label: 'trasa' },
-      { href: '/#vily', label: 'info o zbierke' },
-      { href: '/#kontakt', label: 'kontakt' },
+      { href: "/#trasa", label: "trasa" },
+      { href: "/#vily", label: "info o zbierke" },
+      { href: "/#kontakt", label: "kontakt" },
     ],
     footer: [
-      { href: '/#trasa', label: 'trasa' },
-      { href: '/#vily', label: 'info o zbierke' },
-      { href: '/#pribeh', label: 'príbeh' },
-      { href: '/#partneri', label: 'partneri' },
-      { href: '/#kontakt', label: 'kontakt' },
-      { href: '/press', label: 'press' },
-      { href: '/vily', label: 'viac o Vilkovi' },
+      { href: "/#trasa", label: "trasa" },
+      { href: "/#vily", label: "info o zbierke" },
+      { href: "/#pribeh", label: "príbeh" },
+      { href: "/#partneri", label: "partneri" },
+      { href: "/#kontakt", label: "kontakt" },
+      { href: "/press", label: "press" },
+      { href: "/vily", label: "viac o Vilkovi" },
     ],
   },
   charity: {
-    badge: 'pomôž mi podporiť správnu vec',
-    headingLead: 'bež so mnou.',
-    headingPurpose: 'zachráňme Vilyho.',
+    badge: "pomôž mi podporiť správnu vec",
+    headingLead: "bež so mnou.",
+    headingPurpose: "zachráňme Vilyho.",
     story: {
-      tag: '→ kto je Vilko?',
+      tag: "→ kto je Vilko?",
       introduction:
-        'Vilko má 2 roky. Bojuje s Duchennovou svalovou dystrofiou, vzácnou genetickou chorobou, ktorá mu postupne ničí svaly. Otec mu zohnal medzinárodný tím vedcov a pripravuje sa špecializovaná liečba.',
+        "Vilko má 2 roky. Bojuje s Duchennovou svalovou dystrofiou, vzácnou genetickou chorobou, ktorá mu postupne ničí svaly. Otec mu zohnal medzinárodný tím vedcov a pripravuje sa špecializovaná liečba.",
       accent:
-        'Pred pár týždňami vyšiel Vilkov otec peši z Košíc do Bratislavy a vyzbieral 2 milióny zo 4 potrebných na vývin lieku. Ja pokračujem v jeho šľapajach: 347 km z Tatier k Dunaju. Sólo, bez štafety.',
+        "Pred pár týždňami vyšiel Vilkov otec peši z Košíc do Bratislavy a vyzbieral 2 milióny zo 4 potrebných na vývin lieku. Ja pokračujem v jeho šľapajach: 347 km z Tatier k Dunaju. Sólo, bez štafety.",
     },
-    ctaLead: 'Podpor ma vo výkone tým, že prispeješ.',
+    ctaLead: "Podpor ma vo výkone tým, že prispeješ.",
     bet: {
-      label: 'bonus: stav si na môj čas',
+      label: "bonus: stav si na môj čas",
       finishLead:
-        'Ako prvý bežec ponúkam možnosť staviť si na čas môjho dobehu. V poznámke daru na Donio napíš okrem podpornej správy pre Vilkovu rodinu aj svoj tip:',
-      finishCode: 'Majo čas: 73:30:00',
-      finishOutro: 'Kto bude najbližšie, tomu dar po dobehu znásobím 5× a pošlem späť.',
-      dnfLead: 'Veríš, že to nedám? Napíš',
-      dnfCode: 'Majo čas: nedobehne',
-      dnfOutro: 'a ak budeš mať pravdu, stávku znásobím 10×.',
-      hint: 'Uveď svoje reálne meno ;-)',
+        "Ako prvý bežec ponúkam možnosť staviť si na čas môjho dobehu. V poznámke daru na Donio napíš okrem podpornej správy pre Vilkovu rodinu aj svoj tip:",
+      finishCode: "Majo čas: 73:30:00",
+      finishOutro:
+        "Kto bude najbližšie, tomu dar po dobehu znásobím 5× a pošlem späť, a tú istú sumu prispejem na zbierku.",
+      dnfLead: "Veríš, že to nedám? Napíš",
+      dnfCode: "Majo čas: nedobehne",
+      dnfOutro: "a ak budeš mať pravdu, stávku znásobím 10×.",
+      hint: "Uveď svoje reálne meno ;-)",
     },
     campaign: {
-      beneficiary: 'Zachráňme Vilyho',
+      beneficiary: "Zachráňme Vilyho",
       collectedFallbackEur: 2_000_000,
       targetEur: 4_000_000,
-      destinationLabel: 'donio.sk/zachranme-vilyho',
-      destinationUrl: 'https://donio.sk/zachranme-vilyho/majo-od-tatier-k-dunaju',
+      destinationLabel: "donio.sk/zachranme-vilyho",
+      destinationUrl:
+        "https://donio.sk/zachranme-vilyho/majo-od-tatier-k-dunaju",
     },
   },
   runOverview: {
-    eyebrow: 'to nie je výlet',
-    title: '347,32 km krížom cez Slovensko.',
-    annotation: 'sólo · bez štafety · non-stop',
+    eyebrow: "to nie je výlet",
+    title: "347,32 km krížom cez Slovensko.",
+    annotation: "sólo · bez štafety · non-stop",
     introduction:
-      'Od štartu 13. 8. o 8:00 pred Hotelom Sorea Marmot, cez krásne údolia a hory Nízkych Tatier, desiatky slovenských obcí a miest, až po Tyršovo nábrežie v Bratislave. 347 km a časový limit 84 hodín.',
+      "Od štartu 13. 8. o 8:00 pred Hotelom Sorea Marmot, cez krásne údolia a hory Nízkych Tatier, desiatky slovenských obcí a miest, až po Tyršovo nábrežie v Bratislave. 347 km a časový limit 84 hodín.",
     facts: runFacts,
     route: {
-      distance: '347,32 km',
-      finish: 'Tyršovo nábrežie',
-      start: 'Jasná',
-      timeLimit: '84 hodín',
+      distance: "347,32 km",
+      finish: "Tyršovo nábrežie",
+      start: "Jasná",
+      timeLimit: "84 hodín",
     },
   },
   joinRun: {
-    eyebrow: 'nebudem sa hnevať, naopak',
-    title: 'Pridaj sa ku mne počas behu.',
-    annotation: 'kedykoľvek, kdekoľvek na trase, hoci len kilometer',
+    eyebrow: "nebudem sa hnevať, naopak",
+    title: "Pridaj sa ku mne počas behu.",
+    annotation: "kedykoľvek, kdekoľvek na trase, hoci len kilometer",
     intro:
-      'Ktokoľvek sa môže kedykoľvek pridať. Nájdi si ma podľa GPS, vybehni mi naproti a daj si so mnou kúsok trasy. Alebo to pošli kamarátovi bežcovi, ktorý býva blízko.',
+      "Ktokoľvek sa môže kedykoľvek pridať. Nájdi si ma podľa GPS, vybehni mi naproti a daj si so mnou kúsok trasy. Alebo to pošli kamarátovi bežcovi, ktorý býva blízko.",
     steps: [
       {
-        title: 'nájdi ma',
-        text: 'Počas behu tu bude živý odkaz na moju GPS polohu (Garmin LiveTrack).',
+        title: "nájdi ma",
+        text: "Počas behu tu bude živý odkaz na moju GPS polohu (Garmin LiveTrack).",
       },
       {
-        title: 'vybehni mi naproti',
-        text: 'Trasa aj obce, ktorými pobežím, sú na mape vyššie. Stačí aj kilometer.',
+        title: "vybehni mi naproti",
+        text: "Trasa aj obce, ktorými pobežím, sú na mape vyššie. Stačí aj kilometer.",
       },
       {
-        title: 'pošli to ďalej',
-        text: 'Poznáš bežca, ktorý býva pri trase? Pošli mu tento web.',
+        title: "pošli to ďalej",
+        text: "Poznáš bežca, ktorý býva pri trase? Pošli mu tento web.",
       },
     ],
     share: {
-      title: 'Majo · Od Tatier k Dunaju',
-      text: '347 km sólo pre Zachráňme Vilyho. Pridaj sa na trase alebo prispej.',
+      title: "Majo · Od Tatier k Dunaju",
+      text: "347 km sólo pre Zachráňme Vilyho. Pridaj sa na trase alebo prispej.",
     },
   },
   story: {
-    eyebrow: 'prečo do toho idem',
-    title: 'Môj bežecký príbeh.',
-    annotation: 'fotky a momentky postupne doplním',
+    eyebrow: "prečo do toho idem",
+    title: "Môj bežecký príbeh.",
+    annotation: "fotky a momentky postupne doplním",
     milestones: [
       {
-        id: 'zaciatky',
-        tag: 'začiatky',
-        text: 'Kedysi som behal len pre pivo. Fakt.',
-        photo: missingPhoto('FOTO ZO ZAČIATKOV'),
+        id: "zaciatky",
+        tag: "začiatky",
+        text: "Kedysi som behal len pre pivo. Fakt.",
+        photo: missingPhoto("FOTO ZO ZAČIATKOV"),
       },
       {
-        id: 'trening',
-        tag: 'dnes',
-        text: 'Trénujem pod vedením Michala Šulu, majstra Slovenska v ultrabehu.',
-        photo: missingPhoto('FOTO Z TRÉNINGU'),
+        id: "trening",
+        tag: "dnes",
+        text: "Dnes makám v tréningu na najdlhší beh môjho života.",
+        photo: missingPhoto("FOTO Z TRÉNINGU"),
       },
       {
-        id: 'uuultra',
-        tag: 'uuultra',
-        text: 'S partiou uuultra robíme behy, ktoré majú zmysel.',
-        photo: missingPhoto('FOTO PARTIE'),
+        id: "uuultra",
+        tag: "uuultra",
+        text: "S partiou uuultra robíme behy, ktoré majú zmysel.",
+        photo: missingPhoto("FOTO PARTIE"),
       },
       {
-        id: 'start',
-        tag: '13. 8. 2026 · 8:00',
-        text: 'Štart pred Hotelom Sorea Marmot. 347 km, limit 84 hodín, sólo.',
-        photo: missingPhoto('FOTO ZO ŠTARTU'),
+        id: "start",
+        tag: "13. 8. 2026 · 8:00",
+        text: "Štart pred Hotelom Sorea Marmot. 347 km, limit 84 hodín, sólo.",
+        photo: missingPhoto("FOTO ZO ŠTARTU"),
       },
     ],
     interview: {
-      status: 'ready',
-      href: 'https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor',
-      label: 'prečítaj celý rozhovor →',
+      status: "ready",
+      href: "https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor",
+      label: "prečítaj celý rozhovor →",
     },
   },
   team: {
-    title: 'tím za behom',
+    title: "tím za behom",
     roster: [
-      { role: 'tréner', name: 'Michal Šula', note: 'majster Slovenska v ultrabehu' },
-      { role: 'kamera', name: 'doplníme' },
-      { role: 'support crew', name: 'ľudia, ktorí držia zázemie na trati' },
-      { role: 'pojazdné zázemie', name: 'IontMax dodávka' },
+      { role: "kamera", name: "doplníme" },
+      { role: "support crew", name: "ľudia, ktorí držia zázemie na trati" },
+      { role: "pojazdné zázemie", name: "IontMax dodávka" },
     ],
   },
   partners: {
-    title: 'Partneri.',
+    title: "Partneri.",
     list: [
       {
-        name: 'IontMax',
-        href: 'https://www.iontmax.com/',
+        name: "IontMax",
+        href: "https://www.iontmax.com/",
+        label: "hlavný partner",
         logo: {
-          alt: 'IontMax',
+          alt: "IontMax",
           height: 113,
-          src: '/iontmax.png',
-          status: 'ready',
+          src: "/iontmax.png",
+          status: "ready",
           width: 427,
         },
       },
       {
-        name: 'Shokz slúchadlá',
-        href: 'https://shokz.com/',
+        name: "Shokz slúchadlá",
+        href: "https://shokz.com/",
         logo: {
-          alt: 'Shokz slúchadlá',
+          alt: "Shokz slúchadlá",
           height: 156,
-          src: '/shokz.png',
-          status: 'ready',
+          src: "/shokz.png",
+          status: "ready",
           width: 395,
         },
       },
       {
-        name: 'Daybyday Nitra',
-        href: 'https://daybday.store/',
+        name: "Daybyday Nitra",
+        href: "https://daybday.store/",
         logo: {
-          alt: 'Daybyday Nitra',
+          alt: "Daybyday Nitra",
           height: 104,
-          src: '/daybyday.png',
-          status: 'ready',
+          src: "/daybyday.png",
+          status: "ready",
           width: 179,
         },
       },
       {
-        name: 'All People Nitra',
-        href: 'https://www.instagram.com/allpeoplenitra/',
+        name: "All People Nitra",
+        href: "https://www.instagram.com/allpeoplenitra/",
         logo: {
-          alt: 'All People Nitra',
+          alt: "All People Nitra",
           height: 198,
-          src: '/allpeople.png',
-          status: 'ready',
+          src: "/allpeople.png",
+          status: "ready",
           width: 800,
         },
       },
     ],
     openSlot: {
-      title: 'tu môžeš byť ty',
-      email: 'majocrnkovic@gmail.com',
+      title: "tu môžeš byť ty",
+      email: "majocrnkovic@gmail.com",
     },
   },
   contact: {
-    eyebrow: 'ozvite sa mi',
-    title: 'Neboj sa, nekúšem.',
-    annotation: 'jeden mail na všetko – partnerstvá, médiá, povzbudenie',
-    email: 'majocrnkovic@gmail.com',
-    emailNote: 'partneri, médiá aj obyčajná ľudská podpora',
-    press: { status: 'ready', label: 'press kit →', href: '/press' },
+    eyebrow: "ozvite sa mi",
+    title: "Neboj sa, nekúšem.",
+    annotation: "jeden mail na všetko – partnerstvá, médiá, povzbudenie",
+    email: "majocrnkovic@gmail.com",
+    emailNote: "partneri, médiá aj obyčajná ľudská podpora",
+    press: { status: "ready", label: "press kit →", href: "/press" },
     personal: {
-      heading: 'OSOBNE – NAJLEPŠIA FORMA',
-      body: 'Vážim si, ak sa ako potenciálny partner pripojíte na úsek môjho behu a pokecáme osobne.',
+      heading: "OSOBNE – NAJLEPŠIA FORMA",
+      body: "Vážim si, ak sa ako potenciálny partner pripojíte na úsek môjho behu a pokecáme osobne.",
     },
     socialLinks: [
       {
-        status: 'ready',
-        label: '@majo.crnkovic',
-        href: 'https://www.instagram.com/majo.crnkovic/',
+        status: "ready",
+        label: "@majo.crnkovic",
+        href: "https://www.instagram.com/majo.crnkovic/",
       },
       {
-        status: 'ready',
-        label: '@uuultra.behy',
-        href: 'https://www.instagram.com/uuultra.behy/',
+        status: "ready",
+        label: "@uuultra.behy",
+        href: "https://www.instagram.com/uuultra.behy/",
       },
       {
-        status: 'ready',
-        label: '@odtatierkdunaju · organizátor behu',
-        href: 'https://www.instagram.com/odtatierkdunaju/',
+        status: "ready",
+        label: "@odtatierkdunaju · organizátor behu",
+        href: "https://www.instagram.com/odtatierkdunaju/",
       },
       {
-        status: 'ready',
-        label: 'YouTube · uuultra behy',
-        href: 'https://www.youtube.com/@uuultra.behyyy',
+        status: "ready",
+        label: "YouTube · uuultra behy",
+        href: "https://www.youtube.com/@uuultra.behyyy",
       },
     ],
   },
   finalCta: {
-    eyebrow: 'už vieš, prečo bežím',
-    title: 'Teraz bež so mnou.',
-    body: 'Prispej na Donio a do poznámky pridaj tip na môj čas. Každé euro ide projektu Zachráňme Vilyho.',
-    annotation: 'prispievaš priamo cez donio.sk · bez medzičlánkov',
+    eyebrow: "už vieš, prečo bežím",
+    title: "Teraz bež so mnou.",
+    body: "Prispej na Donio a do poznámky pridaj tip na môj čas. Každé euro ide projektu Zachráňme Vilyho.",
+    annotation: "prispievaš priamo cez donio.sk · bez medzičlánkov",
   },
   footer: {
-    brandPrefix: 'uuu',
-    brandName: 'MAJO · OTKD',
-    summary: '347 km sólo – zbierka pre Vilyho',
-    navigationLabel: 'Navigácia v pätičke',
-    socialLabel: 'Sociálne siete',
+    brandPrefix: "uuu",
+    brandName: "MAJO · OTKD",
+    summary: "347 km sólo – zbierka pre Vilyho",
+    navigationLabel: "Navigácia v pätičke",
+    socialLabel: "Sociálne siete",
     socialLinks: [
       {
-        status: 'ready',
-        label: '@majo.crnkovic',
-        href: 'https://www.instagram.com/majo.crnkovic/',
+        status: "ready",
+        label: "@majo.crnkovic",
+        href: "https://www.instagram.com/majo.crnkovic/",
       },
       {
-        status: 'ready',
-        label: '@uuultra.behy',
-        href: 'https://www.instagram.com/uuultra.behy/',
+        status: "ready",
+        label: "@uuultra.behy",
+        href: "https://www.instagram.com/uuultra.behy/",
       },
       {
-        status: 'ready',
-        label: '@odtatierkdunaju · organizátor behu',
-        href: 'https://www.instagram.com/odtatierkdunaju/',
+        status: "ready",
+        label: "@odtatierkdunaju · organizátor behu",
+        href: "https://www.instagram.com/odtatierkdunaju/",
       },
       {
-        status: 'ready',
-        label: 'YouTube · uuultra behy',
-        href: 'https://www.youtube.com/@uuultra.behyyy',
+        status: "ready",
+        label: "YouTube · uuultra behy",
+        href: "https://www.youtube.com/@uuultra.behyyy",
       },
     ],
   },

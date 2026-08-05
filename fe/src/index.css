@@ -2258,6 +2258,31 @@ a {
   object-fit: contain;
 }
 
+.partner-strip__item--main {
+  position: relative;
+  padding: 1.4rem 1.1rem 0.8rem;
+  border: 2px dashed var(--color-ember);
+}
+
+.partner-strip__item--main img {
+  max-width: min(100%, 14rem);
+  height: clamp(2.9rem, 4.6vw, 3.9rem);
+}
+
+.partner-strip__label {
+  position: absolute;
+  top: -0.85rem;
+  left: 0.7rem;
+  border: 2px solid var(--color-ink);
+  background: var(--color-ember);
+  box-shadow: 2px 2px 0 var(--color-ink);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  transform: rotate(-2deg);
+  white-space: nowrap;
+}
+
 .partner-strip strong {
   font-size: 1.3rem;
   letter-spacing: -0.02em;

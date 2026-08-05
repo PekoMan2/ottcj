@@ -226,7 +226,8 @@ describe('App routes', () => {
     expect(
       screen.getByText(/Od štartu 13\. 8\. o 8:00 pred Hotelom Sorea Marmot/),
     ).toBeInTheDocument();
-    expect(screen.getByText('Michal Šula')).toBeInTheDocument();
+    expect(screen.queryByText(/Šul/)).not.toBeInTheDocument();
+    expect(screen.getByText('hlavný partner')).toBeInTheDocument();
     expect(screen.getByText('kto je Vilko?', { exact: false })).toBeInTheDocument();
     expect(screen.getByText(/Vilko má 2 roky/)).toBeInTheDocument();
     expect(screen.getAllByRole('img', { name: 'IontMax' })[0]).toHaveAttribute(
