@@ -10,7 +10,8 @@
     "logs": "docker compose logs -f",
     "ps": "docker compose ps",
     "rebuild": "docker compose up --build --force-recreate",
-    "reset": "docker compose down --volumes --remove-orphans"
+    "reset": "docker compose down --volumes --remove-orphans",
+    "nuke": "docker compose down --volumes --remove-orphans --rmi local"
   },
   "repository": {
     "type": "git",
