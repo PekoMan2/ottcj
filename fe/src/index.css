@@ -905,6 +905,118 @@ a {
   margin-top: var(--space-2);
 }
 
+.notify-form {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.notify-form__grid {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+
+.notify-form label,
+.notify-form__field {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.notify-form input,
+.notify-form select {
+  min-height: 2.5rem;
+  border: var(--border-ink);
+  border-radius: var(--radius-subtle);
+  background: var(--color-paper);
+  padding: 0.4rem 0.65rem;
+  font-size: 0.9375rem;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.notify-form__phone {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.notify-form__phone select {
+  flex: none;
+}
+
+.notify-form__phone input {
+  flex: 1;
+  min-width: 0;
+}
+
+.notify-form__hint {
+  margin: 0;
+  color: var(--color-ash);
+  font-family: var(--font-handwritten);
+  font-size: 1.05rem;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.notify-form__error {
+  margin: 0;
+  color: var(--color-ember);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.notify-form .sticker-button {
+  margin-top: 0;
+  justify-self: start;
+}
+
+.notify-form__consent {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem var(--space-2);
+  font-size: 0.8125rem;
+}
+
+.notify-form__consent label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: inherit;
+  font-weight: 600;
+}
+
+.notify-form__consent input[type='checkbox'] {
+  width: 1.1rem;
+  height: 1.1rem;
+  min-height: 0;
+  margin: 0;
+  accent-color: var(--color-ember);
+}
+
+.notify-form__consent a {
+  font-style: normal;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.notify-form__success {
+  margin-top: var(--space-2);
+  font-style: normal;
+}
+
+.notify-form__success strong {
+  font-size: 1.05rem;
+}
+
+.notify-form__success p {
+  margin: 0.25rem 0 0;
+}
+
 .tracking-panel__note {
   margin: 0;
   color: var(--color-ash);

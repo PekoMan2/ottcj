@@ -19,6 +19,12 @@ export class LiveAlertSubscriptionEntity {
   @Column({ length: 8, type: 'varchar' })
   channel!: LiveAlertChannel;
 
+  @Column({ name: 'first_name_encrypted', type: 'text' })
+  firstNameEncrypted!: string;
+
+  @Column({ name: 'last_name_encrypted', type: 'text' })
+  lastNameEncrypted!: string;
+
   @Column({ name: 'contact_encrypted', type: 'text' })
   contactEncrypted!: string;
 

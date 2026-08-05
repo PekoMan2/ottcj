@@ -158,10 +158,35 @@ export interface ContactContent {
   title: string;
 }
 
+export interface NotifyFormContent {
+  consentLabel: string;
+  consentLinkLabel: string;
+  contactHint: string;
+  emailLabel: string;
+  errorCapacity: string;
+  errorConsentRequired: string;
+  errorContactRequired: string;
+  errorGeneric: string;
+  errorNameRequired: string;
+  errorPhoneInvalid: string;
+  errorRateLimit: string;
+  firstNameLabel: string;
+  lastNameLabel: string;
+  phoneLabel: string;
+  phonePlaceholder: string;
+  prefixLabel: string;
+  prefixes: readonly { label: string; value: string }[];
+  submitLabel: string;
+  submittingLabel: string;
+  successBody: string;
+  successTitle: string;
+}
+
 export interface TrackingContent {
   eyebrow: string;
   notify: {
     body: string;
+    form: NotifyFormContent;
     label: string;
     title: string;
   };
@@ -225,8 +250,8 @@ export const siteContent = Object.freeze({
   runFacts,
   navigation: {
     header: [
-      { href: "/#trasa", label: "trasa" },
       { href: "/#vily", label: "info o zbierke" },
+      { href: "/#trasa", label: "trasa" },
       { href: "/#kontakt", label: "kontakt" },
     ],
     footer: [
@@ -456,6 +481,35 @@ export const siteContent = Object.freeze({
       title: "upozorni ma, keď Majo vybehne",
       body: "V momente štartu behu dostaneš na sms/email odkaz na sledovanie Majovej lokácie.",
       label: "upozorni ma pri štarte",
+      form: {
+        firstNameLabel: "meno",
+        lastNameLabel: "priezvisko",
+        emailLabel: "email",
+        phoneLabel: "telefón",
+        phonePlaceholder: "900 123 456",
+        prefixLabel: "predvoľba krajiny",
+        prefixes: [
+          { label: "🇸🇰 +421", value: "+421" },
+          { label: "🇨🇿 +420", value: "+420" },
+        ],
+        contactHint: "stačí email alebo telefón, pokojne oboje",
+        submitLabel: "pošli mi upozornenie",
+        submittingLabel: "odosielam…",
+        successTitle: "Hotovo, si na zozname!",
+        successBody:
+          "Hneď po štarte ti príde odkaz na sledovanie Majovej polohy.",
+        errorNameRequired: "Vyplň meno aj priezvisko.",
+        errorContactRequired: "Vyplň email alebo telefónne číslo.",
+        errorPhoneInvalid: "Telefónne číslo musí mať 9 číslic po predvoľbe.",
+        errorConsentRequired:
+          "Pred odoslaním potvrď súhlas so spracovaním údajov.",
+        errorCapacity:
+          "Kapacita upozornení je už plná. Sleduj štart priamo na tejto stránke.",
+        errorRateLimit: "Priveľa pokusov za sebou. Skús to o chvíľu znova.",
+        errorGeneric: "Registrácia sa nepodarila. Skús to o chvíľu znova.",
+        consentLabel: "súhlasím so spracovaním osobných údajov",
+        consentLinkLabel: "ako s údajmi nakladáme →",
+      },
     },
   },
   finalCta: {

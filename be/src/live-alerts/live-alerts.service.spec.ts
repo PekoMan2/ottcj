@@ -75,6 +75,8 @@ describe('LiveAlertsService', () => {
       {
         consent: true,
         email: ' Runner@Example.SK ',
+        firstName: 'Jana',
+        lastName: 'Bežcová',
         phone: '+421900000000',
       },
       '203.0.113.10',
@@ -85,17 +87,31 @@ describe('LiveAlertsService', () => {
     expect(rows.map((row) => row.channel)).toEqual(['email', 'sms']);
     expect(crypto.decrypt(rows[0].contactEncrypted)).toBe('runner@example.sk');
     expect(crypto.decrypt(rows[1].contactEncrypted)).toBe('+421900000000');
+    expect(crypto.decrypt(rows[0].firstNameEncrypted)).toBe('Jana');
+    expect(crypto.decrypt(rows[0].lastNameEncrypted)).toBe('Bežcová');
     expect(JSON.stringify(rows)).not.toContain('Runner@Example.SK');
+    expect(JSON.stringify(rows)).not.toContain('Jana');
+    expect(JSON.stringify(rows)).not.toContain('Bežcová');
   });
 
   it('accepts a repeated active contact without storing a duplicate', async () => {
     const { rows, service } = createHarness();
     await service.subscribe(
-      { consent: true, email: 'runner@example.sk' },
+      {
+        consent: true,
+        email: 'runner@example.sk',
+        firstName: 'Jana',
+        lastName: 'Bežcová',
+      },
       '203.0.113.11',
     );
     await service.subscribe(
-      { consent: true, email: 'RUNNER@example.sk' },
+      {
+        consent: true,
+        email: 'RUNNER@example.sk',
+        firstName: 'Jana',
+        lastName: 'Bežcová',
+      },
       '203.0.113.11',
     );
     expect(rows).toHaveLength(1);
@@ -105,7 +121,12 @@ describe('LiveAlertsService', () => {
     const { service } = createHarness({ emailCount: 50 });
     await expect(
       service.subscribe(
-        { consent: true, email: 'runner@example.sk' },
+        {
+          consent: true,
+          email: 'runner@example.sk',
+          firstName: 'Jana',
+          lastName: 'Bežcová',
+        },
         '203.0.113.12',
       ),
     ).rejects.toBeInstanceOf(ConflictException);
@@ -114,12 +135,18 @@ describe('LiveAlertsService', () => {
   it('exports only decrypted operator data and no encryption payload', async () => {
     const { rows, service } = createHarness();
     await service.subscribe(
-      { consent: true, email: 'runner@example.sk' },
+      {
+        consent: true,
+        email: 'runner@example.sk',
+        firstName: 'Jana',
+        lastName: 'Bežcová',
+      },
       '203.0.113.13',
     );
     const encrypted = rows[0].contactEncrypted;
     const csv = await service.exportCsv();
     expect(csv).toContain('runner@example.sk');
+    expect(csv).toContain('"Jana","Bežcová"');
     expect(csv).toContain('2026-08-04');
     expect(csv).not.toContain(encrypted);
   });

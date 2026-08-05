@@ -113,11 +113,21 @@ describe('Lifecycle and live alerts (e2e)', () => {
   it('accepts a consented contact without returning private data', async () => {
     await request(app.getHttpServer())
       .post('/api/live-alert-subscriptions')
-      .send({ consent: true, email: 'runner@example.sk' })
+      .send({
+        consent: true,
+        email: 'runner@example.sk',
+        firstName: 'Jana',
+        lastName: 'Bežcová',
+      })
       .expect(202)
       .expect({ status: 'accepted' });
     expect(liveAlertsService.subscribe).toHaveBeenCalledWith(
-      { consent: true, email: 'runner@example.sk' },
+      {
+        consent: true,
+        email: 'runner@example.sk',
+        firstName: 'Jana',
+        lastName: 'Bežcová',
+      },
       expect.any(String),
     );
   });
@@ -137,8 +147,34 @@ describe('Lifecycle and live alerts (e2e)', () => {
   });
 
   it.each([
-    ['email', { consent: true, email: 'not-an-email' }],
-    ['phone', { consent: true, phone: '0900 000 000' }],
+    [
+      'email',
+      {
+        consent: true,
+        email: 'not-an-email',
+        firstName: 'Jana',
+        lastName: 'Bežcová',
+      },
+    ],
+    [
+      'national-format phone',
+      {
+        consent: true,
+        phone: '0900 000 000',
+        firstName: 'Jana',
+        lastName: 'Bežcová',
+      },
+    ],
+    [
+      'non Slovak or Czech phone',
+      {
+        consent: true,
+        phone: '+491511234567',
+        firstName: 'Jana',
+        lastName: 'Bežcová',
+      },
+    ],
+    ['nameless', { consent: true, email: 'runner@example.sk' }],
   ])(
     'rejects an invalid %s contact before it reaches the service',
     async (_label, body) => {
@@ -157,6 +193,8 @@ describe('Lifecycle and live alerts (e2e)', () => {
       .send({
         consent: true,
         email: 'runner@example.sk',
+        firstName: 'Jana',
+        lastName: 'Bežcová',
         privateMessage: 'secret',
       })
       .expect(400);

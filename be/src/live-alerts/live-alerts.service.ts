@@ -139,6 +139,8 @@ export class LiveAlertsService {
           contactEncrypted: this.crypto.encrypt(contact.value),
           contactFingerprint: fingerprint,
           expiresAt,
+          firstNameEncrypted: this.crypto.encrypt(dto.firstName),
+          lastNameEncrypted: this.crypto.encrypt(dto.lastName),
           status: 'pending',
         });
         await repository.save(entity);
@@ -159,6 +161,8 @@ export class LiveAlertsService {
       'id',
       'channel',
       'contact',
+      'firstName',
+      'lastName',
       'consentVersion',
       'status',
       'createdAt',
@@ -169,6 +173,8 @@ export class LiveAlertsService {
         row.id,
         row.channel,
         this.crypto.decrypt(row.contactEncrypted),
+        this.crypto.decrypt(row.firstNameEncrypted),
+        this.crypto.decrypt(row.lastNameEncrypted),
         row.consentVersion,
         row.status,
         row.createdAt.toISOString(),
