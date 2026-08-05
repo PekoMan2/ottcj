@@ -877,11 +877,32 @@ a {
   gap: var(--space-2);
 }
 
-.tracking-panel__body {
-  max-width: 42rem;
+.tracking-panel--notify {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+}
+
+.tracking-panel--notify > svg {
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--color-ember);
+  stroke-width: 2.5;
+}
+
+.tracking-panel--notify h2 {
   margin: 0;
-  font-size: 0.975rem;
-  font-weight: 600;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1;
+}
+
+.tracking-panel--notify p {
+  margin: 0.35rem 0 0;
+  color: var(--color-ash);
+  font-size: 0.875rem;
+}
+
+.tracking-panel--notify .sticker-button {
+  margin-top: var(--space-2);
 }
 
 .tracking-panel__note {

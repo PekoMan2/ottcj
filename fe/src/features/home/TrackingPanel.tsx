@@ -18,16 +18,14 @@ export function TrackingPanel({ eventState }: TrackingPanelProps) {
 
   if (beforeStart) {
     return (
-      <aside aria-label="Upozornenie na štart behu" className="tracking-panel">
-        <div className="tracking-panel__heading">
-          <BellRing aria-hidden="true" />
-          <div>
-            <p>{tracking.notify.eyebrow}</p>
-            <h2>{tracking.notify.title}</h2>
-          </div>
-        </div>
-        <p className="tracking-panel__body">{tracking.notify.body}</p>
-        <div className="tracking-panel__buttons">
+      <aside
+        aria-label="Upozornenie na štart behu"
+        className="tracking-panel tracking-panel--notify"
+      >
+        <BellRing aria-hidden="true" />
+        <div>
+          <h2>{tracking.notify.title}</h2>
+          <p>{tracking.notify.body}</p>
           <button className="sticker-button" type="button">
             {tracking.notify.label}
           </button>

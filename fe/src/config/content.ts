@@ -162,7 +162,6 @@ export interface TrackingContent {
   eyebrow: string;
   notify: {
     body: string;
-    eyebrow: string;
     label: string;
     title: string;
   };
@@ -454,7 +453,6 @@ export const siteContent = Object.freeze({
     pendingNote: "Garmin odkaz pridáme hneď po štarte.",
     runningNote: "Garmin beží priamo z Majových hodiniek.",
     notify: {
-      eyebrow: "Garmin LiveTrack",
       title: "upozorni ma, keď Majo vybehne",
       body: "V momente štartu behu dostaneš na sms/email odkaz na sledovanie Majovej lokácie.",
       label: "upozorni ma pri štarte",
