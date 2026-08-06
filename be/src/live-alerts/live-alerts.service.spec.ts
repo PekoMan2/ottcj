@@ -150,4 +150,22 @@ describe('LiveAlertsService', () => {
     expect(csv).toContain('2026-08-04');
     expect(csv).not.toContain(encrypted);
   });
+
+  it('neutralizes spreadsheet formula characters in exported cells', async () => {
+    const { service } = createHarness();
+    await service.subscribe(
+      {
+        consent: true,
+        firstName: '=HYPERLINK("http://evil.example")',
+        lastName: '@Bežcová',
+        phone: '+421900000000',
+      },
+      '203.0.113.14',
+    );
+    const csv = await service.exportCsv();
+    expect(csv).toContain('"\'=HYPERLINK(""http://evil.example"")"');
+    expect(csv).toContain('"\'@Bežcová"');
+    expect(csv).toContain('"\'+421900000000"');
+    expect(csv).not.toContain('"=HYPERLINK');
+  });
 });

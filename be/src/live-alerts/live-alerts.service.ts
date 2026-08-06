@@ -49,7 +49,8 @@ function normalizePhone(value: string): string {
 }
 
 function csvCell(value: string): string {
-  return `"${value.replaceAll('"', '""')}"`;
+  const guarded = /^[\t\r=+@-]/u.test(value) ? `'${value}` : value;
+  return `"${guarded.replaceAll('"', '""')}"`;
 }
 
 @Injectable()

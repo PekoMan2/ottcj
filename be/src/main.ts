@@ -35,17 +35,19 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle('Run Tracker API')
-    .setDescription('Live location and run information API')
-    .setVersion('1.0')
-    .build();
+  if (config.getOrThrow<string>('NODE_ENV') !== 'production') {
+    const swaggerConfig = new DocumentBuilder()
+      .setTitle('Run Tracker API')
+      .setDescription('Live location and run information API')
+      .setVersion('1.0')
+      .build();
 
-  const document = SwaggerModule.createDocument(app, swaggerConfig);
+    const document = SwaggerModule.createDocument(app, swaggerConfig);
 
-  SwaggerModule.setup('docs', app, document, {
-    useGlobalPrefix: true,
-  });
+    SwaggerModule.setup('docs', app, document, {
+      useGlobalPrefix: true,
+    });
+  }
 
   const port = config.getOrThrow<number>('PORT');
 
