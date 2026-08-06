@@ -913,6 +913,7 @@ a {
 
 .notify-form__grid {
   display: grid;
+  min-width: 0;
   gap: var(--space-2);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
 }
@@ -920,6 +921,7 @@ a {
 .notify-form label,
 .notify-form__field {
   display: grid;
+  min-width: 0;
   gap: 0.3rem;
   font-size: 0.8125rem;
   font-style: normal;
@@ -936,6 +938,11 @@ a {
   font-size: 0.9375rem;
   font-style: normal;
   font-weight: 400;
+}
+
+.notify-form input {
+  width: 100%;
+  min-width: 0;
 }
 
 .notify-form__phone {
@@ -1639,6 +1646,9 @@ a {
 
   .tracking-panel__buttons { align-items: stretch; flex-direction: column; }
   .tracking-panel__buttons .sticker-button { width: 100%; }
+
+  .tracking-panel--notify { grid-template-columns: minmax(0, 1fr); }
+  .notify-form .sticker-button { width: 100%; }
 
   .charity-section { padding-block: var(--space-6); }
   .charity-title { font-size: clamp(2.65rem, 13vw, 4rem); }
