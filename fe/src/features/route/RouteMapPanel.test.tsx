@@ -74,8 +74,10 @@ describe('RouteMapPanel', () => {
 
     const keyList = screen.getByRole('list', { name: 'Deväť kľúčových bodov trasy' });
     expect(within(keyList).getAllByRole('listitem')).toHaveLength(9);
-    expect(within(keyList).getByText('5. Zdrojový bod 5')).toBeInTheDocument();
-    expect(within(keyList).queryByText('6. Zdrojový bod 6')).not.toBeInTheDocument();
+    expect(within(keyList).getByText('Banská Bystrica')).toBeInTheDocument();
+    expect(within(keyList).getByText('Tu si so mnou zabehnú kamaráti z Nitry, pridaj sa!'))
+      .toBeInTheDocument();
+    expect(within(keyList).queryByText('5. Zdrojový bod 5')).not.toBeInTheDocument();
 
     const allPoints = screen.getByRole('list', { name: 'Všetkých 37 bodov trasy' });
     expect(within(allPoints).getAllByRole('listitem')).toHaveLength(37);

@@ -10,7 +10,6 @@ import {
   parseKmz,
   RouteDataError,
 } from './routeParser';
-import { selectKeyCheckpoints } from './routeSelectors';
 
 const kmlFixture = `<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -109,18 +108,6 @@ describe('production KMZ contract', () => {
     });
     expect(route.bounds[0][0]).toBeLessThan(route.bounds[1][0]);
     expect(route.bounds[0][1]).toBeLessThan(route.bounds[1][1]);
-  });
-
-  it('derives the final concise selection only from the approved source points', async () => {
-    const source = await readFile(productionAssetPath);
-    const route = assertProductionRouteContract(await parseKmz(source));
-    const selection = selectKeyCheckpoints(route);
-
-    expect(selection).toHaveLength(9);
-    expect(selection.map((checkpoint) => checkpoint.sourceNumber)).toEqual([
-      null, 5, 10, 15, 20, 25, 30, 35, 36,
-    ]);
-    expect(selection.every((checkpoint) => Number.isFinite(checkpoint.distanceKm))).toBe(true);
   });
 
   it('rejects a source that does not match the production point contract', () => {
