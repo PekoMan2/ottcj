@@ -1,4 +1,4 @@
-name: ${COMPOSE_PROJECT_NAME}
+name: ${COMPOSE_PROJECT_NAME:-run-tracker}
 
 services:
   fe:
@@ -6,7 +6,7 @@ services:
       context: ./fe
     restart: unless-stopped
     ports:
-      - "${APP_PORT}:80"
+      - "${APP_PORT:-8080}:80"
     healthcheck:
       test:
         [
