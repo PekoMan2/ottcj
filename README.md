@@ -23,8 +23,7 @@ and contributor rules.
 .
 ├── fe/               React, TypeScript, Vite, Tailwind CSS, and Nginx
 ├── compose.yaml      Frontend service
-├── .env.example      Committed configuration template
-├── .env              Local configuration (ignored by Git)
+├── .env              Compose configuration (committed, no secrets)
 └── package.json      Docker Compose convenience commands
 ```
 
@@ -34,12 +33,6 @@ and contributor rules.
 - npm and Node.js 24 only when running package checks outside Docker
 
 ## Setup
-
-Create the local environment file:
-
-```bash
-cp .env.example .env
-```
 
 Start the site:
 
@@ -64,9 +57,9 @@ The public lifecycle state (`pre`, `live`, `post`), the start time, the Garmin
 LiveTrack link and the final result are all baked into the bundle at build
 time from `VITE_*` variables. Vite loads them by mode: `npm run dev` reads
 `fe/.env.development` and `npm run build` reads `fe/.env.production`,
-including inside the Docker build. See `fe/.env.example` for the full list
-and [docs/live-operations.md](docs/live-operations.md) for the race-day flow.
-Changing any of them requires a rebuild (`npm run rebuild`).
+including inside the Docker build. Both files are committed; no value in them
+is secret. See [docs/live-operations.md](docs/live-operations.md) for the
+race-day flow. Changing any of them requires a rebuild (`npm run rebuild`).
 
 None of the variables are secrets; every value is publicly visible in the
 built JavaScript bundle.

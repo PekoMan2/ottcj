@@ -36,8 +36,9 @@ marked placeholder and record every missing input in
 
 - `fe/`: React 19, TypeScript, Vite, Tailwind CSS v4, React Router, and an Nginx
   production image. Run lifecycle state comes from `VITE_*` build-time
-  variables (see `fe/.env.example`); donations link out to Donio and
-  notification signups link out to a Google Form.
+  variables in the committed `fe/.env.production` and `fe/.env.development`
+  files; donations link out to Donio and notification signups link out to a
+  Google Form.
 - `compose.yaml`: the frontend/Nginx service. Nginx serves the React Router
   fallback.
 - Use npm only; do not add another package manager or workspace layer.
