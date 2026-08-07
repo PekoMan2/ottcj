@@ -16,8 +16,8 @@ and beneficiary of this website.** The cause itself is not a missing input.
 - [ ] Final pledge consent wording, publication consent, minimum pledge amount,
   fulfillment process, and approved definition of DNF/each time boundary.
 - [ ] Lawyer-approved GDPR notice, data controller/contact, purpose, legal
-  basis, retention, processors, data-subject rights, and Google processing
-  details.
+  basis, retention, processors, data-subject rights, and Google and Garmin
+  processing details, including the separate LiveTrack start-alert consent.
 - [ ] Lawyer-approved pledge and donation terms; no crowdfunding or tax/legal
   characterization may be inferred from the brief.
 - [ ] Exact Zachráňme Vilyho donation destination, final public campaign URL,
@@ -79,10 +79,17 @@ and beneficiary of this website.** The cause itself is not a missing input.
 
 ## P2 — lifecycle, launch, and optional material
 
-- [ ] Garmin LiveTrack or alternative provider URL/access, integration method,
-  refresh limits, terms, test feed, and owner.
-- [ ] Manual tracking fallback workflow, authorized operator, data fields, and
-  last-update/status-message process.
+- [ ] Exact Garmin model, phone OS, Garmin Connect/Connect+ account, authorized
+  operator, LiveTrack terms and an end-to-end test session. Confirm the actual
+  email and SMS recipient limits on Majo's setup before enabling registration.
+- [ ] Lawyer-approved LiveTrack alert consent version and display wording,
+  permitted email/phone channels, retention period, data-controller contact,
+  Garmin transfer procedure and deletion procedure in both this database and
+  Garmin contacts.
+- [ ] Manual LiveTrack workflow for exporting pending contacts, requesting any
+  required SMS opt-in, marking contacts as synced/rejected, starting the Garmin
+  session, publishing or replacing its URL, handling signal/session loss,
+  switching to `post`, and purging expired contacts.
 - [ ] Production `DB_PASSWORD`, `TRACKING_SECRET`, deployment secrets, database
   retention/backup policy, and secret owner in a secure store.
 - [ ] Hosting, domain, DNS, TLS, environment, deployment, and rollback access.

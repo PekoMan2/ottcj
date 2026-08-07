@@ -105,7 +105,7 @@ test('preserves the collage identity without responsive overflow', async ({ page
   expect(dateLayer).toBeGreaterThan(titleLayer);
   expect(dateBounds!.y + dateBounds!.height / 2).toBeLessThan(statsBounds!.y);
 
-  await expect(page.locator('.bracket-row--max')).toBeVisible();
+  await expect(page.locator('.donio-progress')).toBeVisible();
 
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,

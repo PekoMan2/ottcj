@@ -1,18 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { resolveSitePhase } from './sitePhase';
+import { isSitePhase } from './sitePhase';
 
-describe('resolveSitePhase', () => {
-  it('defaults missing configuration to pre', () => {
-    expect(resolveSitePhase(undefined)).toBe('pre');
-  });
-
+describe('isSitePhase', () => {
   it.each(['pre', 'live', 'post'] as const)('accepts the %s phase', (phase) => {
-    expect(resolveSitePhase(phase)).toBe(phase);
+    expect(isSitePhase(phase)).toBe(true);
   });
 
-  it('rejects an invalid phase', () => {
-    expect(() => resolveSitePhase('automatic')).toThrow(
-      'Invalid VITE_SITE_PHASE',
-    );
+  it.each([undefined, 'automatic', 1])('rejects invalid phase %s', (phase) => {
+    expect(isSitePhase(phase)).toBe(false);
   });
 });

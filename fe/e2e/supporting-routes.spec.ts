@@ -8,8 +8,6 @@ const evidenceDirectory = path.resolve(
 );
 
 const routes = [
-  { heading: 'Zoznam prísľubov.', path: '/prislub-zoznam', slug: 'pledges' },
-  { heading: 'Ďakujeme, že bežíš s nami.', path: '/dakujem', slug: 'thank-you' },
   { heading: 'Press kit.', path: '/press', slug: 'press' },
   { heading: 'Zachráňme Vilyho.', path: '/vily', slug: 'vily' },
   { heading: 'GDPR informácie.', path: '/gdpr', slug: 'gdpr' },
@@ -28,10 +26,6 @@ for (const route of routes) {
     );
     expect(overflow).toBeLessThanOrEqual(1);
 
-    if (route.path === '/prislub-zoznam') {
-      await expect(page.getByText('Zatiaľ nie je zverejnený žiadny prísľub.')).toBeVisible();
-      await expect(page.getByRole('heading', { name: 'Podmienky prísľubu.' })).toBeVisible();
-    }
     if (route.path === '/vily') {
       await expect(page.locator('main')).not.toContainText(/provisional|draft|unverified|čaká na schválenie|pracovný placeholder/iu);
     }
@@ -43,10 +37,3 @@ for (const route of routes) {
     });
   });
 }
-
-test('serves the safe pledge file as JSON', async ({ request }) => {
-  const response = await request.get('/data/pledges.json');
-  expect(response.ok()).toBe(true);
-  expect(response.headers()['content-type']).toContain('application/json');
-  expect(await response.json()).toEqual({ updatedAt: null, pledges: [] });
-});

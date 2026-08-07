@@ -25,8 +25,9 @@ test('loads the production route lazily and exposes every source point', async (
   await expect(keyPointsHeading).toHaveCSS('font-style', 'italic');
   await expect(keyPointsHeading).toHaveCSS('font-weight', '200');
   await expect(keyPoints.getByRole('listitem')).toHaveCount(9);
-  await expect(keyPoints).toContainText('5. Liptovská Osada');
-  await expect(keyPoints).toContainText('35. Jamaica');
+  await expect(keyPoints).toContainText('Jasná, Demänovská dolina (Nízke Tatry)');
+  await expect(keyPoints).toContainText('Banská Bystrica');
+  await expect(keyPoints).toContainText('Bratislava, Tyršovo nábrežie');
 
   await routeMap.getByText('všetky body · štart + 36 očíslovaných bodov').click();
   await expect(routeMap.getByRole('list', { name: 'Všetkých 37 bodov trasy' }).getByRole('listitem'))

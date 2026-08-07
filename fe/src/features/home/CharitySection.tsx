@@ -1,35 +1,12 @@
+import { Link } from 'react-router';
 import { Container } from '../../components/ui';
 import { siteContent } from '../../config/content';
-import type { SiteConfig } from '../../config/site';
-import { Link } from 'react-router';
-import {
-  calculatePledgeAmount,
-  pledgeBrackets,
-} from '../pledge/pledge';
-import { usePublicPledges } from '../pledge/publicPledgeContext';
+import { DonioCta } from '../donio/DonioCta';
+import { DonioProgress } from '../donio/DonioProgress';
 import { HeartDoodle } from './Doodles';
-import { PledgeCta } from './PledgeCta';
 
-interface CharitySectionProps {
-  config: SiteConfig;
-}
-
-const exampleBaseAmount = 20;
-const exampleOutcomes = [
-  { hours: 58, label: '58 hodín' },
-  { hours: 70, label: '70 hodín' },
-  { hours: 80, label: '80 hodín' },
-] as const;
-
-const currency = new Intl.NumberFormat('sk-SK', {
-  currency: 'EUR',
-  maximumFractionDigits: 2,
-  style: 'currency',
-});
-
-export function CharitySection({ config }: CharitySectionProps) {
+export function CharitySection() {
   const { charity } = siteContent;
-  const pledgeState = usePublicPledges();
 
   return (
     <section aria-labelledby="charity-title" className="charity-section" id="vily">
@@ -51,86 +28,35 @@ export function CharitySection({ config }: CharitySectionProps) {
             <p>{charity.story.introduction}</p>
             <p className="vily-card__accent">{charity.story.accent}</p>
           </div>
-          <p className="vily-card__progress">
-            Zatiaľ vyzbieraných <strong>{charity.campaign.collectedApproximation}</strong>{' '}
-            z celkových <strong>{charity.campaign.targetApproximation}</strong>. Ešte je veľa práce.{' '}
-            <a href={charity.campaign.destinationUrl}>{charity.campaign.destinationLabel}</a>
-          </p>
         </article>
 
-        <div className="pledge-explanation" id="prislub">
-          <p>
-            Ako to funguje: prisľúbiš <strong>základnú sumu</strong>. Podľa toho,
-            ako rýchlo dobehnem, sa suma <strong>znásobí</strong>. Ak nedobehnem,
-            prísľub padá. Peniaze idú priamo na Vilyho liečbu.
+        <div className="donio-actions" id="prispevok">
+          <p className="donio-actions__lead">{charity.ctaLead}</p>
+          <DonioCta size="big" />
+          <p className="donio-actions__note">
+            ↳ prispievaš priamo na{' '}
+            <a href={charity.campaign.destinationUrl} rel="noreferrer" target="_blank">
+              {charity.campaign.destinationLabel}
+            </a>
+            . žiadny medzičlánok.
           </p>
         </div>
 
-        <h3 className="brackets-title">časové brackets <span aria-hidden="true">↘</span></h3>
-        <div aria-label="Násobky prísľubu podľa výsledného času" className="brackets" role="list">
-          {pledgeBrackets.map((bracket) => (
-            <div
-              className={`bracket-row ${bracket.tone === 'max' ? 'bracket-row--max' : ''}`}
-              key={bracket.multiplier}
-              role="listitem"
-            >
-              <span aria-label={bracket.accessibleRange} className="bracket-row__time">
-                {bracket.displayRange}
-                {bracket.tone === 'max' ? <em>← MAX</em> : null}
-              </span>
-              <strong>{bracket.multiplier}× základ</strong>
-            </div>
-          ))}
-        </div>
-        <p className="dnf-note">nad 84h alebo DNF → prísľub padá · 0×</p>
+        <DonioProgress />
 
-        <div className="pledge-example">
-          <span className="pledge-example__label">príklad:</span>
+        <div className="bet-box">
+          <span className="bet-box__label">{charity.bet.label}</span>
           <p>
-            Prisľúbiš <strong>{currency.format(exampleBaseAmount)}</strong>. Ak dobehnem za{' '}
-            <strong>{exampleOutcomes[0].label}</strong>, uhradíš{' '}
-            <strong className="pledge-example__result">
-              {currency.format(
-                calculatePledgeAmount(exampleBaseAmount, {
-                  elapsedHours: exampleOutcomes[0].hours,
-                  status: 'finished',
-                }),
-              )}
-            </strong>
-            . Za {exampleOutcomes[1].hours}h →{' '}
-            {currency.format(
-              calculatePledgeAmount(exampleBaseAmount, {
-                elapsedHours: exampleOutcomes[1].hours,
-                status: 'finished',
-              }),
-            )}
-            . Za {exampleOutcomes[2].hours}h →{' '}
-            {currency.format(
-              calculatePledgeAmount(exampleBaseAmount, {
-                elapsedHours: exampleOutcomes[2].hours,
-                status: 'finished',
-              }),
-            )}
-            . Nedobehnem → {currency.format(calculatePledgeAmount(exampleBaseAmount, { status: 'dnf' }))}.
+            {charity.bet.finishLead}{' '}
+            <strong className="bet-box__code">({charity.bet.finishCode})</strong>.{' '}
+            {charity.bet.finishOutro}
           </p>
-        </div>
-
-        <div className="charity-actions">
-          <PledgeCta href={config.pledgeFormUrl} />
-          <Link className="pledge-list-link" to="/prislub-zoznam">zoznam prísľubov</Link>
-        </div>
-        <p className="charity-note">↳ prísľub cez Google formulár. transparentne, dohľadateľne.</p>
-
-        <div className="pledge-summary" data-pledge-status={pledgeState.status}>
-          {pledgeState.status === 'loading' ? <p><strong>Načítavam verejné prísľuby…</strong></p> : null}
-          {pledgeState.status === 'error' ? <p><strong>Súhrn momentálne nie je dostupný.</strong> Bezpečné verejné dáta sa nepodarilo načítať.</p> : null}
-          {pledgeState.status === 'ready' ? (
-            <p>
-              <strong>{pledgeState.summary.participantCount}</strong> ľudí prisľúbilo · základ{' '}
-              <strong>{currency.format(pledgeState.summary.baseTotalEur)}</strong> · potenciál až{' '}
-              <strong>{currency.format(pledgeState.summary.maximumPotentialEur)}</strong>
-            </p>
-          ) : null}
+          <p>
+            {charity.bet.dnfLead}{' '}
+            <strong className="bet-box__code">({charity.bet.dnfCode})</strong>{' '}
+            {charity.bet.dnfOutro}
+          </p>
+          <p className="bet-box__hint">{charity.bet.hint}</p>
         </div>
       </Container>
     </section>

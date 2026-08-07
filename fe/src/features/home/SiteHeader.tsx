@@ -1,17 +1,13 @@
 import { Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
-import type { SiteConfig } from '../../config/site';
 import { Container } from '../../components/ui';
 import { siteContent } from '../../config/content';
+import { DonioCta } from '../donio/DonioCta';
+import type { EventState } from '../event/eventState';
 import { EventStatus } from './EventStatus';
-import { PledgeCta } from './PledgeCta';
 
-interface SiteHeaderProps {
-  config: SiteConfig;
-}
-
-export function SiteHeader({ config }: SiteHeaderProps) {
+export function SiteHeader({ eventState }: { eventState: EventState }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -42,7 +38,13 @@ export function SiteHeader({ config }: SiteHeaderProps) {
       <Container className="site-header__inner">
         <Link aria-label="Majo · Od Tatier k Dunaju — domov" className="brand" to="/">
           <span className="brand__uuu">uuu</span>
-          <span className="brand__name">MAJO · OTKD</span>
+          <img
+            alt=""
+            className="brand__logo"
+            height={144}
+            src="/otkd-logo.png"
+            width={700}
+          />
         </Link>
 
         <nav aria-label="Hlavná navigácia" className={`site-nav ${menuOpen ? 'site-nav--open' : ''}`} id="site-navigation">
@@ -54,8 +56,8 @@ export function SiteHeader({ config }: SiteHeaderProps) {
         </nav>
 
         <div className="site-header__actions">
-          <EventStatus eventStartAt={config.eventStartAt} phase={config.phase} />
-          <PledgeCta compact href={config.pledgeFormUrl} />
+          <EventStatus eventState={eventState} />
+          {eventState.phase !== 'post' ? <DonioCta size="compact" /> : null}
           <button
             aria-controls="site-navigation"
             aria-expanded={menuOpen}

@@ -41,11 +41,17 @@ The phase is explicit configuration, not automatic date inference.
 | Phase | Intended period | Primary behavior |
 | --- | --- | --- |
 | `pre` | Before the run | Pledge-focused hero, start countdown, charity immediately after the hero. |
-| `live` | During the run | Live position and progress become prominent while pledges remain available. |
+| `live` | During the run | Direct Garmin LiveTrack access becomes prominent while pledges remain available. |
 | `post` | After the run | Finish time, result, final multiplier, donation fulfillment, and total raised become prominent. |
 
 The brief associates these phases with 13–16 August 2026, but exact production
 switch timing and displayed dates must be confirmed operationally.
+
+Approved Milestone 6 adaptation: the live phase provides a prominent direct
+link to Majo's Garmin LiveTrack session. The website does not embed or mirror
+Garmin position, pace or elevation data. Visitors may request a one-time start
+alert only through the separately consented and capacity-limited operator
+workflow documented in `live-operations.md`.
 
 ## Sitemap
 

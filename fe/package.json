@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "render:og": "node tools/render-og-card.mjs",
     "test": "vitest",
     "test:visual": "playwright test",
     "typecheck": "tsc -b --pretty false"

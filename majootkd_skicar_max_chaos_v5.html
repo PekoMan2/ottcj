@@ -1,0 +1,387 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,400;0,600;0,800;1,200;1,400;1,700;1,800;1,900&family=Caveat:wght@400;700&family=Bungee&family=Fredoka:wght@600;700&family=Comic+Neue:ital,wght@0,700;1,700&family=JetBrains+Mono:wght@400;500&display=swap');
+.mockup * { box-sizing: border-box; }
+.mockup { border-radius: 12px; overflow: hidden; border: 0.5px solid var(--border); background: var(--surface-1); font-family: 'Prompt', sans-serif; }
+.browser-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--surface-1); }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.urlbar { flex: 1; text-align: center; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 6px; padding: 4px 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); }
+.site { background: #FDFCF9; color: #0F1419; position: relative; overflow: hidden; }
+
+/* HEADER */
+.header { display: flex; align-items: center; justify-content: space-between; padding: 16px 22px; border-bottom: 2px solid #0F1419; position: relative; z-index: 20; background: #FDFCF9; }
+.logo-wrap { display: flex; align-items: baseline; gap: 10px; }
+.logo-uuu { font-family: 'Prompt', sans-serif; font-weight: 200; font-style: italic; font-size: 36px; line-height: 0.8; color: #0F1419; }
+.logo-sub { font-weight: 700; font-style: italic; font-size: 12px; color: #E8622D; }
+.nav { display: flex; gap: 18px; font-size: 14px; font-weight: 500; font-style: italic; color: #0F1419; }
+.header-right { display: flex; gap: 10px; align-items: center; }
+.countdown-lbl { font-family: 'Caveat', cursive; font-size: 13px; color: #E8622D; }
+.countdown { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; }
+.btn-orange-small { background: #E8622D; color: #FFF; padding: 8px 14px; border-radius: 3px; font-size: 12px; font-weight: 800; font-style: italic; border: 2px solid #0F1419; box-shadow: 3px 3px 0 #0F1419; transform: rotate(-1deg); cursor: pointer; }
+
+/* === HERO — FULL SKICÁR CHAOS === */
+.hero-collage { position: relative; height: 640px; overflow: hidden; background: #FDFCF9; z-index: 2; }
+.hero-collage::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 30%, rgba(0,0,0,0.02) 0.5px, transparent 1px); background-size: 22px 22px; pointer-events: none; }
+
+/* Slniečko */
+.sun-doodle { position: absolute; top: 20px; left: 30px; width: 130px; height: 130px; transform: rotate(-6deg); z-index: 3; }
+
+/* Hory */
+.mountains-doodle { position: absolute; top: 60px; left: 170px; width: 260px; height: 130px; transform: rotate(1deg); z-index: 3; }
+
+/* Kamzík */
+.kamzik-wrap { position: absolute; top: 15px; right: 30px; width: 150px; height: 130px; transform: rotate(6deg); z-index: 4; }
+.kamzik-wrap .uuu-tag { position: absolute; top: 25px; right: 30px; font-family: 'Prompt', sans-serif; font-weight: 200; font-style: italic; font-size: 30px; color: #0F1419; transform: rotate(-5deg); }
+
+/* Halušky */
+.halusky-wrap { position: absolute; top: 20px; right: 200px; width: 100px; height: 90px; transform: rotate(-8deg); z-index: 4; }
+
+/* 347 km rainbow */
+.km347 { position: absolute; top: 175px; left: 60px; z-index: 5; transform: rotate(-8deg); }
+.km347-scribble { position: absolute; top: -18px; left: -30px; width: 240px; height: 100px; }
+.km347-txt { position: relative; font-family: 'Bungee', sans-serif; font-size: 52px; line-height: 1; letter-spacing: 0.02em; background: linear-gradient(90deg, #E51A1A 0%, #F7931E 18%, #FFD11E 36%, #3AB44A 55%, #1E90FF 75%, #8E44AD 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; -webkit-text-stroke: 2px #0F1419; filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.2)); }
+
+/* Slovakia map background */
+.sk-map { position: absolute; top: 140px; left: 190px; width: 460px; height: 220px; z-index: 2; }
+
+/* Štart label */
+.label-start { position: absolute; top: 225px; left: 290px; font-family: 'Caveat', cursive; font-weight: 700; font-size: 26px; color: #0F1419; transform: rotate(-3deg); z-index: 6; }
+.label-start .small { font-family: 'Prompt', sans-serif; font-weight: 200; font-style: italic; font-size: 18px; display: block; margin-top: -4px; }
+
+/* Cieľ label */
+.label-ciel { position: absolute; bottom: 175px; left: 45px; font-family: 'Caveat', cursive; font-weight: 700; font-size: 26px; color: #0F1419; transform: rotate(-5deg); z-index: 6; }
+
+/* Ambulancia */
+.amb-wrap { position: absolute; bottom: 220px; left: 260px; width: 80px; height: 60px; transform: rotate(8deg); z-index: 5; }
+
+/* Mačka v okuliaroch s pizzou */
+.cat-wrap { position: absolute; bottom: 165px; left: 195px; width: 110px; height: 110px; transform: rotate(-6deg); z-index: 5; }
+
+/* Photo Majo */
+.majo-photo { position: absolute; top: 185px; right: 60px; width: 140px; height: 175px; transform: rotate(-4deg); z-index: 5; }
+.majo-photo .frame { position: absolute; inset: 0; border-radius: 50%; border: 4px solid #E51A1A; overflow: hidden; background: #d0d5dd; box-shadow: 4px 4px 0 rgba(0,0,0,0.15); }
+.majo-photo .frame::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, #a8b3c1 0%, #5c6a80 100%); }
+
+/* Selfie stick */
+.selfie-stick { position: absolute; bottom: 40px; right: 100px; width: 40px; height: 200px; z-index: 4; transform: rotate(15deg); }
+
+/* Šípky */
+.arrow-doodle { position: absolute; z-index: 6; }
+.arrow-1 { top: 260px; right: 200px; width: 90px; height: 40px; transform: rotate(10deg); }
+
+/* WordArt Od Tatier k Dunaju */
+.wordart-wrap { position: absolute; bottom: 45px; left: 20px; right: 20px; z-index: 7; transform: rotate(-3deg); text-align: center; }
+
+/* Dátum */
+.date-hw { position: absolute; bottom: 15px; right: 80px; font-family: 'Caveat', cursive; font-weight: 700; font-size: 40px; color: #0F1419; transform: rotate(-2deg); z-index: 8; }
+
+/* CTA row */
+.hero-cta-row { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 20; }
+.btn-primary { background: #E8622D; color: #FFF; padding: 10px 18px; border-radius: 3px; font-size: 13px; font-weight: 800; font-style: italic; border: 2px solid #0F1419; box-shadow: 3px 3px 0 #0F1419; transform: rotate(-1deg); cursor: pointer; font-family: 'Prompt', sans-serif; }
+
+/* === CHARITA SECTION with skicár accents === */
+.charita-section { padding: 44px 24px 40px; position: relative; z-index: 2; border-top: 3px double #0F1419; background: #FDFCF9; }
+.charita-badge { display: inline-block; background: #E8622D; color: #FFF; font-weight: 800; font-style: italic; font-size: 11px; padding: 4px 10px; border-radius: 2px; margin-bottom: 12px; transform: rotate(-2deg); border: 2px solid #0F1419; }
+.charita-title { font-family: 'Prompt', sans-serif; font-weight: 800; font-style: italic; font-size: 46px; letter-spacing: -0.03em; margin: 0 0 20px; line-height: 0.95; color: #0F1419; }
+.charita-title .thin { font-weight: 300; color: #E8622D; text-decoration: underline; text-decoration-style: wavy; text-decoration-color: #E8622D; text-underline-offset: 4px; }
+
+/* Vily block s doodle akcentmi */
+.vily-block { background: #FFFDF6; border: 2px solid #0F1419; padding: 22px 22px 20px; margin: 0 0 24px; box-shadow: 5px 5px 0 rgba(15,20,25,0.15); transform: rotate(-0.3deg); position: relative; }
+.vily-tag { position: absolute; top: -12px; left: 20px; background: #0F1419; color: #FDFCF9; font-family: 'Caveat', cursive; font-size: 18px; padding: 2px 12px; border-radius: 2px; transform: rotate(-2deg); }
+.vily-heart { position: absolute; top: -25px; right: 30px; font-size: 30px; transform: rotate(15deg); }
+.vily-text { font-family: 'Prompt', sans-serif; font-style: italic; font-weight: 400; font-size: 15px; line-height: 1.65; color: #0F1419; }
+.vily-text b { font-weight: 700; }
+.vily-text .accent { color: #E8622D; font-weight: 700; }
+.vily-progress { margin-top: 12px; padding-top: 12px; border-top: 1.5px dashed #0F1419; font-family: 'Prompt', sans-serif; font-style: italic; font-size: 13px; color: #6B6B6B; }
+.vily-progress b { color: #0F1419; font-weight: 700; }
+.vily-progress a { color: #E8622D; text-decoration: underline; font-weight: 600; }
+
+/* Brackets s handpísaným akcentom */
+.brackets-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 26px; color: #0F1419; margin: 8px 0 12px; transform: rotate(-1deg); display: inline-block; }
+.brackets-title .kitty { font-size: 22px; margin-left: 8px; }
+.brackets { border-top: 2px solid #0F1419; margin-bottom: 20px; }
+.bracket-row { display: grid; grid-template-columns: 1fr auto; gap: 20px; padding: 14px 0; border-bottom: 2px solid #0F1419; align-items: baseline; }
+.bracket-time { font-family: 'Prompt', sans-serif; font-weight: 600; font-style: italic; font-size: 20px; color: #0F1419; }
+.bracket-mult { font-family: 'Prompt', sans-serif; font-weight: 800; font-style: italic; font-size: 18px; color: #0F1419; }
+.bracket-row.max { background: #0F1419; padding: 14px 12px; margin: 0 -12px; border: 2px solid #0F1419; position: relative; }
+.bracket-row.max .bracket-time { color: #FDFCF9; font-weight: 800; }
+.bracket-row.max .bracket-mult { color: #E8622D; font-weight: 900; font-size: 22px; }
+.bracket-row.max .max-tag { font-family: 'Caveat', cursive; font-size: 22px; color: #E8622D; margin-left: 8px; }
+.bracket-row.max::after { content: '🔥'; position: absolute; right: -30px; top: 8px; font-size: 30px; transform: rotate(15deg); }
+
+.example-box { background: #FDFCF9; border: 2px dashed #0F1419; padding: 16px 20px; margin: 20px 0 24px; font-family: 'Prompt', sans-serif; font-style: italic; font-size: 15px; color: #0F1419; line-height: 1.5; transform: rotate(-0.5deg); position: relative; }
+.example-box .lbl { font-family: 'Caveat', cursive; font-weight: 700; font-size: 22px; color: #E8622D; display: block; margin-bottom: 4px; transform: rotate(-1deg); }
+.example-box b { font-weight: 800; }
+.example-box .result { color: #E8622D; font-weight: 800; font-size: 17px; }
+
+.charita-cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+.btn-dark { background: #0F1419; color: #FDFCF9; padding: 10px 18px; border-radius: 3px; font-size: 13px; font-weight: 700; font-style: italic; border: 2px solid #0F1419; cursor: pointer; font-family: 'Prompt', sans-serif; }
+.btn-primary-big { background: #E8622D; color: #FFF; padding: 12px 22px; border-radius: 3px; font-size: 15px; font-weight: 800; font-style: italic; border: 2px solid #0F1419; box-shadow: 4px 4px 0 #0F1419; transform: rotate(-1deg); cursor: pointer; font-family: 'Prompt', sans-serif; }
+.charita-note-small { font-family: 'Caveat', cursive; font-size: 18px; color: #6B6B6B; margin-bottom: 14px; }
+.charita-live { font-family: 'Prompt', sans-serif; font-style: italic; font-size: 14px; color: #6B6B6B; padding: 12px 16px; background: rgba(232,98,45,0.08); border-left: 4px solid #E8622D; }
+.charita-live .cnum { color: #0F1419; font-weight: 800; font-size: 15px; }
+.charita-live .cnum.accent { color: #E8622D; }
+</style>
+
+<h2 class="sr-only" style="position:absolute;left:-9999px;">Full skicár chaos mockup majootkd.sk</h2>
+
+<div class="mockup">
+  <div class="browser-bar">
+    <div class="dot" style="background:#FF5F57"></div>
+    <div class="dot" style="background:#FEBC2E"></div>
+    <div class="dot" style="background:#28C840"></div>
+    <div class="urlbar">majootkd.sk</div>
+  </div>
+
+  <div class="site">
+    <div class="header">
+      <div class="logo-wrap">
+        <div class="logo-uuu">uuu</div>
+        <div class="logo-sub">MAJO · OTKD</div>
+      </div>
+      <div class="nav">
+        <span>trasa</span><span>Vily</span><span>tím</span><span>partneri</span><span>prísľub</span>
+      </div>
+      <div class="header-right">
+        <div style="text-align:right;">
+          <div class="countdown-lbl">do štartu:</div>
+          <div class="countdown">11d · 04h · 22m</div>
+        </div>
+        <button class="btn-orange-small">prísľub →</button>
+      </div>
+    </div>
+
+    <!-- HERO: FULL SKICÁR COLLAGE -->
+    <div class="hero-collage">
+
+      <!-- Slnie4čko -->
+      <svg class="sun-doodle" viewBox="0 0 130 130">
+        <g fill="none" stroke="#F9A825" stroke-width="4" stroke-linecap="round">
+          <line x1="65" y1="10" x2="65" y2="28"/>
+          <line x1="65" y1="102" x2="65" y2="120"/>
+          <line x1="10" y1="65" x2="28" y2="65"/>
+          <line x1="102" y1="65" x2="120" y2="65"/>
+          <line x1="22" y1="22" x2="35" y2="35"/>
+          <line x1="95" y1="35" x2="108" y2="22"/>
+          <line x1="22" y1="108" x2="35" y2="95"/>
+          <line x1="95" y1="95" x2="108" y2="108"/>
+        </g>
+        <circle cx="65" cy="65" r="32" fill="#FFEB3B" stroke="#F9A825" stroke-width="3"/>
+        <circle cx="55" cy="60" r="3" fill="#0F1419"/>
+        <circle cx="75" cy="60" r="3" fill="#0F1419"/>
+        <path d="M 52 72 Q 65 82 78 72" fill="none" stroke="#0F1419" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+
+      <!-- Hory -->
+      <svg class="mountains-doodle" viewBox="0 0 260 130">
+        <path d="M 10 118 L 60 22 L 95 68 L 130 12 L 170 55 L 210 32 L 250 100 L 250 125 L 10 125 Z"
+              fill="#4CAF50" stroke="#0F1419" stroke-width="3" stroke-linejoin="miter"/>
+        <path d="M 60 22 L 50 34 L 60 32 L 68 40 L 78 30 L 60 22" fill="#FFF" stroke="#0F1419" stroke-width="1.5"/>
+        <path d="M 130 12 L 120 26 L 130 24 L 140 32 L 148 24 L 130 12" fill="#FFF" stroke="#0F1419" stroke-width="1.5"/>
+      </svg>
+
+      <!-- Halušky bowl -->
+      <svg class="halusky-wrap" viewBox="0 0 100 90">
+        <ellipse cx="50" cy="72" rx="42" ry="10" fill="#8B7355" stroke="#0F1419" stroke-width="2"/>
+        <path d="M 8 65 Q 8 45 50 45 Q 92 45 92 65 Z" fill="#F5F1EB" stroke="#0F1419" stroke-width="2"/>
+        <circle cx="30" cy="52" r="6" fill="#FDFCF9" stroke="#0F1419" stroke-width="1"/>
+        <circle cx="45" cy="48" r="6" fill="#FDFCF9" stroke="#0F1419" stroke-width="1"/>
+        <circle cx="62" cy="50" r="6" fill="#FDFCF9" stroke="#0F1419" stroke-width="1"/>
+        <circle cx="75" cy="55" r="5" fill="#FDFCF9" stroke="#0F1419" stroke-width="1"/>
+        <circle cx="38" cy="58" r="4" fill="#5D4037" opacity="0.8"/>
+        <circle cx="55" cy="56" r="3" fill="#5D4037" opacity="0.8"/>
+        <path d="M 30 30 Q 32 20 40 25" fill="none" stroke="#999" stroke-width="1.5"/>
+        <path d="M 50 28 Q 55 15 62 22" fill="none" stroke="#999" stroke-width="1.5"/>
+      </svg>
+
+      <!-- Kamzík -->
+      <svg class="kamzik-wrap" viewBox="0 0 150 130">
+        <!-- Telo -->
+        <path d="M 35 85 Q 30 60 45 55 L 55 45 L 70 43 L 90 45 L 105 50 L 115 60 L 118 80 L 115 100 L 105 105 L 95 108 L 55 108 L 40 105 Z"
+              fill="#8B6F47" stroke="#0F1419" stroke-width="2.5"/>
+        <!-- Rohy -->
+        <path d="M 62 42 Q 58 25 55 8" fill="none" stroke="#0F1419" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M 80 42 Q 84 25 87 8" fill="none" stroke="#0F1419" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Oko -->
+        <circle cx="60" cy="55" r="2" fill="#0F1419"/>
+        <!-- Nohy -->
+        <line x1="55" y1="105" x2="52" y2="125" stroke="#0F1419" stroke-width="3"/>
+        <line x1="70" y1="107" x2="68" y2="125" stroke="#0F1419" stroke-width="3"/>
+        <line x1="90" y1="107" x2="92" y2="125" stroke="#0F1419" stroke-width="3"/>
+        <line x1="105" y1="105" x2="108" y2="125" stroke="#0F1419" stroke-width="3"/>
+        <!-- Brucho -->
+        <path d="M 50 80 Q 75 90 105 80" fill="#D4B896" stroke="none"/>
+      </svg>
+      <div class="kamzik-wrap"><div class="uuu-tag">uuu</div></div>
+
+      <!-- Slovakia map -->
+      <svg class="sk-map" viewBox="0 0 460 220">
+        <!-- Slovakia outline crayon-drawn -->
+        <path d="M 30 90 Q 25 60 60 55 Q 100 45 150 50 Q 200 55 250 55 Q 300 60 350 65 Q 400 70 430 90 Q 435 110 420 130 Q 400 145 370 145 Q 320 145 280 140 Q 220 145 160 155 Q 100 165 60 155 Q 30 145 30 120 Z"
+              fill="none" stroke="#8B7355" stroke-width="2" stroke-linecap="round" stroke-dasharray="0" opacity="0.6"/>
+        <!-- Trať oranžovým fixom -->
+        <path d="M 340 70 Q 320 90 300 100 Q 260 110 220 115 Q 180 120 140 125 Q 100 130 70 135"
+              fill="none" stroke="#E8622D" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
+        <path d="M 340 70 Q 320 90 300 100 Q 260 110 220 115 Q 180 120 140 125 Q 100 130 70 135"
+              fill="none" stroke="#E8622D" stroke-width="2" stroke-linecap="round" opacity="0.9" stroke-dasharray="3 3"/>
+        <!-- Štart bod -->
+        <circle cx="340" cy="70" r="7" fill="#E51A1A" stroke="#0F1419" stroke-width="2"/>
+        <!-- Cieľ bod -->
+        <circle cx="70" cy="135" r="7" fill="#0F1419" stroke="#0F1419" stroke-width="2"/>
+      </svg>
+
+      <!-- 347 km rainbow WordArt -->
+      <div class="km347">
+        <svg class="km347-scribble" viewBox="0 0 240 100" preserveAspectRatio="none">
+          <path d="M 40 20 Q 15 25 15 55 Q 15 85 65 90 Q 130 95 190 82 Q 225 72 220 40 Q 210 15 150 12 Q 80 8 40 20 Z"
+                fill="none" stroke="#E51A1A" stroke-width="3.5" stroke-linecap="round" opacity="0.85"/>
+        </svg>
+        <div class="km347-txt">347km</div>
+      </div>
+
+      <!-- Štart label -->
+      <div class="label-start">
+        štart
+        <span class="small">uuultra</span>
+      </div>
+
+      <!-- Cieľ label -->
+      <div class="label-ciel">cieľ (?)</div>
+
+      <!-- Šípka od Majovi -->
+      <svg class="arrow-doodle arrow-1" viewBox="0 0 90 40">
+        <path d="M 5 30 Q 30 10 60 15 L 75 15 L 68 8 M 75 15 L 68 22"
+              fill="none" stroke="#E51A1A" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+
+      <!-- Ambulancia -->
+      <svg class="amb-wrap" viewBox="0 0 80 60">
+        <rect x="8" y="18" width="60" height="30" fill="#FDFCF9" stroke="#0F1419" stroke-width="2.5" rx="2"/>
+        <rect x="8" y="18" width="20" height="18" fill="#F5F1EB" stroke="#0F1419" stroke-width="2"/>
+        <rect x="65" y="15" width="10" height="15" fill="#3AB44A" stroke="#0F1419" stroke-width="2"/>
+        <circle cx="20" cy="52" r="6" fill="#0F1419"/>
+        <circle cx="55" cy="52" r="6" fill="#0F1419"/>
+        <rect x="42" y="24" width="4" height="18" fill="#E51A1A"/>
+        <rect x="35" y="31" width="18" height="4" fill="#E51A1A"/>
+      </svg>
+
+      <!-- Mačka s okuliarmi -->
+      <svg class="cat-wrap" viewBox="0 0 110 110">
+        <path d="M 30 55 L 22 25 L 40 40 L 55 38 L 70 40 L 88 25 L 80 55 Q 88 68 82 82 Q 75 95 55 95 Q 35 95 28 82 Q 22 68 30 55 Z"
+              fill="#E8A957" stroke="#0F1419" stroke-width="2.5"/>
+        <path d="M 25 33 L 32 45 L 40 40" fill="#F5C77F" stroke="#0F1419" stroke-width="1.5"/>
+        <path d="M 85 33 L 78 45 L 70 40" fill="#F5C77F" stroke="#0F1419" stroke-width="1.5"/>
+        <!-- Okuliare -->
+        <ellipse cx="42" cy="62" rx="10" ry="7" fill="#0F1419"/>
+        <ellipse cx="68" cy="62" rx="10" ry="7" fill="#0F1419"/>
+        <line x1="52" y1="62" x2="58" y2="62" stroke="#0F1419" stroke-width="2"/>
+        <path d="M 32 62 Q 27 60 22 60" fill="none" stroke="#0F1419" stroke-width="2"/>
+        <path d="M 78 62 Q 83 60 88 60" fill="none" stroke="#0F1419" stroke-width="2"/>
+        <!-- Nos + fúzy -->
+        <path d="M 52 76 L 55 80 L 58 76 Z" fill="#0F1419"/>
+        <path d="M 55 80 L 55 84" stroke="#0F1419" stroke-width="1.5"/>
+        <line x1="35" y1="80" x2="45" y2="82" stroke="#0F1419" stroke-width="1"/>
+        <line x1="35" y1="86" x2="45" y2="85" stroke="#0F1419" stroke-width="1"/>
+        <line x1="75" y1="80" x2="65" y2="82" stroke="#0F1419" stroke-width="1"/>
+        <line x1="75" y1="86" x2="65" y2="85" stroke="#0F1419" stroke-width="1"/>
+      </svg>
+
+      <!-- Foto Majo (silueta v kruhu s červeným kruhom) -->
+      <div class="majo-photo">
+        <div class="frame">
+          <svg viewBox="0 0 100 130" style="position:absolute;inset:0;width:100%;height:100%;">
+            <rect width="100" height="130" fill="#6B7A8F"/>
+            <ellipse cx="50" cy="55" rx="22" ry="26" fill="#D4A574"/>
+            <path d="M 22 130 Q 22 88 50 88 Q 78 88 78 130 Z" fill="#2C3E50"/>
+            <path d="M 28 45 Q 30 30 50 28 Q 70 30 72 45 Q 72 42 65 40 L 35 40 Q 28 42 28 45" fill="#2C1810"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- WordArt titulok -->
+      <div class="wordart-wrap">
+        <svg viewBox="0 0 700 130" preserveAspectRatio="xMidYMid meet" style="width:100%;height:130px;">
+          <defs>
+            <linearGradient id="rain1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#E51A1A"/>
+              <stop offset="20%" stop-color="#F7931E"/>
+              <stop offset="40%" stop-color="#FFD11E"/>
+              <stop offset="60%" stop-color="#3AB44A"/>
+              <stop offset="80%" stop-color="#1E90FF"/>
+              <stop offset="100%" stop-color="#8E44AD"/>
+            </linearGradient>
+            <path id="arc1" d="M 20 100 Q 350 30 680 100" fill="none"/>
+          </defs>
+          <text font-family="Bungee, Fredoka, sans-serif" font-size="72" fill="url(#rain1)" stroke="#0F1419" stroke-width="2.5" paint-order="stroke fill">
+            <textPath href="#arc1" startOffset="50%" text-anchor="middle">Od Tatier k Dunaju</textPath>
+          </text>
+        </svg>
+      </div>
+
+      <!-- Dátum -->
+      <div class="date-hw">13.8. 🏃</div>
+
+      <!-- CTA v ľavom hornom -->
+      <div class="hero-cta-row">
+        <button class="btn-primary">prisľúbiť podporu →</button>
+      </div>
+    </div>
+
+    <!-- CHARITA SECTION -->
+    <div class="charita-section">
+      <div class="charita-badge">verejný prísľub · charitatívny beh</div>
+      <h2 class="charita-title">bež so mnou. <br><span class="thin">zachráňme Vilyho.</span></h2>
+
+      <div class="vily-block">
+        <div class="vily-tag">→ kto je Vily?</div>
+        <div class="vily-heart">❤️</div>
+        <div class="vily-text">
+          <b>Vily má 2 roky.</b> Bojuje s Duchennovou svalovou dystrofiou — vzácnou genetickou chorobou, ktorá mu postupne ničí svaly. Prvé 4 roky sú kritické. Otec mu zohnal medzinárodný tím vedcov (Francúzsko, UPJŠ Košice, Comenius Bratislava) a pripravuje sa špecializovaná liečba.
+          <br><br>
+          <span class="accent">Vilyho otec šiel sám peši 430 km z Košíc do Bratislavy, aby pomohol synovi. Ja pokračujem v jeho šľapajach — 347 km z Tatier k Dunaju. Sólo, bez štafety.</span>
+        </div>
+        <div class="vily-progress">
+          Zatiaľ vyzbieraných <b>~2 milióny €</b> z celkových <b>4 miliónov €</b>. Ešte je veľa práce. → <a>donio.sk/zachranme-vilyho</a>
+        </div>
+      </div>
+
+      <div style="font-family:'Prompt',sans-serif;font-weight:400;font-style:italic;font-size:16px;line-height:1.55;margin-bottom:16px;max-width:580px;">
+        Ako to funguje: prisľúbiš <b>základnú sumu</b>. Podľa toho, ako rýchlo dobehnem, sa suma <b>znásobí</b>. Ak nedobehnem, prísľub padá. Peniaze idú priamo na Vilyho liečbu.
+      </div>
+
+      <div class="brackets-title">časové brackets <span class="kitty">🐱</span></div>
+      <div class="brackets">
+        <div class="bracket-row">
+          <div class="bracket-time">84h — 76h</div>
+          <div class="bracket-mult">1× základ</div>
+        </div>
+        <div class="bracket-row">
+          <div class="bracket-time">76h — 68h</div>
+          <div class="bracket-mult">1.5× základ</div>
+        </div>
+        <div class="bracket-row">
+          <div class="bracket-time">68h — 60h</div>
+          <div class="bracket-mult">2× základ</div>
+        </div>
+        <div class="bracket-row max">
+          <div class="bracket-time">pod 60h <span class="max-tag">← MAX</span></div>
+          <div class="bracket-mult">2.5× základ</div>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <span class="lbl">príklad:</span>
+        Prisľúbiš <b>20 €</b>. Ak dobehnem za <b>58 hodín</b>, uhradíš <span class="result">50 €</span>. Za 70h → 30 €. Za 80h → 20 €. Nedobehnem → prísľub padá.
+      </div>
+
+      <div class="charita-cta-row">
+        <button class="btn-primary-big">prisľúbiť podporu →</button>
+        <button class="btn-dark">zoznam prísľubov</button>
+      </div>
+      <div class="charita-note-small">↳ prísľub cez Google formulár. transparentne, dohľadateľne. 🚑</div>
+
+      <div class="charita-live">
+        <span class="cnum">12</span> ľudí už prisľúbilo · základ <span class="cnum">340 €</span> · potenciál pre Vilyho až <span class="cnum accent">850 €</span>
+      </div>
+    </div>
+  </div>
+</div>

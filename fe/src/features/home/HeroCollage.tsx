@@ -1,16 +1,18 @@
+import { ExternalLink } from 'lucide-react';
 import { Container, Stat } from '../../components/ui';
 import { siteContent } from '../../config/content';
-import type { SiteConfig } from '../../config/site';
+import { DonioCta } from '../donio/DonioCta';
+import type { EventState } from '../event/eventState';
 import {
   AmbulanceDoodle,
   ArrowDoodle,
   MountainsDoodle,
   SunDoodle,
 } from './Doodles';
-import { PledgeCta } from './PledgeCta';
+import { TrackingPanel } from './TrackingPanel';
 
 interface HeroCollageProps {
-  config: SiteConfig;
+  eventState: EventState;
 }
 
 interface HeroArtworkProps {
@@ -48,9 +50,9 @@ function HeroMapArtwork() {
         aria-hidden="true"
         className="hero-map-artwork__image"
         draggable="false"
-        height="835"
-        src="/mapaweb.png"
-        width="938"
+        height="488"
+        src="/mapatrans.png"
+        width="548"
       />
       <svg
         aria-hidden="true"
@@ -89,7 +91,10 @@ function TitleWordArt() {
   );
 }
 
-export function HeroCollage({ config }: HeroCollageProps) {
+export function HeroCollage({ eventState }: HeroCollageProps) {
+  const isLive = eventState.phase === 'live';
+  const isPost = eventState.phase === 'post';
+
   return (
     <section aria-label="347 km sólo pre Zachráňme Vilyho" className="hero-section">
       <div className="hero-collage">
@@ -115,7 +120,17 @@ export function HeroCollage({ config }: HeroCollageProps) {
         </figure>
 
         <div className="hero-primary-cta">
-          <PledgeCta href={config.pledgeFormUrl} />
+          {isLive && eventState.liveTrackUrl ? (
+            <a
+              className="live-track-cta"
+              href={eventState.liveTrackUrl}
+              rel="noreferrer"
+              target="_blank"
+            >
+              sledovať Maja naživo <ExternalLink aria-hidden="true" size={18} />
+            </a>
+          ) : null}
+          {!isPost ? <DonioCta /> : null}
         </div>
 
         <TitleWordArt />
@@ -132,6 +147,9 @@ export function HeroCollage({ config }: HeroCollageProps) {
             </div>
           ))}
         </div>
+        {eventState.phase !== 'post' ? (
+          <TrackingPanel eventState={eventState} />
+        ) : null}
       </Container>
     </section>
   );

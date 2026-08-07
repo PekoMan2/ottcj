@@ -1,3 +1,5 @@
+import { siteLinks } from "./links";
+
 export interface RunFact {
   label: string;
   value: string;
@@ -11,13 +13,13 @@ export interface NavigationItem {
 export interface ReadyContentLink {
   href: string;
   label: string;
-  status: 'ready';
+  status: "ready";
 }
 
 export interface MissingContentLink {
   label: string;
   note: string;
-  status: 'missing';
+  status: "missing";
 }
 
 export type ContentLink = MissingContentLink | ReadyContentLink;
@@ -26,28 +28,42 @@ export interface ReadyContentImage {
   alt: string;
   height: number;
   src: string;
-  status: 'ready';
+  status: "ready";
   width: number;
 }
 
 export interface MissingContentImage {
   label: string;
   note: string;
-  status: 'missing';
+  status: "missing";
 }
 
 export type ContentImage = MissingContentImage | ReadyContentImage;
 
+export interface DonioCampaignContent {
+  beneficiary: string;
+  collectedApproxEur: number;
+  destinationLabel: string;
+  destinationUrl: string;
+  targetEur: number;
+}
+
+export interface BetContent {
+  dnfCode: string;
+  dnfLead: string;
+  dnfOutro: string;
+  finishCode: string;
+  finishLead: string;
+  finishOutro: string;
+  hint: string;
+  label: string;
+}
+
 export interface CharityContent {
   badge: string;
-  campaign: {
-    beneficiary: string;
-    collectedApproximation: string;
-    destinationLabel: string;
-    destinationUrl: string;
-    targetApproximation: string;
-    updatedAt: string | null;
-  };
+  bet: BetContent;
+  campaign: DonioCampaignContent;
+  ctaLead: string;
   headingLead: string;
   headingPurpose: string;
   story: {
@@ -65,80 +81,91 @@ export interface RunOverviewContent {
   route: {
     distance: string;
     finish: string;
-    handoffs: string;
     start: string;
     timeLimit: string;
   };
   title: string;
 }
 
+export interface JoinRunStep {
+  text: string;
+  title: string;
+}
+
+export interface JoinRunContent {
+  annotation: string;
+  eyebrow: string;
+  intro: string;
+  share: {
+    text: string;
+    title: string;
+  };
+  steps: readonly JoinRunStep[];
+  title: string;
+}
+
+export interface StoryMilestone {
+  id: string;
+  photo: ContentImage;
+  tag: string;
+  text: string;
+}
+
 export interface StoryContent {
   annotation: string;
-  biography: {
-    placeholder: string;
-    status: 'missing';
-  };
   eyebrow: string;
   interview: ContentLink;
-  quote: string;
-  quoteAttribution: string;
+  milestones: readonly StoryMilestone[];
   title: string;
 }
 
-export interface TeamMemberContent {
-  description: string;
-  id: string;
-  image: ContentImage;
+export interface PartnerItem {
+  href?: string;
+  label?: string;
+  logo?: ReadyContentImage;
   name: string;
-  role: string;
-  statusLabel?: string;
-}
-
-export interface TeamContent {
-  annotation: string;
-  eyebrow: string;
-  members: readonly TeamMemberContent[];
-  title: string;
-}
-
-export interface PartnerContent {
-  asset: ContentImage;
-  description: string;
-  destination: ContentLink;
-  name: string;
-  statusLabel: string;
-}
-
-export interface PartnerTierContent {
-  annotation: string;
-  emptyMessage?: string;
-  id: string;
-  partners: readonly PartnerContent[];
-  title: string;
 }
 
 export interface PartnersContent {
-  annotation: string;
-  eyebrow: string;
-  tiers: readonly PartnerTierContent[];
-  title: string;
-}
-
-export interface ContactChannelContent {
-  description: string;
-  id: string;
-  links: readonly ContentLink[];
+  list: readonly PartnerItem[];
+  openSlot: {
+    email: string;
+    title: string;
+  };
   title: string;
 }
 
 export interface ContactContent {
   annotation: string;
-  channels: readonly ContactChannelContent[];
+  email: string;
+  emailNote: string;
   eyebrow: string;
+  personal: {
+    body: string;
+    heading: string;
+  };
+  press: ReadyContentLink;
+  socialLinks: readonly ReadyContentLink[];
   title: string;
 }
 
-export interface FinalPledgeContent {
+export interface TrackingContent {
+  eyebrow: string;
+  notify: {
+    body: string;
+    formUrl: string;
+    label: string;
+    title: string;
+  };
+  officialHref: string;
+  officialLabel: string;
+  pendingNote: string;
+  runningNote: string;
+  title: string;
+  unofficialLabel: string;
+}
+
+export interface FinalCtaContent {
   annotation: string;
   body: string;
   eyebrow: string;
@@ -158,8 +185,9 @@ export interface SiteContent {
   charity: CharityContent;
   contact: ContactContent;
   eventDateLabel: string;
-  finalPledge: FinalPledgeContent;
+  finalCta: FinalCtaContent;
   footer: FooterContent;
+  joinRun: JoinRunContent;
   navigation: {
     footer: readonly NavigationItem[];
     header: readonly NavigationItem[];
@@ -168,251 +196,300 @@ export interface SiteContent {
   runFacts: readonly RunFact[];
   runOverview: RunOverviewContent;
   story: StoryContent;
-  team: TeamContent;
+  tracking: TrackingContent;
 }
 
 const runFacts = [
-  { label: 'kilometrov', value: '347' },
-  { label: 'časový limit', value: '84 h' },
-  { label: 'bežec', value: '1' },
+  { label: "kilometrov", value: "347" },
+  { label: "časový limit", value: "84 h" },
+  { label: "bežec", value: "1" },
 ] as const;
 
-const missingPhoto = (label: string): MissingContentImage => ({
-  label,
-  note: 'fotografia, alt text a povolenie čakajú na dodanie',
-  status: 'missing',
-});
-
 export const siteContent = Object.freeze({
-  eventDateLabel: '13. — 16. augusta 2026',
+  eventDateLabel: "13. — 16. augusta 2026",
   runFacts,
   navigation: {
     header: [
-      { href: '/#trasa', label: 'trasa' },
-      { href: '/#vily', label: 'Vily' },
-      { href: '/#tim', label: 'tím' },
-      { href: '/#partneri', label: 'partneri' },
-      { href: '/#prislub', label: 'prísľub' },
+      { href: "/#vily", label: "info o zbierke" },
+      { href: "/#trasa", label: "trasa" },
+      { href: "/#kontakt", label: "kontakt" },
     ],
     footer: [
-      { href: '/#trasa', label: 'trasa' },
-      { href: '/#vily', label: 'Vily' },
-      { href: '/#pribeh', label: 'príbeh' },
-      { href: '/#tim', label: 'tím' },
-      { href: '/#partneri', label: 'partneri' },
-      { href: '/#kontakt', label: 'kontakt' },
-      { href: '/#prislub', label: 'prísľub' },
-      { href: '/prislub-zoznam', label: 'zoznam prísľubov' },
-      { href: '/press', label: 'press' },
-      { href: '/vily', label: 'viac o Vilym' },
-      { href: '/gdpr', label: 'GDPR' },
+      { href: "/#trasa", label: "trasa" },
+      { href: "/#vily", label: "info o zbierke" },
+      { href: "/#pribeh", label: "príbeh" },
+      { href: "/#partneri", label: "partneri" },
+      { href: "/#kontakt", label: "kontakt" },
+      { href: "/press", label: "press" },
+      { href: "/vily", label: "viac o Vilkovi" },
     ],
   },
   charity: {
-    badge: 'verejný prísľub · charitatívny beh',
-    headingLead: 'bež so mnou.',
-    headingPurpose: 'zachráňme Vilyho.',
+    badge: "pomôž mi podporiť správnu vec",
+    headingLead: "bež so mnou.",
+    headingPurpose: "zachráňme Vilyho.",
     story: {
-      tag: '→ kto je Vily?',
+      tag: "→ kto je Vilko?",
       introduction:
-        'Vily má 2 roky. Bojuje s Duchennovou svalovou dystrofiou — vzácnou genetickou chorobou, ktorá mu postupne ničí svaly. Prvé 4 roky sú kritické. Otec mu zohnal medzinárodný tím vedcov (Francúzsko, UPJŠ Košice, Comenius Bratislava) a pripravuje sa špecializovaná liečba.',
+        "Vilko má 2 roky. Bojuje s Duchennovou svalovou dystrofiou, vzácnou genetickou chorobou, ktorá mu postupne ničí svaly. Otec mu zohnal medzinárodný tím vedcov a pripravuje sa špecializovaná liečba.",
       accent:
-        'Vilyho otec šiel sám peši 430 km z Košíc do Bratislavy, aby pomohol synovi. Ja pokračujem v jeho šľapajach — 347 km z Tatier k Dunaju. Sólo, bez štafety.',
+        "Pred pár týždňami vyšiel Vilkov otec peši z Košíc do Bratislavy a vyzbieral 2 milióny zo 4 potrebných na vývin lieku. Ja pokračujem v jeho šľapajach: 347 km z Tatier k Dunaju. Sólo, bez štafety.",
+    },
+    ctaLead: "Podpor ma vo výkone tým, že prispeješ.",
+    bet: {
+      label: "bonus: stav si na môj čas",
+      finishLead:
+        "Ako prvý bežec ponúkam možnosť staviť si na čas môjho dobehu. V poznámke daru na Donio napíš okrem podpornej správy pre Vilkovu rodinu aj svoj tip:",
+      finishCode: "Majo čas: 73:30:00",
+      finishOutro:
+        "Kto bude najbližšie, tomu dar po dobehu znásobím 5× a pošlem späť, a tú istú sumu prispejem na zbierku.",
+      dnfLead: "Veríš, že to nedám? Napíš",
+      dnfCode: "Majo čas: nedobehne",
+      dnfOutro: "a ak budeš mať pravdu, stávku znásobím 10×.",
+      hint: "Uveď svoje reálne meno ;-)",
     },
     campaign: {
-      beneficiary: 'Zachráňme Vilyho',
-      collectedApproximation: '~2 milióny €',
-      destinationLabel: 'donio.sk/zachranme-vilyho',
-      destinationUrl: 'https://donio.sk/zachranme-vilyho',
-      targetApproximation: '4 milióny €',
-      updatedAt: null,
+      beneficiary: "Zachráňme Vilyho",
+      collectedApproxEur: 2_000_000,
+      targetEur: 4_000_000,
+      destinationLabel: "donio.sk/zachranme-vilyho",
+      destinationUrl: siteLinks.donio,
     },
   },
   runOverview: {
-    eyebrow: 'to nie je výlet',
-    title: '347,32 km krížom cez Slovensko.',
-    annotation: 'sólo · bez štafety · non-stop',
+    eyebrow: "to nie je výlet",
+    title: "347,32 km krížom cez Slovensko.",
+    annotation: "sólo · bez štafety · non-stop",
     introduction:
-      'Od štartu v Jasnej po cieľ na Tyršovom nábreží. Jedna súvislá trať, 36 oficiálnych odovzdávok a časový limit 84 hodín.',
+      "Od štartu 13. 8. o 8:00 pred Hotelom Sorea Marmot, cez krásne údolia a hory Nízkych Tatier, desiatky slovenských obcí a miest, až po Tyršovo nábrežie v Bratislave. 347 km a časový limit 84 hodín.",
     facts: runFacts,
     route: {
-      distance: '347,32 km',
-      finish: 'Tyršovo nábrežie',
-      handoffs: '36 odovzdávok',
-      start: 'Jasná',
-      timeLimit: '84 hodín',
+      distance: "347,32 km",
+      finish: "Tyršovo nábrežie",
+      start: "Jasná",
+      timeLimit: "84 hodín",
+    },
+  },
+  joinRun: {
+    eyebrow: "nebudem sa hnevať, naopak",
+    title: "Pridaj sa ku mne počas behu.",
+    annotation: "kedykoľvek, kdekoľvek na trase, hoci len kilometer",
+    intro:
+      "Ktokoľvek sa môže kedykoľvek pridať. Nájdi si ma podľa GPS, vybehni mi naproti a daj si so mnou kúsok trasy. Alebo to pošli kamarátovi bežcovi, ktorý býva blízko.",
+    steps: [
+      {
+        title: "nájdi ma",
+        text: "Počas behu tu bude živý odkaz na moju GPS polohu (Garmin LiveTrack).",
+      },
+      {
+        title: "vybehni mi naproti",
+        text: "Trasa aj obce, ktorými pobežím, sú na mape vyššie. Stačí aj kilometer.",
+      },
+      {
+        title: "pošli to ďalej",
+        text: "Poznáš bežca, ktorý býva pri trase? Pošli mu tento web.",
+      },
+    ],
+    share: {
+      title: "Majo · Od Tatier k Dunaju",
+      text: "347 km sólo pre Zachráňme Vilyho. Pridaj sa na trase alebo prispej.",
     },
   },
   story: {
-    eyebrow: 'prečo do toho idem',
-    title: 'Majov príbeh.',
-    annotation: 'celé bio ešte dopíšeme, príbeh si nevymýšľame',
-    biography: {
-      status: 'missing',
-      placeholder:
-        'Schválené Majo bio v rozsahu 3–5 viet čaká na dodanie. Toto miesto je pripravené na finálny text bez zmeny rozloženia.',
-    },
-    quote: '„Nie, ale môžeš byť prvý. A bude to trápenie.“',
-    quoteAttribution: 'Michal Šula',
-    interview: {
-      status: 'ready',
-      href: 'https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor',
-      label: 'prečítaj celý rozhovor →',
-    },
-  },
-  team: {
-    eyebrow: '347 km nie je sólo projekt',
-    title: 'Tím za behom.',
-    annotation: 'ľudia, ktorí držia tempo, obraz aj zázemie',
-    members: [
+    eyebrow: "prečo do toho idem",
+    title: "Môj bežecký príbeh.",
+    annotation: "fotky a momentky postupne doplním",
+    milestones: [
       {
-        id: 'michal-sula',
-        name: 'Michal Šula',
-        role: 'tréner',
-        description: 'Majster Slovenska v ultrabehu.',
-        image: missingPhoto('FOTO TRÉNERA'),
-        statusLabel: 'údaje zo zdrojového briefu',
+        id: "zaciatky",
+        tag: "začiatky",
+        text: "Kedysi som behal len pre pivo. Fakt.",
+        photo: {
+          alt: "Majo s kamarátom pri pive v cieli behu",
+          height: 1200,
+          src: "/beer.jpg",
+          status: "ready",
+          width: 900,
+        },
       },
       {
-        id: 'camera-operator',
-        name: 'MENO ČAKÁ NA DODANIE',
-        role: 'kamera',
-        description: 'Meno, jedna schválená veta a produkčné údaje čakajú na dodanie.',
-        image: missingPhoto('FOTO KAMERAMANA'),
+        id: "trening",
+        tag: "dnes",
+        text: "Dnes makám v tréningu na najdlhší beh môjho života.",
+        photo: {
+          alt: "Majo pri záťažovej diagnostike na ergometri",
+          height: 900,
+          src: "/run.jpg",
+          status: "ready",
+          width: 1200,
+        },
       },
       {
-        id: 'support-crew',
-        name: 'SUPPORT CREW',
-        role: 'zázemie na trati',
-        description: 'Mená, konkrétne roly a schválený popis čakajú na dodanie.',
-        image: missingPhoto('FOTO SUPPORT CREW'),
+        id: "uuultra",
+        tag: "uuultra",
+        text: "S partiou uuultra robíme behy, ktoré majú zmysel.",
+        photo: {
+          alt: "Majo s kamarátom z partie uuultra počas behu",
+          height: 1200,
+          src: "/party.jpg",
+          status: "ready",
+          width: 900,
+        },
       },
       {
-        id: 'iontmax-van',
-        name: 'IontMax dodávka',
-        role: 'partnerské zázemie',
-        description: 'Hlavný partner behu podľa zdrojového briefu.',
-        image: missingPhoto('FOTO DODÁVKY'),
-        statusLabel: 'potvrdené v zdrojovom briefe',
+        id: "start",
+        tag: "13. 8. 2026 · 8:00",
+        text: "Štart pred Hotelom Sorea Marmot. 347 km, limit 84 hodín, sólo.",
+        photo: {
+          alt: "Majo pred panorámou Vysokých Tatier",
+          height: 900,
+          src: "/solo.jpg",
+          status: "ready",
+          width: 1200,
+        },
       },
     ],
+    interview: {
+      status: "ready",
+      href: "https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor",
+      label: "prečítaj celý rozhovor →",
+    },
   },
   partners: {
-    eyebrow: 'partneri na dlhej trati',
-    title: 'Kto stojí pri projekte.',
-    annotation: 'partneri, ktorí podporili beh a projekt Zachráňme Vilyho',
-    tiers: [
+    title: "Partneri.",
+    list: [
       {
-        id: 'main-partner',
-        title: 'hlavný partner',
-        annotation: '',
-        partners: [
-          {
-            name: 'IontMax',
-            description: 'Hlavný partner behu.',
-            statusLabel: 'hlavný partner',
-            asset: {
-              alt: 'Logo IontMax',
-              height: 447,
-              src: '/iontmax.png',
-              status: 'ready',
-              width: 447,
-            },
-            destination: {
-              href: 'https://www.iontmax.com/',
-              label: 'iontmax.com →',
-              status: 'ready',
-            },
-          },
-        ],
+        name: "IontMax",
+        href: "https://www.iontmax.com/",
+        label: "hlavný partner",
+        logo: {
+          alt: "IontMax",
+          height: 113,
+          src: "/iontmax.png",
+          status: "ready",
+          width: 427,
+        },
       },
       {
-        id: 'supporting-partners',
-        title: 'supporting partneri',
-        annotation: 'sloty zostávajú voľné do potvrdenia',
-        emptyMessage: 'Žiadny supporting partner zatiaľ nie je potvrdený.',
-        partners: [],
+        name: "Shokz slúchadlá",
+        href: "https://shokz.com/",
+        logo: {
+          alt: "Shokz slúchadlá",
+          height: 156,
+          src: "/shokz.png",
+          status: "ready",
+          width: 395,
+        },
       },
       {
-        id: 'media-partners',
-        title: 'mediálni partneri',
-        annotation: 'mená doplníme až po potvrdení partnerstva',
-        emptyMessage: 'Mediálnych partnerov zverejníme až po potvrdení.',
-        partners: [],
+        name: "Daybyday Nitra",
+        href: "https://daybday.store/",
+        logo: {
+          alt: "Daybyday Nitra",
+          height: 104,
+          src: "/daybyday.png",
+          status: "ready",
+          width: 179,
+        },
+      },
+      {
+        name: "All People Nitra",
+        href: "https://apn.sk/",
+        logo: {
+          alt: "All People Nitra",
+          height: 198,
+          src: "/allpeople.png",
+          status: "ready",
+          width: 800,
+        },
       },
     ],
+    openSlot: {
+      title: "tu môžeš byť ty",
+      email: "majocrnkovic@gmail.com",
+    },
   },
   contact: {
-    eyebrow: 'tri otázky, tri cesty',
-    title: 'Ozvite sa správnym smerom.',
-    annotation: 'žiadny univerzálny inbox',
-    channels: [
+    eyebrow: "ozvite sa mi",
+    title: "Neboj sa, nekúšem.",
+    annotation: "jeden mail na všetko – partnerstvá, médiá, povzbudenie",
+    email: "majocrnkovic@gmail.com",
+    emailNote: "partneri, médiá aj obyčajná ľudská podpora",
+    press: { status: "ready", label: "press kit →", href: "/press" },
+    personal: {
+      heading: "OSOBNE – NAJLEPŠIA FORMA",
+      body: "Vážim si, ak sa ako potenciálny partner pripojíte na úsek môjho behu a pokecáme osobne.",
+    },
+    socialLinks: [
       {
-        id: 'sponsors',
-        title: 'pre sponzorov',
-        description: 'Partnerstvá, materiálna podpora a spolupráca na trati.',
-        links: [
-          {
-            status: 'ready',
-            label: 'partneri@majootkd.sk',
-            href: 'mailto:partneri@majootkd.sk',
-          },
-        ],
+        status: "ready",
+        label: "@majo.crnkovic",
+        href: "https://www.instagram.com/majo.crnkovic/",
       },
       {
-        id: 'media',
-        title: 'pre médiá',
-        description: 'Rozhovory, overené fakty a budúci press kit.',
-        links: [
-          {
-            status: 'ready',
-            label: 'media@majootkd.sk',
-            href: 'mailto:media@majootkd.sk',
-          },
-          { status: 'ready', label: 'press kit →', href: '/press' },
-        ],
+        status: "ready",
+        label: "@uuultra.behy",
+        href: "https://www.instagram.com/uuultra.behy/",
       },
       {
-        id: 'personal',
-        title: 'osobne',
-        description: 'Beh, komunita a zákulisie projektu na Instagrame.',
-        links: [
-          {
-            status: 'ready',
-            label: '@majo.crnkovic',
-            href: 'https://www.instagram.com/majo.crnkovic/',
-          },
-          {
-            status: 'ready',
-            label: '@uuultra.behy',
-            href: 'https://www.instagram.com/uuultra.behy/',
-          },
-        ],
+        status: "ready",
+        label: "@odtatierkdunaju · organizátor behu",
+        href: "https://www.instagram.com/odtatierkdunaju/",
+      },
+      {
+        status: "ready",
+        label: "YouTube · uuultra behy",
+        href: "https://www.youtube.com/@uuultra.behyyy",
       },
     ],
   },
-  finalPledge: {
-    eyebrow: 'už vieš, prečo bežím',
-    title: 'Teraz bež so mnou.',
-    body: 'Prisľúb základnú sumu. Výsledný čas rozhodne o násobku a podpora smeruje projektu Zachráňme Vilyho.',
-    annotation: 'jeden formulár · jasné pravidlá · verejný prísľub',
+  tracking: {
+    eyebrow: "sleduj ma naživo",
+    title: "Kde práve som?",
+    officialLabel: "oficiálny Live-track OTKD sólo bežcov →",
+    officialHref: siteLinks.officialTracking,
+    unofficialLabel: "Majov Garmin tracking (záložný)",
+    pendingNote: "Garmin odkaz pridáme hneď po štarte.",
+    runningNote: "Garmin beží priamo z Majových hodiniek.",
+    notify: {
+      title: "upozorni ma, keď Majo vybehne",
+      body: "V momente štartu behu dostaneš na sms/email odkaz na sledovanie Majovej lokácie. Registruj sa cez krátky formulár.",
+      label: "upozorni ma pri štarte",
+      formUrl: siteLinks.notifyForm,
+    },
+  },
+  finalCta: {
+    eyebrow: "už vieš, prečo bežím",
+    title: "Teraz bež so mnou.",
+    body: "Prispej na Donio a do poznámky pridaj tip na môj čas. Každé euro ide projektu Zachráňme Vilyho.",
+    annotation: "prispievaš priamo cez donio.sk · bez medzičlánkov",
   },
   footer: {
-    brandPrefix: 'uuu',
-    brandName: 'MAJO · OTKD',
-    summary: '347 km sólo · verejný prísľub pre Zachráňme Vilyho',
-    navigationLabel: 'Navigácia v pätičke',
-    socialLabel: 'Sociálne siete',
+    brandPrefix: "uuu",
+    brandName: "MAJO · OTKD",
+    summary: "347 km sólo – zbierka pre Vilyho",
+    navigationLabel: "Navigácia v pätičke",
+    socialLabel: "Sociálne siete",
     socialLinks: [
       {
-        status: 'ready',
-        label: '@majo.crnkovic',
-        href: 'https://www.instagram.com/majo.crnkovic/',
+        status: "ready",
+        label: "@majo.crnkovic",
+        href: "https://www.instagram.com/majo.crnkovic/",
       },
       {
-        status: 'ready',
-        label: '@uuultra.behy',
-        href: 'https://www.instagram.com/uuultra.behy/',
+        status: "ready",
+        label: "@uuultra.behy",
+        href: "https://www.instagram.com/uuultra.behy/",
+      },
+      {
+        status: "ready",
+        label: "@odtatierkdunaju · organizátor behu",
+        href: "https://www.instagram.com/odtatierkdunaju/",
+      },
+      {
+        status: "ready",
+        label: "YouTube · uuultra behy",
+        href: "https://www.youtube.com/@uuultra.behyyy",
       },
     ],
   },

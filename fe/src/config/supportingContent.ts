@@ -1,15 +1,9 @@
 export const supportingContent = Object.freeze({
-  thankYou: {
-    eyebrow: 'prísľub odoslaný',
-    title: 'Ďakujeme, že bežíš s nami.',
-    body: 'Tvoj prísľub pomáha niesť príbeh Zachráňme Vilyho ďalej. Zdieľaj výzvu s niekým, kto sa chce pridať.',
-    shareTitle: 'Majo · Od Tatier k Dunaju',
-    shareText: '347 km sólo pre Zachráňme Vilyho. Pridaj sa verejným prísľubom.',
-  },
   press: {
     eyebrow: 'pre médiá',
     title: 'Press kit.',
-    introduction: 'Materiály pre redakcie, rozhovory a overenie faktov sú pripravené v jednej štruktúre. Súbory zverejníme až po dodaní a schválení.',
+    introduction: 'Materiály pre redakcie, rozhovory a overenie faktov sú pripravené v jednej štruktúre. Fotky a logá budú pribúdať priebežne.',
+    contactEmail: 'majocrnkovic@gmail.com',
     assets: [
       { label: 'TLAČOVÁ SPRÁVA', note: 'finálny text a formát čakajú na dodanie' },
       { label: 'HD FOTOGRAFIE', note: 'fotografie, titulky, kredity a práva čakajú na dodanie' },
@@ -25,12 +19,12 @@ export const supportingContent = Object.freeze({
     eyebrow: 'ochrana osobných údajov',
     title: 'GDPR informácie.',
     warning: 'PRÁVNY TEXT NIE JE SCHVÁLENÝ',
-    introduction: 'Finálne informácie o spracovaní údajov z Google Formulára doplníme po právnom schválení.',
+    introduction: 'Registrácia upozornení prebieha cez Google Formulár. Finálne informácie o spracovaní údajov doplníme po právnom schválení.',
     missingItems: [
       'prevádzkovateľ a kontaktné údaje',
       'účel a právny základ spracovania',
       'rozsah údajov a doba uchovávania',
-      'spracovatelia vrátane služieb Google',
+      'spracovatelia vrátane služieb Google (Formuláre) a Garmin',
       'práva dotknutých osôb a spôsob ich uplatnenia',
     ],
   },

@@ -1,53 +1,53 @@
-import { Handshake } from 'lucide-react';
-import { Container, Section, SectionHeading } from '../../components/ui';
+import { Container } from '../../components/ui';
 import { siteContent } from '../../config/content';
-import { ContentImageView, ContentLinkView } from './ContentMedia';
 
 export function PartnersSection() {
   const { partners } = siteContent;
 
   return (
-    <Section aria-labelledby="partners-title" className="partners-section" id="partneri">
+    <section aria-labelledby="partners-title" className="partners-section" id="partneri">
       <Container>
-        <SectionHeading
-          annotation={partners.annotation}
-          eyebrow={partners.eyebrow}
-          id="partners-title"
-          title={partners.title}
-        />
+        <h2 className="partners-section__title" id="partners-title">
+          {partners.title} <span aria-hidden="true">↓</span>
+        </h2>
+        <ul className="partner-strip">
+          {partners.list.map((partner) => {
+            const body = partner.logo ? (
+              <img
+                alt={partner.logo.alt}
+                height={partner.logo.height}
+                loading="lazy"
+                src={partner.logo.src}
+                width={partner.logo.width}
+              />
+            ) : (
+              <strong>{partner.name}</strong>
+            );
 
-        <div className="partner-tiers">
-          {partners.tiers.map((tier) => (
-            <section aria-labelledby={`${tier.id}-title`} className={`partner-tier partner-tier--${tier.id}`} key={tier.id}>
-              <div className="partner-tier__heading">
-                <h3 id={`${tier.id}-title`}>{tier.title}</h3>
-                <p>{tier.annotation}</p>
-              </div>
-
-              {tier.partners.length > 0 ? (
-                <div className="partner-tier__items">
-                  {tier.partners.map((partner) => (
-                    <article className="partner-card" key={partner.name}>
-                      <ContentImageView image={partner.asset} />
-                      <div className="partner-card__body">
-                        <span className="partner-card__status">{partner.statusLabel}</span>
-                        <h4>{partner.name}</h4>
-                        <p>{partner.description}</p>
-                        <ContentLinkView className="partner-card__link" link={partner.destination} />
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              ) : (
-                <div className="partner-tier__empty" data-content-status="missing">
-                  <Handshake aria-hidden="true" />
-                  <p>{tier.emptyMessage}</p>
-                </div>
-              )}
-            </section>
-          ))}
-        </div>
+            return (
+              <li
+                className={partner.label ? 'partner-strip__item--main' : undefined}
+                key={partner.name}
+              >
+                {partner.label ? (
+                  <span className="partner-strip__label">{partner.label}</span>
+                ) : null}
+                {partner.href ? (
+                  <a href={partner.href} rel="noreferrer" target="_blank">
+                    {body}
+                  </a>
+                ) : (
+                  body
+                )}
+              </li>
+            );
+          })}
+        </ul>
+        <p className="partners-section__open">
+          {partners.openSlot.title} →{' '}
+          <a href={`mailto:${partners.openSlot.email}`}>{partners.openSlot.email}</a>
+        </p>
       </Container>
-    </Section>
+    </section>
   );
 }

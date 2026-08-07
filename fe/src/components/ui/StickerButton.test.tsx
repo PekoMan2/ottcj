@@ -4,9 +4,9 @@ import { StickerButton } from './StickerButton';
 
 describe('StickerButton', () => {
   it('uses safe button semantics by default', () => {
-    render(<StickerButton>prisľúbiť</StickerButton>);
+    render(<StickerButton>prispej</StickerButton>);
 
-    expect(screen.getByRole('button', { name: 'prisľúbiť' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'prispej' })).toHaveAttribute(
       'type',
       'button',
     );

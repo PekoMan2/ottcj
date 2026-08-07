@@ -61,8 +61,12 @@ exclusively in this milestone.
 ## 6. Lifecycle and tracking operations
 
 Implement explicit `pre`, `live`, and `post` behavior, backend operational
-state, the approved real tracking provider or documented manual fallback, live
-statistics, support messages, and safe operational controls.
+state, safe operational controls, and the approved direct Garmin LiveTrack
+handoff. The live website links to Garmin rather than embedding a second map or
+inventing live statistics. A separately consented start-alert registration may
+collect an email address, phone number, or both only after the Garmin device,
+recipient limits, legal copy, retention and manual operator workflow pass an
+end-to-end pilot.
 
 ## 7. Launch hardening
 

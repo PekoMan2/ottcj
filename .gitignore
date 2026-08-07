@@ -1,7 +1,6 @@
-# Environment and secrets
+# Environment: committed on purpose, values are public build-time config.
+# Only personal local overrides stay untracked.
 .env
-.env.*
-!.env.example
 
 # Dependencies and build output
 node_modules/
