@@ -53,13 +53,16 @@ use.
 
 ## Run lifecycle configuration
 
-The public lifecycle state (`pre`, `live`, `post`), the start time, the Garmin
-LiveTrack link and the final result are all baked into the bundle at build
-time from `VITE_*` variables. Vite loads them by mode: `npm run dev` reads
-`fe/.env.development` and `npm run build` reads `fe/.env.production`,
-including inside the Docker build. Both files are committed; no value in them
-is secret. See [docs/live-operations.md](docs/live-operations.md) for the
-race-day flow. Changing any of them requires a rebuild (`npm run rebuild`).
+The run configuration (start time, Garmin LiveTrack link, external links and
+the final result) is baked into the bundle at build time from `VITE_*`
+variables. Vite loads them by mode: `npm run dev` reads `fe/.env.development`
+and `npm run build` reads `fe/.env.production`, including inside the Docker
+build. Both files are committed; no value in them is secret. The lifecycle
+phase is derived from the clock (`pre` before `VITE_EVENT_START_AT`, `live`
+after); only `post` is set manually, and forcing other phases is possible
+only in development. See [docs/live-operations.md](docs/live-operations.md)
+for the race-day flow. Changing any value requires a rebuild
+(`npm run rebuild`).
 
 None of the variables are secrets; every value is publicly visible in the
 built JavaScript bundle.

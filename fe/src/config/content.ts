@@ -1,3 +1,5 @@
+import { siteLinks } from "./links";
+
 export interface RunFact {
   label: string;
   value: string;
@@ -269,8 +271,7 @@ export const siteContent = Object.freeze({
       collectedApproxEur: 2_000_000,
       targetEur: 4_000_000,
       destinationLabel: "donio.sk/zachranme-vilyho",
-      destinationUrl:
-        "https://donio.sk/zachranme-vilyho/majo-od-tatier-k-dunaju",
+      destinationUrl: siteLinks.donio,
     },
   },
   runOverview: {
@@ -448,8 +449,7 @@ export const siteContent = Object.freeze({
     eyebrow: "sleduj ma naživo",
     title: "Kde práve som?",
     officialLabel: "oficiálny Live-track OTKD sólo bežcov →",
-    officialHref:
-      "https://sunbell.tracktherace.com/sk/sportove-udalosti/beh-v-prirode/od-tatier-k-dunaju-2026-solo/pretek",
+    officialHref: siteLinks.officialTracking,
     unofficialLabel: "Majov Garmin tracking (záložný)",
     pendingNote: "Garmin odkaz pridáme hneď po štarte.",
     runningNote: "Garmin beží priamo z Majových hodiniek.",
@@ -457,8 +457,7 @@ export const siteContent = Object.freeze({
       title: "upozorni ma, keď Majo vybehne",
       body: "V momente štartu behu dostaneš na sms/email odkaz na sledovanie Majovej lokácie. Registruj sa cez krátky formulár.",
       label: "upozorni ma pri štarte",
-      formUrl:
-        "https://docs.google.com/forms/d/e/1FAIpQLSegRzumYZgOYlFeqTv3LtHKBqYCAIrzDHKDBrFOXDu5JQi2yA/viewform",
+      formUrl: siteLinks.notifyForm,
     },
   },
   finalCta: {

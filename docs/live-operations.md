@@ -23,13 +23,20 @@ Before the start:
 4. After the run, delete contacts from Garmin and clear the form responses
    according to the approved retention procedure.
 
+## Phase lifecycle
+
+The phase is derived from the clock: before `VITE_EVENT_START_AT`
+(`2026-08-13T08:00:00+02:00`) the site is `pre`, from that moment on it is
+`live`, with no deploy needed for the flip. Only `post` is set manually.
+Production builds refuse a forced `pre` or `live`; that override exists only
+for local development.
+
 ## Before the start (pre phase)
 
-The deployed default needs no configuration: `VITE_EVENT_PHASE=pre` and the
-official start `2026-08-13T08:00:00+02:00` are built in. Override
-`VITE_EVENT_START_AT` only if the official start moves.
+The deployed default needs no configuration. Override `VITE_EVENT_START_AT`
+in `fe/.env.production` only if the official start moves.
 
-## Starting live mode
+## During the run (live phase)
 
 1. Start the Garmin LiveTrack session on the tested device and confirm a
    test recipient received the expected message.
@@ -37,18 +44,17 @@ official start `2026-08-13T08:00:00+02:00` are built in. Override
 3. In `fe/.env.production` set:
 
    ```text
-   VITE_EVENT_PHASE=live
-   VITE_LIVE_TRACK_URL=https://livetrack.garmin.com/...
+   VITE_GARMIN_URL=https://livetrack.garmin.com/...
    ```
 
 4. Rebuild and redeploy (`npm run rebuild`), then open the public website in
-   a private browser. Confirm the live label, verify that the prominent
-   button opens the active Garmin session, and confirm the donation links
-   remain available. A build with an invalid combination of `VITE_*` values
-   fails loudly in the browser, so always verify after deploying.
+   a private browser. Verify that the Garmin buttons open the active session
+   and that the donation links remain available. A build with an invalid
+   combination of `VITE_*` values fails loudly in the browser, so always
+   verify after deploying.
 5. If Garmin starts a replacement session after signal, phone or battery
    loss, repeat steps 2-4 with the new URL. If no valid URL exists, clear
-   `VITE_LIVE_TRACK_URL` and rebuild; the website shows an honest pending
+   `VITE_GARMIN_URL` and rebuild; the website shows an honest pending
    state.
 
 ## Publishing the result (post phase)
@@ -60,7 +66,7 @@ The bet multiplier is derived from the elapsed time automatically.
 
 ```text
 VITE_EVENT_PHASE=post
-VITE_LIVE_TRACK_URL=
+VITE_GARMIN_URL=
 VITE_RESULT_STATUS=finished
 VITE_RESULT_ELAPSED_SECONDS=208800
 VITE_RESULT_FINAL_DONATION_EUR=12500

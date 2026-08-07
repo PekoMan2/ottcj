@@ -19,9 +19,10 @@ export interface EventState {
 }
 
 export interface EventEnvironment {
+  MODE?: string;
   VITE_EVENT_PHASE?: string;
   VITE_EVENT_START_AT?: string;
-  VITE_LIVE_TRACK_URL?: string;
+  VITE_GARMIN_URL?: string;
   VITE_RESULT_STATUS?: string;
   VITE_RESULT_ELAPSED_SECONDS?: string;
   VITE_RESULT_FINAL_DONATION_EUR?: string;
@@ -43,7 +44,27 @@ function parseEventStartAt(value: string | undefined): string {
   return eventStartAt;
 }
 
-function parseLiveTrackUrl(value: string | undefined): string | null {
+function resolvePhase(
+  environment: EventEnvironment,
+  eventStartAt: string,
+  now: Date,
+): SitePhase {
+  const override = cleaned(environment.VITE_EVENT_PHASE);
+  if (override === undefined) {
+    return Date.parse(eventStartAt) <= now.getTime() ? 'live' : 'pre';
+  }
+  if (!isSitePhase(override)) {
+    throw new TypeError('VITE_EVENT_PHASE must be "pre", "live" or "post"');
+  }
+  if ((environment.MODE ?? 'production') === 'production' && override !== 'post') {
+    throw new TypeError(
+      'only "post" can be forced in production; pre and live are derived from VITE_EVENT_START_AT',
+    );
+  }
+  return override;
+}
+
+function parseGarminUrl(value: string | undefined): string | null {
   if (value === undefined) return null;
   try {
     const url = new URL(value);
@@ -59,7 +80,7 @@ function parseLiveTrackUrl(value: string | undefined): string | null {
     }
     return url.toString();
   } catch {
-    throw new TypeError('VITE_LIVE_TRACK_URL must be a secure Garmin URL');
+    throw new TypeError('VITE_GARMIN_URL must be a secure Garmin URL');
   }
 }
 
@@ -125,26 +146,24 @@ function parseResult(environment: EventEnvironment): EventResult | null {
   };
 }
 
-export function buildEventState(environment: EventEnvironment): EventState {
-  const phase = cleaned(environment.VITE_EVENT_PHASE) ?? 'pre';
-  if (!isSitePhase(phase)) {
-    throw new TypeError('VITE_EVENT_PHASE must be "pre", "live" or "post"');
-  }
+export function buildEventState(
+  environment: EventEnvironment,
+  now: Date = new Date(),
+): EventState {
+  const eventStartAt = parseEventStartAt(cleaned(environment.VITE_EVENT_START_AT));
+  const phase = resolvePhase(environment, eventStartAt, now);
   const result = parseResult(environment);
-  const liveTrackUrl = parseLiveTrackUrl(cleaned(environment.VITE_LIVE_TRACK_URL));
+  const liveTrackUrl = parseGarminUrl(cleaned(environment.VITE_GARMIN_URL));
   if (phase === 'post' && result === null) {
     throw new TypeError('the post phase requires a configured result');
   }
   if (phase !== 'post' && result !== null) {
     throw new TypeError('a result is only allowed in the post phase');
   }
-  if (phase !== 'live' && liveTrackUrl !== null) {
-    throw new TypeError('VITE_LIVE_TRACK_URL is only allowed in the live phase');
-  }
 
   return {
-    eventStartAt: parseEventStartAt(cleaned(environment.VITE_EVENT_START_AT)),
-    liveTrackUrl,
+    eventStartAt,
+    liveTrackUrl: phase === 'live' ? liveTrackUrl : null,
     phase,
     result,
   };
