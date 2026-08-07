@@ -1,116 +1,70 @@
 # Garmin LiveTrack and lifecycle operations
 
-This runbook is the operational contract for Milestone 6. The website links to
-the active Garmin LiveTrack session; it does not ingest, embed or copy Garmin
-location or performance data.
+This runbook covers race-day operation of the static website. The site links
+to the active Garmin LiveTrack session; it does not ingest, embed or copy
+Garmin location or performance data. All lifecycle state is baked into the
+frontend bundle from `VITE_*` variables at build time, so every change below
+means: edit `.env`, rebuild, redeploy, verify.
 
-## Production prerequisites
+## Notification signups (Google Form)
 
-Do not enable live-alert registration until all of these are complete:
+Run-start notifications are collected in a Google Form linked from the
+pre-start tracking panel. Google Forms stores the responses; the website
+stores nothing.
 
-1. Record the exact Garmin device, phone OS, Garmin Connect/Connect+
-   subscription and authorized operator in `content-needed.md`.
-2. Run a real test activity and verify the LiveTrack link, email invitation,
-   SMS opt-in and start notification on the devices that will be used during
-   the run.
-3. Set `LIVE_ALERT_EMAIL_CAPACITY` and `LIVE_ALERT_SMS_CAPACITY` no higher than
-   the limits proven by that test. A zero capacity disables that channel.
-4. Obtain the approved consent text/version, GDPR disclosure and retention
-   period. Set the same approved display text in
-   `VITE_LIVE_ALERT_CONSENT_TEXT` and set the matching version in
-   `VITE_LIVE_ALERT_CONSENT_VERSION`. The public form remains disabled if the
-   frontend and backend versions differ.
-5. Generate `LIVE_ALERT_DATA_KEY` as a cryptographically random 32-byte value,
-   base64-encode it, and store it only in the production secret store. Losing
-   the key makes stored contacts intentionally unrecoverable.
-6. Change `TRACKING_SECRET` to a strong production secret. Never place either
-   secret in a browser bundle, repository, screenshot, URL or operator export.
-7. Rebuild the frontend after changing the consent display text, then set
-   `LIVE_ALERTS_ENABLED=true` on the backend. Runtime phase changes do not
-   require another frontend build.
+Before the start:
 
-## Before the start
+1. Open the linked Google Sheet of form responses.
+2. Add each contact manually to Garmin Connect following the tested Garmin
+   flow for email invitations and phone-number opt-in.
+3. Do not copy the responses to any other drive, chat or analytics system.
+   Delete local exports immediately after the Garmin transfer.
+4. After the run, delete contacts from Garmin and clear the form responses
+   according to the approved retention procedure.
 
-1. Export pending registrations through the authenticated operator endpoint:
+## Before the start (pre phase)
 
-   ```text
-   GET /api/admin/live-alert-subscriptions/export?status=pending
-   Authorization: Bearer <TRACKING_SECRET>
-   ```
+The deployed default needs no configuration: `VITE_EVENT_PHASE=pre` and the
+official start `2026-08-13T08:00:00+02:00` are built in. Override
+`VITE_EVENT_START_AT` only if the official start moves.
 
-2. Add each contact manually to Garmin Connect. Follow the tested Garmin flow
-   for phone-number opt-in. Never copy the CSV to a shared drive, chat or
-   analytics system.
-3. Mark a successfully transferred record as `synced`; mark unusable or
-   declined contacts as `rejected`:
+## Starting live mode
 
-   ```text
-   PATCH /api/admin/live-alert-subscriptions/<id>
-   Authorization: Bearer <TRACKING_SECRET>
-   Content-Type: application/json
-
-   { "status": "synced" }
-   ```
-
-4. Re-export `pending` until it is empty. If a proven Garmin capacity is full,
-   lower that channel's configured capacity or set it to zero. The public form
-   will stop accepting that channel.
-
-## Starting and running live mode
-
-1. Start the Garmin LiveTrack session on the tested device and confirm that a
-   synced email and phone recipient received the expected message.
+1. Start the Garmin LiveTrack session on the tested device and confirm a
+   test recipient received the expected message.
 2. Copy the secure `https://...garmin.com/...` session URL from Garmin.
-3. Atomically switch the website to live mode:
+3. In `.env` set:
 
    ```text
-   PUT /api/admin/event-state
-   Authorization: Bearer <TRACKING_SECRET>
-   Content-Type: application/json
-
-   { "phase": "live", "liveTrackUrl": "https://livetrack.garmin.com/..." }
+   VITE_EVENT_PHASE=live
+   VITE_LIVE_TRACK_URL=https://livetrack.garmin.com/...
    ```
 
-4. Open the public website in a private browser, confirm the `live` label and
-   verify that the prominent button opens the active Garmin session. Pledges
-   must remain available.
-5. If Garmin starts a replacement session after signal, phone or battery loss,
-   repeat steps 2–4 with the new URL. If no valid URL exists, update live mode
-   with `liveTrackUrl: null`; the website will show an honest pending state.
+4. Rebuild and redeploy (`npm run rebuild`), then open the public website in
+   a private browser. Confirm the live label, verify that the prominent
+   button opens the active Garmin session, and confirm the donation links
+   remain available. A build with an invalid combination of `VITE_*` values
+   fails loudly in the browser, so always verify after deploying.
+5. If Garmin starts a replacement session after signal, phone or battery
+   loss, repeat steps 2-4 with the new URL. If no valid URL exists, clear
+   `VITE_LIVE_TRACK_URL` and rebuild; the website shows an honest pending
+   state.
 
-## Publishing the result
+## Publishing the result (post phase)
 
 Switch to `post` only after the result is official and the public copy is
-approved. A finished result requires integer elapsed seconds; DNF stores no
-elapsed time. Donation total and result copy are optional until verified.
+approved. A finished result requires whole elapsed seconds; DNF must not set
+elapsed time. The donation total and result copy are optional until verified.
+The bet multiplier is derived from the elapsed time automatically.
 
 ```text
-PUT /api/admin/event-state
-Authorization: Bearer <TRACKING_SECRET>
-Content-Type: application/json
-
-{
-  "phase": "post",
-  "resultStatus": "finished",
-  "elapsedSeconds": 208800,
-  "resultCopy": "<approved result copy>"
-}
+VITE_EVENT_PHASE=post
+VITE_LIVE_TRACK_URL=
+VITE_RESULT_STATUS=finished
+VITE_RESULT_ELAPSED_SECONDS=208800
+VITE_RESULT_FINAL_DONATION_EUR=12500
+VITE_RESULT_COPY=<approved result copy>
 ```
 
-The backend calculates the public multiplier from the approved boundaries.
-Do not publish estimated elapsed time, donation totals or result copy.
-
-## Retention, deletion and recovery
-
-- The database stores encrypted contacts and keyed fingerprints only. Public
-  endpoints expose capacity, never contacts or subscription identifiers.
-- Operator exports contain personal data and use `Cache-Control: no-store`.
-  Delete each local export immediately after the Garmin transfer.
-- Purge expired database rows with authenticated
-  `DELETE /api/admin/live-alert-subscriptions/expired` and remove the same
-  contacts from Garmin according to the approved retention procedure.
-- Database backups containing active subscriptions inherit the same retention
-  deadline. Document and test deletion from backups before enabling the form.
-- If the API is unavailable, do not guess the phase, result or URL. Keep the
-  pledge path available, restore the database/API, and verify public state
-  before resuming operator changes.
+Rebuild, redeploy and verify the result panel on the public website. Do not
+publish estimated elapsed time, donation totals or result copy.

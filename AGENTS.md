@@ -4,9 +4,10 @@ These instructions apply to the entire repository.
 
 ## Source-of-truth hierarchy
 
-1. The existing React, NestJS, PostgreSQL, Nginx, and Docker architecture is
-   authoritative. Do not replace it with the Astro or Next.js recommendation
-   from the product brief.
+1. The existing React, Nginx, and Docker architecture is authoritative. The
+   site is fully static: there is no backend and no database, and neither may
+   be reintroduced. Do not replace the stack with the Astro or Next.js
+   recommendation from the product brief.
 2. `majootkd_design_brief_v2.docx` is authoritative for product goals,
    functionality, content structure, page structure, lifecycle, and
    requirements.
@@ -34,12 +35,12 @@ marked placeholder and record every missing input in
 ## Architecture
 
 - `fe/`: React 19, TypeScript, Vite, Tailwind CSS v4, React Router, and an Nginx
-  production image.
-- `be/`: NestJS, TypeORM, PostgreSQL, Swagger, and environment validation.
-- `compose.yaml`: PostgreSQL, backend, and frontend/Nginx services. Nginx
-  proxies `/api/*` to NestJS and serves the React Router fallback.
-- The frontend and backend are independent npm projects with separate lock
-  files. Use npm only; do not add another package manager or workspace layer.
+  production image. Run lifecycle state comes from `VITE_*` build-time
+  variables (see `fe/.env.example`); donations link out to Donio and
+  notification signups link out to a Google Form.
+- `compose.yaml`: the frontend/Nginx service. Nginx serves the React Router
+  fallback.
+- Use npm only; do not add another package manager or workspace layer.
 
 ## Milestone discipline
 
@@ -63,17 +64,12 @@ npm --prefix fe run lint
 npm --prefix fe run typecheck
 npm --prefix fe run test -- --run
 npm --prefix fe run build
-npm --prefix be exec -- eslint "{src,test}/**/*.ts"
-npm --prefix be run test -- --runInBand
-npm --prefix be run test:e2e -- --runInBand
-npm --prefix be run build
 docker compose config --quiet
 docker compose build
 git diff --check
 ```
 
-The backend's `npm run lint` currently includes `--fix`; use the non-mutating
-command above for verification. Inspect the final diff and repository status.
+Inspect the final diff and repository status.
 
 ## Commits and handoff
 
