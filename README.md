@@ -62,10 +62,10 @@ use.
 
 The public lifecycle state (`pre`, `live`, `post`), the start time, the Garmin
 LiveTrack link and the final result are all baked into the bundle at build
-time from `VITE_*` variables. Compose passes them from `.env` as build
-arguments; local `npm run dev` inside `fe/` reads them from `fe/.env`. See
-`fe/.env.example` for the full list and
-[docs/live-operations.md](docs/live-operations.md) for the race-day flow.
+time from `VITE_*` variables. Vite loads them by mode: `npm run dev` reads
+`fe/.env.development` and `npm run build` reads `fe/.env.production`,
+including inside the Docker build. See `fe/.env.example` for the full list
+and [docs/live-operations.md](docs/live-operations.md) for the race-day flow.
 Changing any of them requires a rebuild (`npm run rebuild`).
 
 None of the variables are secrets; every value is publicly visible in the

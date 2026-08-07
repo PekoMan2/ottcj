@@ -3,8 +3,9 @@
 This runbook covers race-day operation of the static website. The site links
 to the active Garmin LiveTrack session; it does not ingest, embed or copy
 Garmin location or performance data. All lifecycle state is baked into the
-frontend bundle from `VITE_*` variables at build time, so every change below
-means: edit `.env`, rebuild, redeploy, verify.
+frontend bundle from `VITE_*` variables in `fe/.env.production` at build
+time, so every change below means: edit `fe/.env.production`, rebuild,
+redeploy, verify.
 
 ## Notification signups (Google Form)
 
@@ -33,7 +34,7 @@ official start `2026-08-13T08:00:00+02:00` are built in. Override
 1. Start the Garmin LiveTrack session on the tested device and confirm a
    test recipient received the expected message.
 2. Copy the secure `https://...garmin.com/...` session URL from Garmin.
-3. In `.env` set:
+3. In `fe/.env.production` set:
 
    ```text
    VITE_EVENT_PHASE=live
