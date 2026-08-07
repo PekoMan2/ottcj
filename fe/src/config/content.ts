@@ -205,12 +205,6 @@ const runFacts = [
   { label: "bežec", value: "1" },
 ] as const;
 
-const missingPhoto = (label: string): MissingContentImage => ({
-  label,
-  note: "fotka pribudne čoskoro",
-  status: "missing",
-});
-
 export const siteContent = Object.freeze({
   eventDateLabel: "13. — 16. augusta 2026",
   runFacts,
@@ -310,25 +304,49 @@ export const siteContent = Object.freeze({
         id: "zaciatky",
         tag: "začiatky",
         text: "Kedysi som behal len pre pivo. Fakt.",
-        photo: missingPhoto("FOTO ZO ZAČIATKOV"),
+        photo: {
+          alt: "Majo s kamarátom pri pive v cieli behu",
+          height: 1200,
+          src: "/beer.jpg",
+          status: "ready",
+          width: 900,
+        },
       },
       {
         id: "trening",
         tag: "dnes",
         text: "Dnes makám v tréningu na najdlhší beh môjho života.",
-        photo: missingPhoto("FOTO Z TRÉNINGU"),
+        photo: {
+          alt: "Majo pri záťažovej diagnostike na ergometri",
+          height: 900,
+          src: "/run.jpg",
+          status: "ready",
+          width: 1200,
+        },
       },
       {
         id: "uuultra",
         tag: "uuultra",
         text: "S partiou uuultra robíme behy, ktoré majú zmysel.",
-        photo: missingPhoto("FOTO PARTIE"),
+        photo: {
+          alt: "Majo s kamarátom z partie uuultra počas behu",
+          height: 1200,
+          src: "/party.jpg",
+          status: "ready",
+          width: 900,
+        },
       },
       {
         id: "start",
         tag: "13. 8. 2026 · 8:00",
         text: "Štart pred Hotelom Sorea Marmot. 347 km, limit 84 hodín, sólo.",
-        photo: missingPhoto("FOTO ZO ŠTARTU"),
+        photo: {
+          alt: "Majo pred panorámou Vysokých Tatier",
+          height: 900,
+          src: "/solo.jpg",
+          status: "ready",
+          width: 1200,
+        },
       },
     ],
     interview: {
