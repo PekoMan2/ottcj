@@ -4,11 +4,10 @@ import { Link } from 'react-router';
 import { Container } from '../../components/ui';
 import { siteContent } from '../../config/content';
 import { DonioCta } from '../donio/DonioCta';
-import { useEventState } from '../event/eventStateContext';
+import type { EventState } from '../event/eventState';
 import { EventStatus } from './EventStatus';
 
-export function SiteHeader() {
-  const eventState = useEventState();
+export function SiteHeader({ eventState }: { eventState: EventState }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -57,10 +56,8 @@ export function SiteHeader() {
         </nav>
 
         <div className="site-header__actions">
-          <EventStatus state={eventState} />
-          {eventState.status !== 'ready' || eventState.data.phase !== 'post' ? (
-            <DonioCta size="compact" />
-          ) : null}
+          <EventStatus eventState={eventState} />
+          {eventState.phase !== 'post' ? <DonioCta size="compact" /> : null}
           <button
             aria-controls="site-navigation"
             aria-expanded={menuOpen}

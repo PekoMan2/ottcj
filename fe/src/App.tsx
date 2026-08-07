@@ -14,11 +14,10 @@ import {
   HandwrittenAnnotation,
   Section,
 } from "./components/ui";
-import type { DonioCampaign } from "./features/donio/donioCampaign";
-import { DonioCampaignProvider } from "./features/donio/DonioCampaignProvider";
-import { EventStateProvider } from "./features/event/EventStateProvider";
-import type { EventState } from "./features/event/eventState";
-import { useEventState } from "./features/event/eventStateContext";
+import {
+  eventState as configuredEventState,
+  type EventState,
+} from "./features/event/eventState";
 import { CharitySection } from "./features/home/CharitySection";
 import { ContactSection } from "./features/home/ContactSection";
 import { FinalCtaSection } from "./features/home/FinalCtaSection";
@@ -48,16 +47,13 @@ function ScrollToTop() {
   return null;
 }
 
-function SiteLayout() {
-  const eventState = useEventState();
-  const phase =
-    eventState.status === "ready" ? eventState.data.phase : "unknown";
+function SiteLayout({ eventState }: { eventState: EventState }) {
   return (
-    <div className="site-shell" data-site-phase={phase}>
+    <div className="site-shell" data-site-phase={eventState.phase}>
       <a className="skip-link" href="#main-content">
         preskočiť na obsah
       </a>
-      <SiteHeader />
+      <SiteHeader eventState={eventState} />
 
       <main className="site-shell__main" id="main-content">
         <Outlet />
@@ -68,23 +64,21 @@ function SiteLayout() {
   );
 }
 
-function HomePage() {
-  const eventState = useEventState();
-  const runtimeState = eventState.status === "ready" ? eventState.data : null;
+function HomePage({ eventState }: { eventState: EventState }) {
   return (
     <>
-      <HeroCollage eventState={runtimeState} />
-      {runtimeState?.phase === "post" && runtimeState.result ? (
-        <RunResultPanel result={runtimeState.result} />
+      <HeroCollage eventState={eventState} />
+      {eventState.phase === "post" && eventState.result ? (
+        <RunResultPanel result={eventState.result} />
       ) : null}
       <CharitySection />
       <RunOverview />
-      <JoinRunSection eventState={runtimeState} />
+      <JoinRunSection eventState={eventState} />
       <StorySection />
       <TeamSection />
       <PartnersSection />
       <ContactSection />
-      <FinalCtaSection phase={runtimeState?.phase} />
+      <FinalCtaSection phase={eventState.phase} />
     </>
   );
 }
@@ -107,28 +101,22 @@ function NotFoundPage() {
 }
 
 interface AppProps {
-  initialDonioCampaign?: DonioCampaign;
-  initialEventState?: EventState;
+  eventState?: EventState;
 }
 
-export default function App({
-  initialDonioCampaign,
-  initialEventState,
-}: AppProps) {
+export default function App({ eventState = configuredEventState }: AppProps) {
   return (
-    <EventStateProvider initialState={initialEventState}>
-      <DonioCampaignProvider initialData={initialDonioCampaign}>
-        <ScrollToTop />
-        <Routes>
-          <Route element={<SiteLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="press" element={<PressPage />} />
-            <Route path="vily" element={<VilyPage />} />
-            <Route path="gdpr" element={<GdprPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-      </DonioCampaignProvider>
-    </EventStateProvider>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route element={<SiteLayout eventState={eventState} />}>
+          <Route index element={<HomePage eventState={eventState} />} />
+          <Route path="press" element={<PressPage />} />
+          <Route path="vily" element={<VilyPage />} />
+          <Route path="gdpr" element={<GdprPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </>
   );
 }

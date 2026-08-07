@@ -2,38 +2,20 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import App from './App';
-import type { DonioCampaign } from './features/donio/donioCampaign';
 import type { EventState } from './features/event/eventState';
 
 const preEventState: EventState = {
-  eventStartAt: '2026-08-13T06:00:00+02:00',
+  eventStartAt: '2026-08-13T08:00:00+02:00',
   liveTrackUrl: null,
   phase: 'pre',
   result: null,
-  updatedAt: null,
-};
-const emptyCampaign: DonioCampaign = {
-  campaignCollectedEur: null,
-  campaignDonorCount: null,
-  campaignTargetEur: null,
-  challengeCollectedEur: null,
-  challengeDonorCount: null,
-  challengeTargetEur: null,
-  updatedAt: null,
 };
 const donioUrl = 'https://donio.sk/zachranme-vilyho/majo-od-tatier-k-dunaju';
 
-function renderAt(
-  path: string,
-  initialEventState: EventState = preEventState,
-  initialDonioCampaign: DonioCampaign = emptyCampaign,
-) {
+function renderAt(path: string, eventState: EventState = preEventState) {
   return render(
     <MemoryRouter initialEntries={[path]}>
-      <App
-        initialDonioCampaign={initialDonioCampaign}
-        initialEventState={initialEventState}
-      />
+      <App eventState={eventState} />
     </MemoryRouter>,
   );
 }
@@ -64,31 +46,17 @@ describe('App routes', () => {
     }
   });
 
-  it('shows fallback campaign numbers when live Donio data is unavailable', () => {
+  it('shows the approximate campaign numbers with a link to Donio', () => {
     renderAt('/');
 
     const progress = screen.getByRole('complementary', { name: 'Stav zbierky Zachráňme Vilyho' });
     expect(within(progress).getByText('2 000 000 €')).toBeInTheDocument();
     expect(within(progress).getByText(/z\s*4 000 000 €/)).toBeInTheDocument();
     expect(within(progress).getByText(/približný stav/)).toBeInTheDocument();
-  });
-
-  it('shows live campaign and challenge numbers from Donio', () => {
-    renderAt('/', preEventState, {
-      campaignCollectedEur: 2_013_292.68,
-      campaignDonorCount: 65_422,
-      campaignTargetEur: 3_963_500,
-      challengeCollectedEur: 150,
-      challengeDonorCount: 1,
-      challengeTargetEur: 1000,
-      updatedAt: '2026-08-05T10:00:00.000Z',
-    });
-
-    const progress = screen.getByRole('complementary', { name: 'Stav zbierky Zachráňme Vilyho' });
-    expect(within(progress).getByText('2 013 293 €')).toBeInTheDocument();
-    expect(within(progress).getByText(/naživo z donio\.sk/)).toBeInTheDocument();
-    expect(within(progress).getByText(/cez môj beh:/)).toBeInTheDocument();
-    expect(within(progress).getByRole('progressbar')).toHaveAttribute('aria-valuenow', '51');
+    expect(within(progress).getByRole('progressbar')).toHaveAttribute('aria-valuenow', '50');
+    expect(
+      within(progress).getByRole('link', { name: 'donio.sk/zachranme-vilyho' }),
+    ).toHaveAttribute('href', donioUrl);
   });
 
   it('renders the bet invitation with both time codes', () => {
@@ -120,7 +88,6 @@ describe('App routes', () => {
         liveTrackUrl: null,
         phase: 'live',
         result: null,
-        updatedAt: null,
       } satisfies EventState,
       'Majo behá už:',
     ],
@@ -136,7 +103,6 @@ describe('App routes', () => {
           resultCopy: null,
           status: 'dnf',
         },
-        updatedAt: null,
       } satisfies EventState,
       'fáza behu sa skončila',
     ],
@@ -168,20 +134,23 @@ describe('App routes', () => {
       screen.getByRole('link', { name: /Majov Garmin tracking/i }),
     ).toHaveAttribute('href', 'https://livetrack.garmin.com/session/example');
     expect(
-      screen.queryByRole('button', { name: 'upozorni ma pri štarte' }),
+      screen.queryByRole('link', { name: 'upozorni ma pri štarte' }),
     ).not.toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: /prispej/i }).length).toBeGreaterThan(0);
   });
 
-  it('offers the notify card before the start instead of tracking links', () => {
+  it('offers the Google Form notify card before the start instead of tracking links', () => {
     renderAt('/');
 
     expect(
       screen.getByRole('heading', { name: 'upozorni ma, keď Majo vybehne' }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: 'upozorni ma pri štarte' }),
-    ).toBeEnabled();
+    const signupLink = screen.getByRole('link', { name: 'upozorni ma pri štarte' });
+    expect(signupLink).toHaveAttribute(
+      'href',
+      'https://docs.google.com/forms/d/e/1FAIpQLSegRzumYZgOYlFeqTv3LtHKBqYCAIrzDHKDBrFOXDu5JQi2yA/viewform',
+    );
+    expect(signupLink).toHaveAttribute('target', '_blank');
     expect(
       screen.queryByRole('link', { name: /oficiálny Live-track/i }),
     ).not.toBeInTheDocument();
@@ -191,7 +160,7 @@ describe('App routes', () => {
     renderAt('/', { ...preEventState, eventStartAt: '2026-08-01T06:00:00+02:00' });
 
     expect(
-      screen.queryByRole('button', { name: 'upozorni ma pri štarte' }),
+      screen.queryByRole('link', { name: 'upozorni ma pri štarte' }),
     ).not.toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: 'oficiálny Live-track OTKD sólo bežcov →' }),

@@ -12,7 +12,7 @@ import {
 import { TrackingPanel } from './TrackingPanel';
 
 interface HeroCollageProps {
-  eventState: EventState | null;
+  eventState: EventState;
 }
 
 interface HeroArtworkProps {
@@ -92,8 +92,8 @@ function TitleWordArt() {
 }
 
 export function HeroCollage({ eventState }: HeroCollageProps) {
-  const isLive = eventState?.phase === 'live';
-  const isPost = eventState?.phase === 'post';
+  const isLive = eventState.phase === 'live';
+  const isPost = eventState.phase === 'post';
 
   return (
     <section aria-label="347 km sólo pre Zachráňme Vilyho" className="hero-section">
@@ -150,7 +150,7 @@ export function HeroCollage({ eventState }: HeroCollageProps) {
             </div>
           ))}
         </div>
-        {eventState?.phase !== 'post' ? (
+        {eventState.phase !== 'post' ? (
           <TrackingPanel eventState={eventState} />
         ) : null}
       </Container>

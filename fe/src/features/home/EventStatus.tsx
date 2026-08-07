@@ -1,9 +1,9 @@
-import type { EventStateLoadState } from '../event/eventStateContext';
+import type { EventState } from '../event/eventState';
 import { formatCountdown } from '../countdown/countdown';
 import { useCountdown } from '../countdown/useCountdown';
 
 interface EventStatusProps {
-  state: EventStateLoadState;
+  eventState: EventState;
 }
 
 function CountdownStatus({
@@ -25,17 +25,8 @@ function CountdownStatus({
   );
 }
 
-export function EventStatus({ state }: EventStatusProps) {
-  if (state.status !== 'ready') {
-    return (
-      <div className="event-status" data-event-status={state.status}>
-        <span className="event-status__label">stav behu:</span>
-        <strong>{state.status === 'loading' ? 'načítavam' : 'nedostupný'}</strong>
-      </div>
-    );
-  }
-
-  if (state.data.phase === 'post') {
+export function EventStatus({ eventState }: EventStatusProps) {
+  if (eventState.phase === 'post') {
     return (
       <div className="event-status" data-event-status="post">
         <span className="event-status__label">stav podujatia:</span>
@@ -46,8 +37,8 @@ export function EventStatus({ state }: EventStatusProps) {
 
   return (
     <CountdownStatus
-      eventStartAt={state.data.eventStartAt}
-      status={state.data.phase}
+      eventStartAt={eventState.eventStartAt}
+      status={eventState.phase}
     />
   );
 }

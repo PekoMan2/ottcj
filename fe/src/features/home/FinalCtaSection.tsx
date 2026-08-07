@@ -5,7 +5,7 @@ import type { SitePhase } from '../../config/sitePhase';
 import { DonioCta } from '../donio/DonioCta';
 
 interface FinalCtaSectionProps {
-  phase?: SitePhase;
+  phase: SitePhase;
 }
 
 export function FinalCtaSection({ phase }: FinalCtaSectionProps) {

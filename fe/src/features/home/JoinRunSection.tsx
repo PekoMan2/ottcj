@@ -9,13 +9,13 @@ const stepIcons = [MapPin, Footprints, Send] as const;
 type CopyState = 'idle' | 'copied' | 'error';
 
 interface JoinRunSectionProps {
-  eventState: EventState | null;
+  eventState: EventState;
 }
 
 export function JoinRunSection({ eventState }: JoinRunSectionProps) {
   const { joinRun } = siteContent;
   const [copyState, setCopyState] = useState<CopyState>('idle');
-  const liveTrackUrl = eventState?.phase === 'live' ? eventState.liveTrackUrl : null;
+  const liveTrackUrl = eventState.phase === 'live' ? eventState.liveTrackUrl : null;
   const shareFunction = (navigator as unknown as {
     share?: (data: ShareData) => Promise<void>;
   }).share;

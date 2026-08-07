@@ -1,23 +1,18 @@
 import { BellRing, Radio } from 'lucide-react';
-import { useState } from 'react';
 import { siteContent } from '../../config/content';
 import { useCountdown } from '../countdown/useCountdown';
 import type { EventState } from '../event/eventState';
-import { NotifySignupForm } from './NotifySignupForm';
 
 interface TrackingPanelProps {
-  eventState: EventState | null;
+  eventState: EventState;
 }
-
-const epoch = '1970-01-01T00:00:00Z';
 
 export function TrackingPanel({ eventState }: TrackingPanelProps) {
   const { tracking } = siteContent;
-  const [signupOpen, setSignupOpen] = useState(false);
-  const countdown = useCountdown(eventState?.eventStartAt ?? epoch);
+  const countdown = useCountdown(eventState.eventStartAt);
   const liveTrackUrl =
-    eventState?.phase === 'live' ? eventState.liveTrackUrl : null;
-  const beforeStart = eventState?.phase === 'pre' && !countdown.started;
+    eventState.phase === 'live' ? eventState.liveTrackUrl : null;
+  const beforeStart = eventState.phase === 'pre' && !countdown.started;
 
   if (beforeStart) {
     return (
@@ -29,18 +24,14 @@ export function TrackingPanel({ eventState }: TrackingPanelProps) {
         <div>
           <h2>{tracking.notify.title}</h2>
           <p>{tracking.notify.body}</p>
-          {signupOpen ? (
-            <NotifySignupForm />
-          ) : (
-            <button
-              aria-expanded={signupOpen}
-              className="sticker-button"
-              onClick={() => setSignupOpen(true)}
-              type="button"
-            >
-              {tracking.notify.label}
-            </button>
-          )}
+          <a
+            className="sticker-button"
+            href={tracking.notify.formUrl}
+            rel="noreferrer"
+            target="_blank"
+          >
+            {tracking.notify.label}
+          </a>
         </div>
       </aside>
     );
