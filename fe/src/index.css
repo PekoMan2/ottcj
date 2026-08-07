@@ -733,8 +733,7 @@ a {
   transform: translateX(-50%);
 }
 
-.live-track-cta,
-.live-track-pending {
+.live-track-cta {
   display: inline-flex;
   min-height: 3rem;
   align-items: center;
@@ -754,11 +753,6 @@ a {
   background: var(--color-ink);
   color: var(--color-paper);
   text-decoration: none;
-}
-
-.live-track-pending {
-  background: var(--color-vily-cream);
-  color: var(--color-ash);
 }
 
 .hero-wordart {

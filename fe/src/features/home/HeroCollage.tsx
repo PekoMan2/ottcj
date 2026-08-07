@@ -130,9 +130,6 @@ export function HeroCollage({ eventState }: HeroCollageProps) {
               sledovať Maja naživo <ExternalLink aria-hidden="true" size={18} />
             </a>
           ) : null}
-          {isLive && !eventState.liveTrackUrl ? (
-            <span className="live-track-pending">LiveTrack odkaz sa pripravuje</span>
-          ) : null}
           {!isPost ? <DonioCta /> : null}
         </div>
 
