@@ -431,16 +431,6 @@ export const siteContent = Object.freeze({
         label: "@uuultra.behy",
         href: "https://www.instagram.com/uuultra.behy/",
       },
-      {
-        status: "ready",
-        label: "@odtatierkdunaju · organizátor behu",
-        href: "https://www.instagram.com/odtatierkdunaju/",
-      },
-      {
-        status: "ready",
-        label: "YouTube · uuultra behy",
-        href: "https://www.youtube.com/@uuultra.behyyy",
-      },
     ],
   },
   tracking: {
@@ -485,6 +475,11 @@ export const siteContent = Object.freeze({
         status: "ready",
         label: "@odtatierkdunaju · organizátor behu",
         href: "https://www.instagram.com/odtatierkdunaju/",
+      },
+      {
+        status: "ready",
+        label: "Strava (Moje tréningy)",
+        href: "https://www.strava.com/athletes/132549637",
       },
       {
         status: "ready",
