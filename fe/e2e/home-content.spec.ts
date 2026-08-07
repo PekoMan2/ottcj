@@ -5,7 +5,7 @@ test('renders the complete editorial homepage without overflow', async ({ page }
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
 
-  for (const id of ['vily', 'trasa', 'pridaj-sa', 'pribeh', 'tim', 'partneri', 'kontakt']) {
+  for (const id of ['vily', 'trasa', 'pridaj-sa', 'pribeh', 'partneri', 'kontakt']) {
     await expect(page.locator(`#${id}`)).toBeVisible();
   }
 

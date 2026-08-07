@@ -119,17 +119,6 @@ export interface StoryContent {
   title: string;
 }
 
-export interface TeamRosterItem {
-  name: string;
-  note?: string;
-  role: string;
-}
-
-export interface TeamContent {
-  roster: readonly TeamRosterItem[];
-  title: string;
-}
-
 export interface PartnerItem {
   href?: string;
   label?: string;
@@ -207,7 +196,6 @@ export interface SiteContent {
   runFacts: readonly RunFact[];
   runOverview: RunOverviewContent;
   story: StoryContent;
-  team: TeamContent;
   tracking: TrackingContent;
 }
 
@@ -348,14 +336,6 @@ export const siteContent = Object.freeze({
       href: "https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor",
       label: "prečítaj celý rozhovor →",
     },
-  },
-  team: {
-    title: "tím za behom",
-    roster: [
-      { role: "kamera", name: "doplníme" },
-      { role: "support crew", name: "ľudia, ktorí držia zázemie na trati" },
-      { role: "pojazdné zázemie", name: "IontMax dodávka" },
-    ],
   },
   partners: {
     title: "Partneri.",

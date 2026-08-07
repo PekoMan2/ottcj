@@ -28,7 +28,6 @@ import { RunOverview } from "./features/home/RunOverview";
 import { SiteHeader } from "./features/home/SiteHeader";
 import { SiteFooter } from "./features/home/SiteFooter";
 import { StorySection } from "./features/home/StorySection";
-import { TeamSection } from "./features/home/TeamSection";
 import { RunResultPanel } from "./features/home/RunResultPanel";
 import { GdprPage } from "./features/pages/GdprPage";
 import { PressPage } from "./features/pages/PressPage";
@@ -75,7 +74,6 @@ function HomePage({ eventState }: { eventState: EventState }) {
       <RunOverview />
       <JoinRunSection eventState={eventState} />
       <StorySection />
-      <TeamSection />
       <PartnersSection />
       <ContactSection />
       <FinalCtaSection phase={eventState.phase} />

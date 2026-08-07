@@ -197,7 +197,7 @@ describe('App routes', () => {
 
     expect(
       Array.from(container.querySelectorAll('main > section[id]')).map((section) => section.id),
-    ).toEqual(['vily', 'trasa', 'pridaj-sa', 'pribeh', 'tim', 'partneri', 'kontakt']);
+    ).toEqual(['vily', 'trasa', 'pridaj-sa', 'pribeh', 'partneri', 'kontakt']);
     expect(screen.getByRole('heading', { name: '347,32 km krížom cez Slovensko.' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Pridaj sa ku mne počas behu.' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Môj bežecký príbeh.' })).toBeInTheDocument();
