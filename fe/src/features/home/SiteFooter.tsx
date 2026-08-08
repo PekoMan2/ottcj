@@ -35,14 +35,15 @@ export function SiteFooter() {
 
         <div aria-label="Partneri behu" className="site-footer__partners" role="group">
           {siteContent.partners.list.map((partner) => {
-            if (!partner.logo) return null;
+            const source = partner.logoMono ?? partner.logo;
+            if (!source) return null;
             const logo = (
               <img
-                alt={partner.logo.alt}
-                height={partner.logo.height}
+                alt={source.alt}
+                height={source.height}
                 loading="lazy"
-                src={partner.logo.src}
-                width={partner.logo.width}
+                src={source.src}
+                width={source.width}
               />
             );
             return partner.href ? (
