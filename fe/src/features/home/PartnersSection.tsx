@@ -26,7 +26,7 @@ export function PartnersSection() {
 
             return (
               <li
-                className={partner.label ? 'partner-strip__item--main' : undefined}
+                className={partner.variant ? `partner-strip__item--${partner.variant}` : undefined}
                 key={partner.name}
               >
                 {partner.label ? (

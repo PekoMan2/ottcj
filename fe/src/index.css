@@ -2281,10 +2281,18 @@ a {
   object-fit: contain;
 }
 
-.partner-strip__item--main {
+.partner-strip__item--main,
+.partner-strip__item--media {
   position: relative;
   padding: 1.4rem 1.1rem 0.8rem;
+}
+
+.partner-strip__item--main {
   border: 2px dashed var(--color-ember);
+}
+
+.partner-strip__item--media {
+  border: 2px dotted var(--color-ash);
 }
 
 .partner-strip__item--main img {
@@ -2304,6 +2312,13 @@ a {
   padding: 0.15rem 0.5rem;
   transform: rotate(-2deg);
   white-space: nowrap;
+}
+
+.partner-strip__item--media .partner-strip__label {
+  background: var(--color-paper);
+  color: var(--color-ash);
+  font-size: 0.66rem;
+  font-weight: 700;
 }
 
 .partner-strip strong {

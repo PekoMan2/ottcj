@@ -123,7 +123,10 @@ export interface PartnerItem {
   href?: string;
   label?: string;
   logo?: ReadyContentImage;
+  /** Used where logos are flattened to a silhouette: internal detail must be transparent, not coloured. */
+  logoMono?: ReadyContentImage;
   name: string;
+  variant?: "main" | "media";
 }
 
 export interface PartnersContent {
@@ -362,6 +365,7 @@ export const siteContent = Object.freeze({
         name: "IontMax",
         href: "https://www.iontmax.com/",
         label: "hlavný partner",
+        variant: "main",
         logo: {
           alt: "IontMax",
           height: 113,
@@ -401,6 +405,50 @@ export const siteContent = Object.freeze({
           src: "/allpeople.png",
           status: "ready",
           width: 800,
+        },
+      },
+      {
+        name: "Lisu",
+        href: "https://lisu.cz",
+        logo: {
+          alt: "Lisu",
+          height: 92,
+          src: "/lisu.png",
+          status: "ready",
+          width: 206,
+        },
+      },
+      {
+        name: "Markíza",
+        href: "https://www.markiza.sk/",
+        label: "mediálny partner",
+        variant: "media",
+        logo: {
+          alt: "Markíza",
+          height: 213,
+          src: "/markiza.png",
+          status: "ready",
+          width: 906,
+        },
+        logoMono: {
+          alt: "Markíza",
+          height: 213,
+          src: "/markiza-mono.png",
+          status: "ready",
+          width: 906,
+        },
+      },
+      {
+        name: "Refresher",
+        href: "https://refresher.sk/205038-23-rocny-Majo-kedysi-behal-len-pre-pivo-teraz-sa-chysta-zdolat-345-km-v-behu-Od-Tatier-k-Dunaju-Rozhovor",
+        label: "mediálny partner",
+        variant: "media",
+        logo: {
+          alt: "Refresher",
+          height: 129,
+          src: "/refresher.png",
+          status: "ready",
+          width: 450,
         },
       },
     ],

@@ -2,6 +2,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import App from './App';
+import { siteContent } from './config/content';
 import type { EventState } from './features/event/eventState';
 
 const preEventState: EventState = {
@@ -248,6 +249,16 @@ describe('App routes', () => {
       'src',
       '/allpeople.png',
     );
+    expect(screen.getAllByRole('img', { name: 'Lisu' })[0]).toHaveAttribute('src', '/lisu.png');
+    expect(screen.getAllByRole('img', { name: 'Markíza' })[0]).toHaveAttribute(
+      'src',
+      '/markiza.png',
+    );
+    expect(screen.getAllByRole('img', { name: 'Refresher' })[0]).toHaveAttribute(
+      'src',
+      '/refresher.png',
+    );
+    expect(screen.getAllByText('mediálny partner')).toHaveLength(2);
     expect(screen.getByText(/tu môžeš byť ty/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'prečítaj celý rozhovor →' })).toHaveAttribute(
       'href',
@@ -286,7 +297,18 @@ describe('App routes', () => {
     expect(within(footer).queryByRole('link', { name: 'tím' })).not.toBeInTheDocument();
     expect(within(footer).queryByRole('link', { name: /príspevk/ })).not.toBeInTheDocument();
     expect(within(footer).getByText('347 km sólo – zbierka pre Vilyho')).toBeInTheDocument();
-    expect(within(footer).getAllByRole('img')).toHaveLength(4);
+    expect(within(footer).getAllByRole('img')).toHaveLength(
+      siteContent.partners.list.filter((partner) => partner.logoMono ?? partner.logo).length,
+    );
+  });
+
+  it('gives the footer silhouette a logo whose detail survives being flattened', () => {
+    renderAt('/');
+
+    expect(within(screen.getByRole('contentinfo')).getByRole('img', { name: 'Markíza' })).toHaveAttribute(
+      'src',
+      '/markiza-mono.png',
+    );
   });
 
   it.each([
