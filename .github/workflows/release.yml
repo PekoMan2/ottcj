@@ -50,5 +50,5 @@ jobs:
           tag="v${{ github.run_number }}"
           gh release create "$tag" ottcj-site.zip \
             --title "Site build $tag ($(date -u +%Y-%m-%d))" \
-            --notes "Static site built from ${GITHUB_SHA:0:7}. Unzip into the web root; nginx.conf and Dockerfile are not included." \
+            --notes "Built from ${GITHUB_SHA:0:7}" \
             --target "$GITHUB_SHA"
