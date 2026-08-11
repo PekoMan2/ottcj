@@ -387,7 +387,7 @@ export const siteContent = Object.freeze({
       },
       {
         name: "Daybyday Nitra",
-        href: "https://daybday.store/",
+        href: "https://daybday.sk/",
         logo: {
           alt: "Daybyday Nitra",
           height: 104,
@@ -416,6 +416,28 @@ export const siteContent = Object.freeze({
           src: "/lisu.png",
           status: "ready",
           width: 206,
+        },
+      },
+      {
+        name: "Reklamask",
+        href: "https://reklamask.sk/",
+        logo: {
+          alt: "Reklamask",
+          height: 181,
+          src: "/reklamask.png",
+          status: "ready",
+          width: 800,
+        },
+      },
+      {
+        name: "Garmond Nitra",
+        href: "https://garmondnitra.sk/",
+        logo: {
+          alt: "Garmond Nitra",
+          height: 200,
+          src: "/garmondnitra.png",
+          status: "ready",
+          width: 587,
         },
       },
       {
