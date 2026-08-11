@@ -250,6 +250,14 @@ describe('App routes', () => {
       '/allpeople.png',
     );
     expect(screen.getAllByRole('img', { name: 'Lisu' })[0]).toHaveAttribute('src', '/lisu.png');
+    expect(screen.getAllByRole('img', { name: 'Reklamask' })[0]).toHaveAttribute(
+      'src',
+      '/reklamask.png',
+    );
+    expect(screen.getAllByRole('img', { name: 'Garmond Nitra' })[0]).toHaveAttribute(
+      'src',
+      '/garmondnitra.png',
+    );
     expect(screen.getAllByRole('img', { name: 'Markíza' })[0]).toHaveAttribute(
       'src',
       '/markiza.png',
@@ -257,6 +265,18 @@ describe('App routes', () => {
     expect(screen.getAllByRole('img', { name: 'Refresher' })[0]).toHaveAttribute(
       'src',
       '/refresher.png',
+    );
+    expect(screen.getAllByRole('link', { name: 'Daybyday Nitra' })[0]).toHaveAttribute(
+      'href',
+      'https://daybday.sk/',
+    );
+    expect(screen.getAllByRole('link', { name: 'Reklamask' })[0]).toHaveAttribute(
+      'href',
+      'https://reklamask.sk/',
+    );
+    expect(screen.getAllByRole('link', { name: 'Garmond Nitra' })[0]).toHaveAttribute(
+      'href',
+      'https://garmondnitra.sk/',
     );
     expect(screen.getAllByText('mediálny partner')).toHaveLength(2);
     expect(screen.getByText(/tu môžeš byť ty/)).toBeInTheDocument();
