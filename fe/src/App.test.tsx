@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
 import { siteContent } from './config/content';
 import type { EventState } from './features/event/eventState';
@@ -22,6 +22,15 @@ function renderAt(path: string, eventState: EventState = preEventState) {
 }
 
 describe('App routes', () => {
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-08-12T09:00:00+02:00'));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('renders the donation-first homepage at the root route', () => {
     const { container } = renderAt('/');
 
