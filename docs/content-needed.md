@@ -37,8 +37,6 @@ and beneficiary of this website.** The cause itself is not a missing input.
 - [ ] Final ownership and publication confirmation for the sponsor and media
   addresses and Instagram handles supplied by the brief and rendered
   provisionally in Milestone 3.
-- [x] IontMax logo, destination URL, main-partner wording, placement, and asset
-  usage confirmed and integrated.
 - [ ] Final primary CTA wording and Google Form destination.
 
 ## P1 — required for complete pre-event content
