@@ -362,19 +362,6 @@ export const siteContent = Object.freeze({
     title: "Partneri.",
     list: [
       {
-        name: "IontMax",
-        href: "https://www.iontmax.com/",
-        label: "hlavný partner",
-        variant: "main",
-        logo: {
-          alt: "IontMax",
-          height: 113,
-          src: "/iontmax.png",
-          status: "ready",
-          width: 427,
-        },
-      },
-      {
         name: "Shokz slúchadlá",
         href: "https://shokz.com/",
         logo: {

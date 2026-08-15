@@ -132,10 +132,6 @@ describe('App routes', () => {
       liveTrackUrl: 'https://livetrack.garmin.com/session/example',
       phase: 'live',
     });
-    expect(screen.getByRole('link', { name: /sledovať Maja naživo/i })).toHaveAttribute(
-      'href',
-      'https://livetrack.garmin.com/session/example',
-    );
     expect(screen.getByRole('link', { name: /kde práve som/i })).toHaveAttribute(
       'href',
       'https://livetrack.garmin.com/session/example',
@@ -239,13 +235,8 @@ describe('App routes', () => {
       screen.getByText(/Od štartu 13\. 8\. o 8:00 pred Hotelom Sorea Marmot/),
     ).toBeInTheDocument();
     expect(screen.queryByText(/Šul/)).not.toBeInTheDocument();
-    expect(screen.getByText('hlavný partner')).toBeInTheDocument();
     expect(screen.getByText('kto je Vilko?', { exact: false })).toBeInTheDocument();
     expect(screen.getByText(/Vilko má 2 roky/)).toBeInTheDocument();
-    expect(screen.getAllByRole('img', { name: 'IontMax' })[0]).toHaveAttribute(
-      'src',
-      '/iontmax.png',
-    );
     expect(screen.getAllByRole('img', { name: 'Shokz slúchadlá' })[0]).toHaveAttribute(
       'src',
       '/shokz.png',

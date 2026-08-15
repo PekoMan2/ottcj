@@ -1,4 +1,3 @@
-import { ExternalLink } from 'lucide-react';
 import { Container, Stat } from '../../components/ui';
 import { siteContent } from '../../config/content';
 import { DonioCta } from '../donio/DonioCta';
@@ -92,7 +91,6 @@ function TitleWordArt() {
 }
 
 export function HeroCollage({ eventState }: HeroCollageProps) {
-  const isLive = eventState.phase === 'live';
   const isPost = eventState.phase === 'post';
 
   return (
@@ -120,16 +118,6 @@ export function HeroCollage({ eventState }: HeroCollageProps) {
         </figure>
 
         <div className="hero-primary-cta">
-          {isLive && eventState.liveTrackUrl ? (
-            <a
-              className="live-track-cta"
-              href={eventState.liveTrackUrl}
-              rel="noreferrer"
-              target="_blank"
-            >
-              sledovať Maja naživo <ExternalLink aria-hidden="true" size={18} />
-            </a>
-          ) : null}
           {!isPost ? <DonioCta /> : null}
         </div>
 
