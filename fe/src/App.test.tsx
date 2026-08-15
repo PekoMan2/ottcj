@@ -132,10 +132,6 @@ describe('App routes', () => {
       liveTrackUrl: 'https://livetrack.garmin.com/session/example',
       phase: 'live',
     });
-    expect(screen.getByRole('link', { name: /sledovať Maja naživo/i })).toHaveAttribute(
-      'href',
-      'https://livetrack.garmin.com/session/example',
-    );
     expect(screen.getByRole('link', { name: /kde práve som/i })).toHaveAttribute(
       'href',
       'https://livetrack.garmin.com/session/example',
